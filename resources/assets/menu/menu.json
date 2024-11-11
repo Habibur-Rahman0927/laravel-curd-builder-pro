@@ -1,0 +1,132 @@
+{
+    "menu": [
+        {
+            "url": "admin-dashboard",
+            "icon": "bi bi-speedometer2",
+            "name": "Dashboard",
+            "slug": "admin-dashboard",
+            "permission": [
+                "admin-dashboard"
+            ]
+        },
+        {
+            "name": "User",
+            "icon": "bi bi-people",
+            "slug": "user",
+            "permission": [
+                "user.index",
+                "user.create"
+            ],
+            "submenu": [
+                {
+                    "url": "user.index",
+                    "name": "List",
+                    "icon": "bi bi-circle"
+                },
+                {
+                    "url": "user.create",
+                    "name": "Create",
+                    "icon": "bi bi-circle"
+                }
+            ]
+        },
+        {
+            "name": "Role",
+            "icon": "bi bi-shield-lock",
+            "slug": "role",
+            "permission": [
+                "role.index",
+                "role.create"
+            ],
+            "submenu": [
+                {
+                    "url": "role.index",
+                    "name": "List",
+                    "icon": "bi bi-circle"
+                },
+                {
+                    "url": "role.create",
+                    "name": "Create",
+                    "icon": "bi bi-circle"
+                }
+            ]
+        },
+        {
+            "name": "Permission Group",
+            "icon": "bi bi-folder",
+            "slug": "permissiongroup",
+            "permission": [
+                "permissiongroup.index",
+                "permissiongroup.create"
+            ],
+            "submenu": [
+                {
+                    "url": "permissiongroup.index",
+                    "name": "List",
+                    "icon": "bi bi-circle"
+                },
+                {
+                    "url": "permissiongroup.create",
+                    "name": "Create",
+                    "icon": "bi bi-circle"
+                }
+            ]
+        },
+        {
+            "name": "Permission",
+            "icon": "bi bi-key",
+            "slug": "permission",
+            "permission": [
+                "permission.index",
+                "permission.create"
+            ],
+            "submenu": [
+                {
+                    "url": "permission.index",
+                    "name": "List",
+                    "icon": "bi bi-circle"
+                },
+                {
+                    "url": "permission.create",
+                    "name": "Create",
+                    "icon": "bi bi-circle"
+                }
+            ]
+        },
+        {
+            "name": "Role Has Permission",
+            "icon": "bi bi-gear",
+            "slug": "rolehaspermission",
+            "permission": [
+                "rolehaspermission.index",
+                "rolehaspermission.create"
+            ],
+            "submenu": [
+                {
+                    "url": "rolehaspermission.index",
+                    "name": "List",
+                    "slug": "rolehaspermission.index",
+                    "icon": "bi bi-circle"
+                },
+                {
+                    "url": "rolehaspermission.create",
+                    "name": "Create",
+                    "slug": "rolehaspermission.create",
+                    "icon": "bi bi-circle"
+                }
+            ]
+        },
+        {
+            "url": "crud.generator.create",
+            "icon": "bi bi-file-earmark-code",
+            "name": "Generate CURD",
+            "slug": "crud.generator.create",
+            "permission": [
+                "crud.generator.create"
+            ]
+        },
+        {
+            "nav-heading": "<li class='nav-heading'>Generated Module<\/li>"
+        }
+    ]
+}

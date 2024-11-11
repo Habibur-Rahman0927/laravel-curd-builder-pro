@@ -1,0 +1,134 @@
+/*------------------------------------------------------------------
+* Bootstrap Simple Admin Template
+* Version: 3.0
+* Author: Alexis Luna
+* Website: https://github.com/alexis-luna/bootstrap-simple-admin-template
+-------------------------------------------------------------------*/
+/* #sidebar {
+    background: linear-gradient(180deg, #2c3e50, #34495e);
+    min-width: 250px;
+    max-width: 250px;
+    color: #fff;
+    transition: all 0.3s;
+    border-right: 1px solid #e6ecf5;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: .4rem 1rem;
+    border-bottom: 1px solid rgba(101, 109, 119, .16);
+    max-height: 55px;
+}
+
+#sidebar ul.components {
+    padding: 0 0;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: .8rem 1.5rem;
+    font-size: 1rem;
+    display: block;
+}
+
+#sidebar ul li a .fas {
+    min-width: 20px;
+    margin-right: 5px;
+    text-align: center;
+}
+
+#sidebar ul li a:hover,
+#sidebar ul li a.active {
+    color: #fff;
+    background: #2196F3;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: inherit;
+}
+
+#sidebar ul ul a {
+    font-size: 1rem;
+    background: #EEEEEE;
+}
+
+#sidebar a[data-toggle="collapse"] {
+    position: relative;
+}
+
+#sidebar .dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    display: none;
+}
+
+@media (max-width: 768px) {
+    #sidebarCollapse span {
+        display: none;
+    }
+} */
+
+#sidebar {
+    background: linear-gradient(180deg, #2c3e50, #34495e); /* Blue gradient background */
+    min-width: 250px;
+    max-width: 250px;
+    color: #ffffff;
+    transition: all 0.3s;
+    border-right: 1px solid #e6ecf5;
+}
+
+#sidebar .sidebar-header {
+    padding: 0.4rem 1rem;
+    border-bottom: 1px solid rgba(101, 109, 119, 0.16);
+    max-height: 55px;
+}
+
+#sidebar ul li a {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    color: #ffffff;
+    display: block;
+    font-weight: 800;
+    transition: all 0.3s ease;
+}
+
+#sidebar ul li a .fas {
+    min-width: 20px;
+    margin-right: 8px;
+    text-align: center;
+}
+
+#sidebar ul li a:hover,
+#sidebar ul li a.active {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white on hover */
+    transform: translateX(8px); /* Moves slightly right on hover */
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1); /* Adds shadow on hover */
+}
+
+#sidebar ul ul a {
+    font-size: 0.9rem;
+}
+
+#sidebar ul li.active > a,
+a[aria-expanded="true"] {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.2); /* Maintain hover effect for active links */
+}
+
+@media (max-width: 768px) {
+    #sidebarCollapse span {
+        display: none;
+    }
+}
