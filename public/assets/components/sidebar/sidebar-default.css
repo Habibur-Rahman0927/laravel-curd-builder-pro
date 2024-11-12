@@ -81,8 +81,8 @@ a[aria-expanded="true"] {
 
 #sidebar {
     background: linear-gradient(180deg, #2c3e50, #34495e); /* Blue gradient background */
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 260px;
+    max-width: 260px;
     color: #ffffff;
     transition: all 0.3s;
     border-right: 1px solid #e6ecf5;
@@ -125,6 +125,11 @@ a[aria-expanded="true"] {
 a[aria-expanded="true"] {
     color: #ffffff;
     background-color: rgba(255, 255, 255, 0.2); /* Maintain hover effect for active links */
+}
+
+.small-icon{
+    font-size: 0.5em; 
+    vertical-align: middle;
 }
 
 @media (max-width: 768px) {

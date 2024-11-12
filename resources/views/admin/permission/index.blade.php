@@ -1,22 +1,22 @@
 @extends('layouts/layout')
 
-@section('title', 'List User')
+@section('title', 'List Permission')
 
 @section('page-style')
     @vite([])
 @endsection
 
 @section('page-script')
-    @vite(['resources/assets/js/user.js'])
+    @vite(['resources/assets/js/permission.js'])
 @endsection
 
 @section('content')
     <div class="content">
-        <div id="routeData" data-url="{{ route('user-list') }}"></div>
+        <div id="routeData" data-url="{{ route('permission-list') }}"></div>
         <div class="row">
             <div class="col-md-12 page-header mb-2">
-                <div class="page-pretitle">User</div>
-                <h1 class="page-title">User List</h1>
+                <div class="page-pretitle">Permission</div>
+                <h1 class="page-title">Permission List</h1>
             </div>
         </div>
         <div class="row">
@@ -36,7 +36,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <a href="{{ route('user.create') }}" class="btn btn-success add-btn">Add New</a>
+                        <a href="{{ route('permission.create') }}" class="btn btn-success add-btn">Add New</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -45,16 +45,16 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
+                                    <th>Permission Group Name</th>
+                                    <th>Permission Name</th>
                                     <th>Action</th>
                                 </tr>
                                 <tr>
                                     <th><input type="text" placeholder="Search ID" class="column-search form-control" />
                                     </th>
-                                    <th><input type="text" placeholder="Search Name"
+                                    <th><input type="text" placeholder="Search Group Name"
                                             class="column-search form-control" /></th>
-                                    <th><input type="text" placeholder="Search Email"
+                                    <th><input type="text" placeholder="Search Permission Name"
                                             class="column-search form-control" /></th>
                                     <th></th>
                                 </tr>

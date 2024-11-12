@@ -1,22 +1,22 @@
 @extends('layouts/layout')
 
-@section('title', 'List User')
+@section('title', 'List Permission Group')
 
 @section('page-style')
     @vite([])
 @endsection
 
 @section('page-script')
-    @vite(['resources/assets/js/user.js'])
+    @vite(['resources/assets/js/permissiongroup.js'])
 @endsection
 
 @section('content')
     <div class="content">
-        <div id="routeData" data-url="{{ route('user-list') }}"></div>
+        <div id="routeData" data-url="{{ route('permissiongroup-list') }}"></div>
         <div class="row">
             <div class="col-md-12 page-header mb-2">
-                <div class="page-pretitle">User</div>
-                <h1 class="page-title">User List</h1>
+                <div class="page-pretitle">Permission Group</div>
+                <h1 class="page-title">Permission Group List</h1>
             </div>
         </div>
         <div class="row">
@@ -36,7 +36,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <a href="{{ route('user.create') }}" class="btn btn-success add-btn">Add New</a>
+                        <a href="{{ route('permissiongroup.create') }}" class="btn btn-success add-btn">Add New</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -46,15 +46,12 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Email</th>
                                     <th>Action</th>
                                 </tr>
                                 <tr>
                                     <th><input type="text" placeholder="Search ID" class="column-search form-control" />
                                     </th>
                                     <th><input type="text" placeholder="Search Name"
-                                            class="column-search form-control" /></th>
-                                    <th><input type="text" placeholder="Search Email"
                                             class="column-search form-control" /></th>
                                     <th></th>
                                 </tr>

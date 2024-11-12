@@ -3,42 +3,79 @@
         <img src="{{ asset('assets/img/bootstraper-logo.png') }}" alt="bootraper logo" class="app-logo">
     </div>
     <ul class="nav flex-column">
+        
         <li class="nav-item">
             <a class="nav-link" href="{{ route('admin-dashboard') }}"><i class="fas fa-tachometer-alt"></i><span
                     class="nav-text">Dashboard</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-users"></i><span class="nav-text">Users</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#settingsMenu"
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#user"
                 aria-expanded="false">
-                <i class="fas fa-cog"></i><span class="nav-text">Settings</span>
+                <i class="fas fa-users"></i><span class="nav-text">User</span>
                 <i class="fas fa-caret-right indicator ms-auto"></i>
             </a>
-            <div class="collapse" id="settingsMenu">
+            <div class="collapse" id="user">
                 <ul class="list-unstyled ms-4">
-                    <li><a class="nav-link" href="#">General</a></li>
-                    <li><a class="nav-link" href="#">Privacy</a></li>
+                    <li><a class="nav-link" href="{{ route('user.index') }}"> <i class="fas fa-circle small-icon"></i>List</a></li>
+                    <li><a class="nav-link" href="{{ route('user.create') }}"> <i class="fas fa-circle small-icon"></i>Create</a></li>
                 </ul>
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-chart-line"></i><span
-                    class="nav-text">Reports</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#messagesMenu"
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#role"
                 aria-expanded="false">
-                <i class="fas fa-envelope"></i><span class="nav-text">Messages</span>
+                <i class="fas fa-lock"></i><span class="nav-text">Role</span>
                 <i class="fas fa-caret-right indicator ms-auto"></i>
             </a>
-            <div class="collapse" id="messagesMenu">
+            <div class="collapse" id="role">
                 <ul class="list-unstyled ms-4">
-                    <li><a class="nav-link" href="#">Inbox</a></li>
-                    <li><a class="nav-link" href="#">Sent</a></li>
+                    <li><a class="nav-link" href="{{ route('role.index') }}"> <i class="fas fa-circle small-icon"></i>List</a></li>
+                    <li><a class="nav-link" href="{{ route('role.create') }}"> <i class="fas fa-circle small-icon"></i>Create</a></li>
                 </ul>
             </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#permissiongroup"
+                aria-expanded="false">
+                <i class="fas fa-folder"></i><span class="nav-text">Permission Group</span>
+                <i class="fas fa-caret-right indicator ms-auto"></i>
+            </a>
+            <div class="collapse" id="permissiongroup">
+                <ul class="list-unstyled ms-4">
+                    <li><a class="nav-link" href="{{ route('permissiongroup.index') }}"> <i class="fas fa-circle small-icon"></i>List</a></li>
+                    <li><a class="nav-link" href="{{ route('permissiongroup.create') }}"> <i class="fas fa-circle small-icon"></i>Create</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#permission"
+                aria-expanded="false">
+                <i class="fas fa-key"></i><span class="nav-text">Permission</span>
+                <i class="fas fa-caret-right indicator ms-auto"></i>
+            </a>
+            <div class="collapse" id="permission">
+                <ul class="list-unstyled ms-4">
+                    <li><a class="nav-link" href="{{ route('permission.index') }}"> <i class="fas fa-circle small-icon"></i>List</a></li>
+                    <li><a class="nav-link" href="{{ route('permission.create') }}"> <i class="fas fa-circle small-icon"></i>Create</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#roleHasPermission"
+                aria-expanded="false">
+                <i class="fas fa-gear"></i><span class="nav-text">Role Has Permission</span>
+                <i class="fas fa-caret-right indicator ms-auto"></i>
+            </a>
+            <div class="collapse" id="roleHasPermission">
+                <ul class="list-unstyled ms-4">
+                    <li><a class="nav-link" href="{{ route('rolehaspermission.index') }}"> <i class="fas fa-circle small-icon"></i>List</a></li>
+                    <li><a class="nav-link" href="{{ route('rolehaspermission.create') }}"> <i class="fas fa-circle small-icon"></i>Create</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('crud.generator.create') }}"><i class="fas fa-code"></i><span
+                    class="nav-text">Generate CURD</span></a>
         </li>
     </ul>
 </nav>
