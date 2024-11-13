@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="card shadow">
+            <div class="card shadow w-100">
                 <div class="card-body">
                     <h5 class="card-title"></h5>
 

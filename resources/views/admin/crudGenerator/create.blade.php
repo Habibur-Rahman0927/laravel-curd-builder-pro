@@ -32,7 +32,7 @@
             background-color: #f0f8ff;
         }
         .accordion-background{
-            background: #3991de !important;
+            background: linear-gradient(90deg, #3b5265, #3d5166) !important;
         }
     
         .alert {

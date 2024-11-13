@@ -315,18 +315,16 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
 @endsection
 
 @section('content')
-    <main id=\"main\" class=\"main\">
-        <div class=\"pagetitle\">
-            <h1>Create {$modelName}</h1>
-            <nav>
-                <ol class=\"breadcrumb\">
-                    <li class=\"breadcrumb-item\"><a href=\"{{ route('admin-dashboard') }}\">Home</a></li>
-                    <li class=\"breadcrumb-item active\">{$modelName}</li>
-                </ol>
-            </nav>
+    <div class=\"content\">
+        <div class=\"row\">
+            <div class=\"col-md-12 page-header mb-2\">
+                <div class=\"page-pretitle\">{$modelName}</div>
+                <h1 class=\"page-title\">Create {$modelName}</h1>
+            </div>
         </div>
-        <section class=\"section dashboard\">
-            <div class=\"card\">
+
+        <div class=\"row\">
+            <div class=\"card shadow w-100\">
                 <div class=\"card-body\">
                     <h5 class=\"card-title\"></h5>
                     @if (\$errors->any())
@@ -410,8 +408,8 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                     </form>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 @endsection
             ";
 
@@ -459,18 +457,15 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
 @endsection
 
 @section('content')
-    <main id=\"main\" class=\"main\">
-        <div class=\"pagetitle\">
-            <h1>Edit {$modelName}</h1>
-            <nav>
-                <ol class=\"breadcrumb\">
-                    <li class=\"breadcrumb-item\"><a href=\"{{ route('admin-dashboard') }}\">Home</a></li>
-                    <li class=\"breadcrumb-item active\">{$modelName}</li>
-                </ol>
-            </nav>
+    <div class=\"content\">
+        <div class=\"row\">
+            <div class=\"col-md-12 page-header mb-2\">
+                <div class=\"page-pretitle\">{$modelName}</div>
+                <h1 class=\"page-title\">Edit {$modelName}</h1>
+            </div>
         </div>
-        <section class=\"section dashboard\">
-            <div class=\"card\">
+        <div class=\"row\">
+            <div class=\"card shadow w-100\">
                 <div class=\"card-body\">
                     <h5 class=\"card-title\"></h5>
                     @if (\$errors->any())
@@ -550,8 +545,8 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                     </form>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 @endsection
             ";
 
@@ -602,71 +597,66 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
 
 @section('content')
     <div id=\"routeData\" data-url=\"{{ route('{$lowerCaseModelName}-list') }}\"></div>
-    <main id=\"main\" class=\"main\">
-        <div class=\"pagetitle\">
-            <h1>{$modelName} List</h1>
-            <nav>
-                <ol class=\"breadcrumb\">
-                    <li class=\"breadcrumb-item\"><a href=\"{{ route('admin-dashboard') }}\">Home</a></li>
-                    <li class=\"breadcrumb-item active\">{$modelName}</li>
-                </ol>
-            </nav>
+    <div class=\"content\">
+        <div class=\"row\">
+            <div class=\"col-md-12 page-header mb-2\">
+                <div class=\"page-pretitle\">{$modelName}</div>
+                <h1 class=\"page-title\">Edit {$modelName}</h1>
+            </div>
         </div>
-        <section class=\"section dashboard\">
-            <div class=\"row\">
-                <div class=\"card\">
-                    <div class=\"card-header\">
-                        <div class=\"btn-group-wrapper\">
-                            <div class=\"export-dropdown\">
-                                <button type=\"button\" class=\"btn btn-primary dropdown-toggle export-btn\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">
-                                    Export
-                                </button>
-                                <ul class=\"dropdown-menu\">
-                                    <li><button type=\"button\" class=\"btn btn-secondary mb-1\" id=\"csvExport\">CSV</button></li>
-                                    <li><button type=\"button\" class=\"btn btn-secondary mb-1\" id=\"excelExport\">Excel</button></li>
-                                    <li><button type=\"button\" class=\"btn btn-secondary mb-1\" id=\"printExport\">Print</button></li>
-                                </ul>
-                            </div>
-                            <a href=\"{{ route('{$lowerCaseModelName}.create') }}\" class=\"btn btn-success add-btn\">Add New</a>
+        <div class=\"row\">
+            <div class=\"card shadow w-100\">
+                <div class=\"card-header\">
+                    <div class=\"btn-group-wrapper\">
+                        <div class=\"export-dropdown\">
+                            <button type=\"button\" class=\"btn btn-primary dropdown-toggle export-btn\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">
+                                Export
+                            </button>
+                            <ul class=\"dropdown-menu\">
+                                <li><button type=\"button\" class=\"btn btn-secondary mb-1\" id=\"csvExport\">CSV</button></li>
+                                <li><button type=\"button\" class=\"btn btn-secondary mb-1\" id=\"excelExport\">Excel</button></li>
+                                <li><button type=\"button\" class=\"btn btn-secondary mb-1\" id=\"printExport\">Print</button></li>
+                            </ul>
                         </div>
+                        <a href=\"{{ route('{$lowerCaseModelName}.create') }}\" class=\"btn btn-success add-btn\">Add New</a>
                     </div>
+                </div>
 
-                    <div class=\"card-body\">
-                        <div class=\"table-responsive\">
-                            <table class=\"table table-bordered yajra-datatable\">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>\n";
-                                    foreach($fields as $fieldName => $attributes) {
-                                        if (isset($attributes['list']) && $attributes['list'] === 'on') {
-                                            $label = ucwords(str_replace('_', ' ', $attributes['name']));
-                                            $viewContent .= "\t\t\t\t\t\t\t\t\t<th>{$label}</th>\n";
-                                        }
+                <div class=\"card-body\">
+                    <div class=\"table-responsive\">
+                         <table class=\"table table-bordered yajra-datatable\">
+                            <thead>
+                            <tr>
+                                <th>ID</th>\n";
+                                foreach($fields as $fieldName => $attributes) {
+                                    if (isset($attributes['list']) && $attributes['list'] === 'on') {
+                                        $label = ucwords(str_replace('_', ' ', $attributes['name']));
+                                        $viewContent .= "\t\t\t\t\t\t\t\t\t<th>{$label}</th>\n";
                                     }
-                                    $viewContent.= "
-                                    <th>Action</th>
-                                </tr>
-                                <tr>
-                                    <th><input type=\"text\" placeholder=\"Search ID\" class=\"column-search form-control\" /></th>\n";
-                                    foreach($fields as $fieldName => $attributes) {
-                                        if (isset($attributes['list']) && $attributes['list'] === 'on') {
-                                            $label = ucwords(str_replace('_', ' ', $attributes['name']));
-                                            $viewContent .= "\t\t\t\t\t\t\t\t\t<th><input type=\"text\" placeholder=\"Search {$label}\" class=\"column-search form-control\" /></th>\n";
-                                        }
+                                }
+                                $viewContent.= "
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <th><input type=\"text\" placeholder=\"Search ID\" class=\"column-search form-control\" /></th>\n";
+                                foreach($fields as $fieldName => $attributes) {
+                                    if (isset($attributes['list']) && $attributes['list'] === 'on') {
+                                        $label = ucwords(str_replace('_', ' ', $attributes['name']));
+                                        $viewContent .= "\t\t\t\t\t\t\t\t\t<th><input type=\"text\" placeholder=\"Search {$label}\" class=\"column-search form-control\" /></th>\n";
                                     }
-                                    $viewContent.= "
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
+                                }
+                                $viewContent.= "
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 @endsection
             ";
 

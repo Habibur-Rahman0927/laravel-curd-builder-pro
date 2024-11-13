@@ -2,7 +2,7 @@
     "menu": [
         {
             "url": "admin-dashboard",
-            "icon": "bi bi-speedometer2",
+            "icon": "fas fa-tachometer-alt",
             "name": "Dashboard",
             "slug": "admin-dashboard",
             "permission": [
@@ -11,7 +11,7 @@
         },
         {
             "name": "User",
-            "icon": "bi bi-people",
+            "icon": "fas fa-users",
             "slug": "user",
             "permission": [
                 "user.index",
@@ -21,18 +21,18 @@
                 {
                     "url": "user.index",
                     "name": "List",
-                    "icon": "bi bi-circle"
+                    "icon": "fas fa-circle small-icon"
                 },
                 {
                     "url": "user.create",
                     "name": "Create",
-                    "icon": "bi bi-circle"
+                    "icon": "fas fa-circle small-icon"
                 }
             ]
         },
         {
             "name": "Role",
-            "icon": "bi bi-shield-lock",
+            "icon": "fas fa-lock",
             "slug": "role",
             "permission": [
                 "role.index",
@@ -42,18 +42,18 @@
                 {
                     "url": "role.index",
                     "name": "List",
-                    "icon": "bi bi-circle"
+                    "icon": "fas fa-circle small-icon"
                 },
                 {
                     "url": "role.create",
                     "name": "Create",
-                    "icon": "bi bi-circle"
+                    "icon": "fas fa-circle small-icon"
                 }
             ]
         },
         {
             "name": "Permission Group",
-            "icon": "bi bi-folder",
+            "icon": "fas fa-folder",
             "slug": "permissiongroup",
             "permission": [
                 "permissiongroup.index",
@@ -63,18 +63,18 @@
                 {
                     "url": "permissiongroup.index",
                     "name": "List",
-                    "icon": "bi bi-circle"
+                    "icon": "fas fa-circle small-icon"
                 },
                 {
                     "url": "permissiongroup.create",
                     "name": "Create",
-                    "icon": "bi bi-circle"
+                    "icon": "fas fa-circle small-icon"
                 }
             ]
         },
         {
             "name": "Permission",
-            "icon": "bi bi-key",
+            "icon": "fas fa-key",
             "slug": "permission",
             "permission": [
                 "permission.index",
@@ -84,18 +84,18 @@
                 {
                     "url": "permission.index",
                     "name": "List",
-                    "icon": "bi bi-circle"
+                    "icon": "fas fa-circle small-icon"
                 },
                 {
                     "url": "permission.create",
                     "name": "Create",
-                    "icon": "bi bi-circle"
+                    "icon": "fas fa-circle small-icon"
                 }
             ]
         },
         {
             "name": "Role Has Permission",
-            "icon": "bi bi-gear",
+            "icon": "fas fa-gear",
             "slug": "rolehaspermission",
             "permission": [
                 "rolehaspermission.index",
@@ -106,19 +106,19 @@
                     "url": "rolehaspermission.index",
                     "name": "List",
                     "slug": "rolehaspermission.index",
-                    "icon": "bi bi-circle"
+                    "icon": "fas fa-circle small-icon"
                 },
                 {
                     "url": "rolehaspermission.create",
                     "name": "Create",
                     "slug": "rolehaspermission.create",
-                    "icon": "bi bi-circle"
+                    "icon": "fas fa-circle small-icon"
                 }
             ]
         },
         {
             "url": "crud.generator.create",
-            "icon": "bi bi-file-earmark-code",
+            "icon": "fas fa-code",
             "name": "Generate CURD",
             "slug": "crud.generator.create",
             "permission": [

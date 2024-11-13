@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="card shadow">
+                <div class="card shadow w-100">
                     <div class="card-header">
                         <div class="btn-group-wrapper">
                             <div class="export-dropdown">

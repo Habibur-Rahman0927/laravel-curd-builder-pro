@@ -127,6 +127,26 @@ a[aria-expanded="true"] {
     background-color: rgba(255, 255, 255, 0.2); /* Maintain hover effect for active links */
 }
 
+/*sub menu active */
+
+#sidebar ul li a.active-sub {
+    color: #ffffff;
+    background-color: rgb(255 255 255 / 10%);
+    transform: translateX(8px);
+    box-shadow: inset 3px 3px 20px 0px rgba(255, 255, 255, 0.1);
+    margin: 2px;
+}
+
+#sidebar ul ul a {
+    font-size: 0.9rem;
+}
+
+#sidebar ul li.active-sub > a,
+a[aria-expanded="true"] {
+    color: #ffffff;
+    background-color: rgb(255 255 255 / 10%);
+}
+
 .small-icon{
     font-size: 0.5em; 
     vertical-align: middle;
@@ -136,4 +156,12 @@ a[aria-expanded="true"] {
     #sidebarCollapse span {
         display: none;
     }
+}
+
+.nav-heading {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #899bbd;
+    font-weight: 600;
+    margin: 10px 0 5px 25px;
 }

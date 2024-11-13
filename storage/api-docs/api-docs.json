@@ -1,0 +1,167 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "CRUD Builder API Documentation",
+        "description": "API documentation for the CRUD Builder, designed to generate CRUD operations dynamically for various models and configurations.",
+        "contact": {
+            "email": "support@yourcrudbuilder.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Register a new user",
+                "operationId": "58fe5a217ef88ae75e9b530a5e5817d1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "user_type",
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "johndoe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "user_type": {
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "role_id": {
+                                        "type": "string",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User registered successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login a user",
+                "operationId": "ea134134deae11eb974c719450ef8a02",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "admin@admin.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout a user",
+                "operationId": "5ebea01ab5f21df71d38f3505718a1d7",
+                "responses": {
+                    "200": {
+                        "description": "Logout successful"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/refresh": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Refresh access token",
+                "operationId": "e2da618f5fd0174f82eb64d3c022fc6b",
+                "responses": {
+                    "200": {
+                        "description": "Token refreshed successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication"
+        }
+    ]
+}
