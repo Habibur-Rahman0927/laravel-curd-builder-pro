@@ -147,6 +147,178 @@
                     }
                 ]
             }
+        },
+        "/api/admin/api-test": {
+            "get": {
+                "tags": [
+                    "Test"
+                ],
+                "summary": "Get all tests",
+                "operationId": "0188079ede30bb6a8e5c83d0be9df07e",
+                "responses": {
+                    "200": {
+                        "description": "A list of tests"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Test"
+                ],
+                "summary": "Create a new test",
+                "operationId": "d873c55aec8fc4761d70111e1b66f214",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Test created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-test/{id}": {
+            "get": {
+                "tags": [
+                    "Test"
+                ],
+                "summary": "Get a test by ID",
+                "operationId": "143d07bf612df6328767141cca33451d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single test object"
+                    },
+                    "404": {
+                        "description": "Test not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Test"
+                ],
+                "summary": "Update an existing test",
+                "operationId": "ca8014abc4058ec5a1a8cdcce51b2bde",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Test updated successfully"
+                    },
+                    "404": {
+                        "description": "Test not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Test"
+                ],
+                "summary": "Delete a test by ID",
+                "operationId": "9bbb1b7f41df51dbe122e6fd857635e6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the test to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Test deleted successfully"
+                    },
+                    "404": {
+                        "description": "Test not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -159,6 +331,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Test",
+            "description": "Test management operations"
+        },
         {
             "name": "Authentication",
             "description": "Authentication"

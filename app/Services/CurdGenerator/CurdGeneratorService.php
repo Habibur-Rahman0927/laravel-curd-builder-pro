@@ -829,19 +829,19 @@ $(function () {
 
             $newMenuItem = [
                 "name" => $modelName,
-                "icon" => "bi bi-menu-button-wide",
+                "icon" => "fas fa-list",
                 "slug" => $lowerCaseModelName,
                 "permission" => [$lowerCaseModelName . '.index', $lowerCaseModelName . '.create'],
                 "submenu" => [
                     [
                         "url" => $lowerCaseModelName . '.index',
                         "name" => "List",
-                        "icon" => "bi bi-circle"
+                        "icon" => "fas fa-circle small-icon"
                     ],
                     [
                         "url" => $lowerCaseModelName . '.create',
                         "name" => "Create",
-                        "icon" => "bi bi-circle"
+                        "icon" => "fas fa-circle small-icon"
                     ]
                 ]
             ];
