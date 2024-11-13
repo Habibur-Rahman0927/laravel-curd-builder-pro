@@ -401,8 +401,8 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
         $viewContent .= "
                         <div class=\"row\">
                             <div class=\"col-md-12 text-end\"> 
-                                <a href=\"{{ route('{$lowerCaseModelName}.index') }}\" class=\"btn btn-secondary me-2\">Back</a>
-                                <button type=\"submit\" class=\"btn btn-primary\">Submit</button>
+                                <a href=\"{{ route('{$lowerCaseModelName}.index') }}\" class=\"btn btn-danger me-2\">Back</a>
+                                <button type=\"submit\" class=\"btn add-btn\">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -538,8 +538,8 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
         $viewContent .= "
                         <div class=\"row\">
                             <div class=\"col-md-12 text-end\"> 
-                                <a href=\"{{ route('{$lowerCaseModelName}.index') }}\" class=\"btn btn-secondary me-2\">Back</a>
-                                <button type=\"submit\" class=\"btn btn-primary\">Submit</button>
+                                <a href=\"{{ route('{$lowerCaseModelName}.index') }}\" class=\"btn btn-danger me-2\">Back</a>
+                                <button type=\"submit\" class=\"btn add-btn\">Submit</button>
                             </div>
                         </div>
                     </form>

@@ -148,16 +148,16 @@
                 ]
             }
         },
-        "/api/admin/api-test": {
+        "/api/admin/api-commnet": {
             "get": {
                 "tags": [
-                    "Test"
+                    "Commnet"
                 ],
-                "summary": "Get all tests",
-                "operationId": "0188079ede30bb6a8e5c83d0be9df07e",
+                "summary": "Get all commnets",
+                "operationId": "cdcfa93536a6fe20c7d58d942cab22a1",
                 "responses": {
                     "200": {
-                        "description": "A list of tests"
+                        "description": "A list of commnets"
                     }
                 },
                 "security": [
@@ -168,10 +168,10 @@
             },
             "post": {
                 "tags": [
-                    "Test"
+                    "Commnet"
                 ],
-                "summary": "Create a new test",
-                "operationId": "d873c55aec8fc4761d70111e1b66f214",
+                "summary": "Create a new commnet",
+                "operationId": "8a841c1cc352f193840ce34d8ab7afd8",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -194,7 +194,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Test created successfully"
+                        "description": "Commnet created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -207,13 +207,13 @@
                 ]
             }
         },
-        "/api/admin/api-test/{id}": {
+        "/api/admin/api-commnet/{id}": {
             "get": {
                 "tags": [
-                    "Test"
+                    "Commnet"
                 ],
-                "summary": "Get a test by ID",
-                "operationId": "143d07bf612df6328767141cca33451d",
+                "summary": "Get a commnet by ID",
+                "operationId": "0445a8a75dcc480c1dd8066302ec7430",
                 "parameters": [
                     {
                         "name": "id",
@@ -226,10 +226,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single test object"
+                        "description": "A single commnet object"
                     },
                     "404": {
-                        "description": "Test not found"
+                        "description": "Commnet not found"
                     }
                 },
                 "security": [
@@ -240,10 +240,10 @@
             },
             "put": {
                 "tags": [
-                    "Test"
+                    "Commnet"
                 ],
-                "summary": "Update an existing test",
-                "operationId": "ca8014abc4058ec5a1a8cdcce51b2bde",
+                "summary": "Update an existing commnet",
+                "operationId": "e8e7c011c4a09a635a06a4dec88a0428",
                 "parameters": [
                     {
                         "name": "id",
@@ -276,10 +276,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Test updated successfully"
+                        "description": "Commnet updated successfully"
                     },
                     "404": {
-                        "description": "Test not found"
+                        "description": "Commnet not found"
                     }
                 },
                 "security": [
@@ -290,15 +290,15 @@
             },
             "delete": {
                 "tags": [
-                    "Test"
+                    "Commnet"
                 ],
-                "summary": "Delete a test by ID",
-                "operationId": "9bbb1b7f41df51dbe122e6fd857635e6",
+                "summary": "Delete a commnet by ID",
+                "operationId": "0e47b062ec06a69f205e3377863656d0",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the test to delete",
+                        "description": "ID of the commnet to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -307,10 +307,354 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Test deleted successfully"
+                        "description": "Commnet deleted successfully"
                     },
                     "404": {
-                        "description": "Test not found"
+                        "description": "Commnet not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-post": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Get all posts",
+                "operationId": "5be814bb30e5ed17e741fd0fd6d3e32c",
+                "responses": {
+                    "200": {
+                        "description": "A list of posts"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Create a new post",
+                "operationId": "2f66a30c7e5edea279f5d42bb7356c18",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Post created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-post/{id}": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Get a post by ID",
+                "operationId": "9a5b0ccaee65f365a8b2d3b59438608e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single post object"
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Update an existing post",
+                "operationId": "a40bf86865acde36506738f16be616a8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Post updated successfully"
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Delete a post by ID",
+                "operationId": "b99a5157a5c6d4c799c5a4993ae08a7f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the post to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Post deleted successfully"
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-product": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get all products",
+                "operationId": "727821eff4fb4c1fb901f9166710c8cb",
+                "responses": {
+                    "200": {
+                        "description": "A list of products"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Create a new product",
+                "operationId": "2a864a97ac07d41d10e25dcd8d2010ab",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Product created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-product/{id}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get a product by ID",
+                "operationId": "2cded4c94ce7bbd89da58cd903eae5ef",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single product object"
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Update an existing product",
+                "operationId": "e1e371f95e5f79688024124dd2340d2f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Product updated successfully"
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete a product by ID",
+                "operationId": "e833874b6161135740fd0d41b773a947",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the product to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Product deleted successfully"
+                    },
+                    "404": {
+                        "description": "Product not found"
                     }
                 },
                 "security": [
@@ -332,8 +676,16 @@
     },
     "tags": [
         {
-            "name": "Test",
-            "description": "Test management operations"
+            "name": "Commnet",
+            "description": "Commnet management operations"
+        },
+        {
+            "name": "Post",
+            "description": "Post management operations"
+        },
+        {
+            "name": "Product",
+            "description": "Product management operations"
         },
         {
             "name": "Authentication",
