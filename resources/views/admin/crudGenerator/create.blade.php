@@ -119,9 +119,9 @@
                                                 <label for="softdelete-checkbox" class="form-label">Soft Deletes</label>
                                             </td>
                                             <td>
-                                                <div class="form-check">
+                                                <div class="d-flex">
                                                     <input type="checkbox" id="softdelete-checkbox" name="softdelete" value="1">
-                                                    <label class="form-check-label" for="softdelete-checkbox">
+                                                    <label class="form-check-label p-2" for="softdelete-checkbox">
                                                         Enable soft deletes for this model, allowing the model records to be "deleted" without removing them from the database.
                                                     </label>
                                                 </div>

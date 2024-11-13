@@ -95,7 +95,7 @@ interface ICurdGeneratorService extends IBaseService
      * @param string $type The type of request ('Create' or 'Update').
      * @return array
      */
-    public function generateRequestFile(string $modelName, array $validations, string $type = 'Create'): array;
+    public function generateRequestFile(string $modelName, array $validations = null, string $type = 'Create'): array;
 
     /**
      * Generate an API controller for the specified model.
