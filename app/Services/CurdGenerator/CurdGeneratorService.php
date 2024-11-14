@@ -31,7 +31,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
      * @param array $relationships An array of relationships to define for the model.
      * @return array
      */
-    public function generateModel(string $modelName, bool $softDelete, array $fields, array $relationships): array
+    public function generateModel(string $modelName, bool $softDelete, array $fields, array $relationships = null): array
     {
         $modelPath = app_path("Models/{$modelName}.php");
 

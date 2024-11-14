@@ -127,6 +127,27 @@
         },
         {
             "nav-heading": "<li class='nav-heading'>Generated Module<\/li>"
+        },
+        {
+            "name": "Language",
+            "icon": "fas fa-list",
+            "slug": "language",
+            "permission": [
+                "language.index",
+                "language.create"
+            ],
+            "submenu": [
+                {
+                    "url": "language.index",
+                    "name": "List",
+                    "icon": "fas fa-circle small-icon"
+                },
+                {
+                    "url": "language.create",
+                    "name": "Create",
+                    "icon": "fas fa-circle small-icon"
+                }
+            ]
         }
     ]
 }
