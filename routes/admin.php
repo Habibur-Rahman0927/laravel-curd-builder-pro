@@ -27,8 +27,8 @@ Route::get('permission-list', [PermissionController::class, 'getDatatables'])->n
 Route::resource('rolehaspermission', RoleHasPermissionController::class);
 Route::get('rolehaspermission-list', [RoleHasPermissionController::class, 'getDatatables'])->name('rolehaspermission-list');
 
-Route::get('/crud-generator', [CrudGeneratorController::class, 'showCurdAndAPIGeneratorForm'])->name('crud.generator.create');
-Route::post('/crud-generator', [CrudGeneratorController::class, 'generateCurdAndAPI'])->name('crud.generator.store');
-
 Route::resource('language', LanguageController::class);
 Route::get('language-list', [LanguageController::class, 'getDatatables'])->name('language-list');
+
+Route::get('/crud-generator', [CrudGeneratorController::class, 'showCurdAndAPIGeneratorForm'])->name('crud.generator.create');
+Route::post('/crud-generator', [CrudGeneratorController::class, 'generateCurdAndAPI'])->name('crud.generator.store');

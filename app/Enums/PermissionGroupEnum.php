@@ -18,6 +18,8 @@ enum PermissionGroupEnum: string
 
     case PERMISSION = 'permission';
 
+    case LANGUAGE = 'language';
+
     case ROLE_HAS_PERMISSION = 'rolehaspermission';
 }
 

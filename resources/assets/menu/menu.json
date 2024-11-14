@@ -117,18 +117,6 @@
             ]
         },
         {
-            "url": "crud.generator.create",
-            "icon": "fas fa-code",
-            "name": "Generate CURD",
-            "slug": "crud.generator.create",
-            "permission": [
-                "crud.generator.create"
-            ]
-        },
-        {
-            "nav-heading": "<li class='nav-heading'>Generated Module<\/li>"
-        },
-        {
             "name": "Language",
             "icon": "fas fa-list",
             "slug": "language",
@@ -148,6 +136,18 @@
                     "icon": "fas fa-circle small-icon"
                 }
             ]
+        },
+        {
+            "url": "crud.generator.create",
+            "icon": "fas fa-code",
+            "name": "Generate CURD",
+            "slug": "crud.generator.create",
+            "permission": [
+                "crud.generator.create"
+            ]
+        },
+        {
+            "nav-heading": "<li class='nav-heading'>Generated Module<\/li>"
         }
     ]
 }

@@ -52,4 +52,12 @@ enum PermissionEnum: string
     case ROLE_HAS_PERMISSION_EDIT = 'rolehaspermission.edit';
     case ROLE_HAS_PERMISSION_UPDATE = 'rolehaspermission.update';
     case ROLE_HAS_PERMISSION_DESTROY = 'rolehaspermission.destroy';
+
+    case LANGUAGE_INDEX = 'language.index';
+    case LANGUAGE_LIST = 'language-list';
+    case LANGUAGE_CREATE = 'language.create';
+    case LANGUAGE_STORE = 'language.store';
+    case LANGUAGE_EDIT = 'language.edit';
+    case LANGUAGE_UPDATE = 'language.update';
+    case LANGUAGE_DESTROY = 'language.destroy';
 }
