@@ -56,7 +56,10 @@ class LanguageController extends Controller
      */
     public function create(): View
     {
-        return view('admin.language.create')->with([]);
+        $combinedLanguageKeys = $this->languageService->getLanguageFiles();
+        return view('admin.language.create')->with([
+            'combinedLanguageKeys' => $combinedLanguageKeys
+        ]);
     }
 
     /**
@@ -68,7 +71,7 @@ class LanguageController extends Controller
     public function store(CreateLanguageRequest $request): RedirectResponse
     {
         try {
-            $response = $this->languageService->create($request->all());
+            $response = $this->languageService->createLanguage($request->only('name', 'code', 'is_default', 'translations'));
 
             if ($response) {
                 return redirect()->back()->with('success', 'Language added successfully.');
@@ -101,9 +104,12 @@ class LanguageController extends Controller
     {
         try {
             $response = $this->languageService->findById($id);
-
+            if ($response) {
+                $combinedLanguageKeys = $this->languageService->getLanguageFiles($response->code);
+            }
             return view('admin.language.edit')->with([
                 'data' => $response,
+                'combinedLanguageKeys' => $combinedLanguageKeys
             ]);
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Error retrieving the resource.');
@@ -121,7 +127,7 @@ class LanguageController extends Controller
     {
         try {
             $data = $request->except(['_token', '_method']);
-            $this->languageService->update(['id' => $id], $data);
+            $this->languageService->updateLanguage($id, $data);
 
             return redirect()->back()->with('success', 'Language updated successfully.');
         } catch (Exception $e) {
