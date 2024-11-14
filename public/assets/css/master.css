@@ -95,10 +95,11 @@ body {
 }
 
 #body {
-    width: 100%;
+    margin-left: 260px; /* Offset body content by sidebar width */
     padding: 0;
     min-height: 100vh;
     transition: all 0.3s;
+    width: calc(100% - 260px); /* Adjust width to fill the remaining space */
 }
 
 /*------------------------------------------------------------------

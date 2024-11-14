@@ -903,7 +903,7 @@ $(function () {
      * @param string $type The type of request ('Create' or 'Update').
      * @return array
      */
-    public function generateRequestFile(string $modelName, array $validations, string $type = 'Create'): array
+    public function generateRequestFile(string $modelName, array $validations = null, string $type = 'Create'): array
     {
         $className = $type . Str::studly($modelName) . 'Request';
         $requestFilePath = app_path("Http/Requests/{$className}.php");

@@ -148,16 +148,16 @@
                 ]
             }
         },
-        "/api/admin/api-commnet": {
+        "/api/admin/api-boss": {
             "get": {
                 "tags": [
-                    "Commnet"
+                    "Boss"
                 ],
-                "summary": "Get all commnets",
-                "operationId": "cdcfa93536a6fe20c7d58d942cab22a1",
+                "summary": "Get all bosss",
+                "operationId": "76744569d6a13feb921491c169f69d02",
                 "responses": {
                     "200": {
-                        "description": "A list of commnets"
+                        "description": "A list of bosss"
                     }
                 },
                 "security": [
@@ -168,10 +168,10 @@
             },
             "post": {
                 "tags": [
-                    "Commnet"
+                    "Boss"
                 ],
-                "summary": "Create a new commnet",
-                "operationId": "8a841c1cc352f193840ce34d8ab7afd8",
+                "summary": "Create a new boss",
+                "operationId": "4982be6fab2a2c56d1cee2cf0dee689a",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -194,7 +194,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Commnet created successfully"
+                        "description": "Boss created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -207,13 +207,13 @@
                 ]
             }
         },
-        "/api/admin/api-commnet/{id}": {
+        "/api/admin/api-boss/{id}": {
             "get": {
                 "tags": [
-                    "Commnet"
+                    "Boss"
                 ],
-                "summary": "Get a commnet by ID",
-                "operationId": "0445a8a75dcc480c1dd8066302ec7430",
+                "summary": "Get a boss by ID",
+                "operationId": "05fc8d35e8275e7f23c615ea841888c5",
                 "parameters": [
                     {
                         "name": "id",
@@ -226,10 +226,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single commnet object"
+                        "description": "A single boss object"
                     },
                     "404": {
-                        "description": "Commnet not found"
+                        "description": "Boss not found"
                     }
                 },
                 "security": [
@@ -240,10 +240,10 @@
             },
             "put": {
                 "tags": [
-                    "Commnet"
+                    "Boss"
                 ],
-                "summary": "Update an existing commnet",
-                "operationId": "e8e7c011c4a09a635a06a4dec88a0428",
+                "summary": "Update an existing boss",
+                "operationId": "273d9e443d19505680a359c8525f00c0",
                 "parameters": [
                     {
                         "name": "id",
@@ -276,10 +276,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Commnet updated successfully"
+                        "description": "Boss updated successfully"
                     },
                     "404": {
-                        "description": "Commnet not found"
+                        "description": "Boss not found"
                     }
                 },
                 "security": [
@@ -290,15 +290,15 @@
             },
             "delete": {
                 "tags": [
-                    "Commnet"
+                    "Boss"
                 ],
-                "summary": "Delete a commnet by ID",
-                "operationId": "0e47b062ec06a69f205e3377863656d0",
+                "summary": "Delete a boss by ID",
+                "operationId": "71f681cdbb5656d421005b1dfe53ae5d",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the commnet to delete",
+                        "description": "ID of the boss to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -307,10 +307,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Commnet deleted successfully"
+                        "description": "Boss deleted successfully"
                     },
                     "404": {
-                        "description": "Commnet not found"
+                        "description": "Boss not found"
                     }
                 },
                 "security": [
@@ -320,16 +320,16 @@
                 ]
             }
         },
-        "/api/admin/api-post": {
+        "/api/admin/api-dos": {
             "get": {
                 "tags": [
-                    "Post"
+                    "Dos"
                 ],
-                "summary": "Get all posts",
-                "operationId": "5be814bb30e5ed17e741fd0fd6d3e32c",
+                "summary": "Get all doss",
+                "operationId": "4f22dcd8f89d81cfbf9d0c88ce2976ed",
                 "responses": {
                     "200": {
-                        "description": "A list of posts"
+                        "description": "A list of doss"
                     }
                 },
                 "security": [
@@ -340,10 +340,10 @@
             },
             "post": {
                 "tags": [
-                    "Post"
+                    "Dos"
                 ],
-                "summary": "Create a new post",
-                "operationId": "2f66a30c7e5edea279f5d42bb7356c18",
+                "summary": "Create a new dos",
+                "operationId": "7951305f6ba1017f9b1c985212063b8c",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -366,7 +366,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Post created successfully"
+                        "description": "Dos created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -379,13 +379,13 @@
                 ]
             }
         },
-        "/api/admin/api-post/{id}": {
+        "/api/admin/api-dos/{id}": {
             "get": {
                 "tags": [
-                    "Post"
+                    "Dos"
                 ],
-                "summary": "Get a post by ID",
-                "operationId": "9a5b0ccaee65f365a8b2d3b59438608e",
+                "summary": "Get a dos by ID",
+                "operationId": "549aaa36cdcd7a5c8a2bb481744d504a",
                 "parameters": [
                     {
                         "name": "id",
@@ -398,10 +398,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single post object"
+                        "description": "A single dos object"
                     },
                     "404": {
-                        "description": "Post not found"
+                        "description": "Dos not found"
                     }
                 },
                 "security": [
@@ -412,10 +412,10 @@
             },
             "put": {
                 "tags": [
-                    "Post"
+                    "Dos"
                 ],
-                "summary": "Update an existing post",
-                "operationId": "a40bf86865acde36506738f16be616a8",
+                "summary": "Update an existing dos",
+                "operationId": "40d76bb04547d19bdc1099a72b5498fe",
                 "parameters": [
                     {
                         "name": "id",
@@ -448,10 +448,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Post updated successfully"
+                        "description": "Dos updated successfully"
                     },
                     "404": {
-                        "description": "Post not found"
+                        "description": "Dos not found"
                     }
                 },
                 "security": [
@@ -462,15 +462,15 @@
             },
             "delete": {
                 "tags": [
-                    "Post"
+                    "Dos"
                 ],
-                "summary": "Delete a post by ID",
-                "operationId": "b99a5157a5c6d4c799c5a4993ae08a7f",
+                "summary": "Delete a dos by ID",
+                "operationId": "b00732bab3d2a9292768ce1a98bfda49",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the post to delete",
+                        "description": "ID of the dos to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -479,10 +479,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Post deleted successfully"
+                        "description": "Dos deleted successfully"
                     },
                     "404": {
-                        "description": "Post not found"
+                        "description": "Dos not found"
                     }
                 },
                 "security": [
@@ -492,16 +492,16 @@
                 ]
             }
         },
-        "/api/admin/api-product": {
+        "/api/admin/api-robot": {
             "get": {
                 "tags": [
-                    "Product"
+                    "Robot"
                 ],
-                "summary": "Get all products",
-                "operationId": "727821eff4fb4c1fb901f9166710c8cb",
+                "summary": "Get all robots",
+                "operationId": "6b193b333f08f372a9b74e42b9057db4",
                 "responses": {
                     "200": {
-                        "description": "A list of products"
+                        "description": "A list of robots"
                     }
                 },
                 "security": [
@@ -512,10 +512,346 @@
             },
             "post": {
                 "tags": [
-                    "Product"
+                    "Robot"
                 ],
-                "summary": "Create a new product",
-                "operationId": "2a864a97ac07d41d10e25dcd8d2010ab",
+                "summary": "Create a new robot",
+                "operationId": "fdae9c78e3529a0d8ce48766cf85381b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Robot created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-robot/{id}": {
+            "get": {
+                "tags": [
+                    "Robot"
+                ],
+                "summary": "Get a robot by ID",
+                "operationId": "63eab0841787627b51cf792468e972be",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single robot object"
+                    },
+                    "404": {
+                        "description": "Robot not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Robot"
+                ],
+                "summary": "Update an existing robot",
+                "operationId": "6e38e4d3eef6d7c9a846c197042f656c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Robot updated successfully"
+                    },
+                    "404": {
+                        "description": "Robot not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Robot"
+                ],
+                "summary": "Delete a robot by ID",
+                "operationId": "29451baf96acca4cc4c45fd3a93173b5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the robot to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Robot deleted successfully"
+                    },
+                    "404": {
+                        "description": "Robot not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-tom": {
+            "get": {
+                "tags": [
+                    "Tom"
+                ],
+                "summary": "Get all toms",
+                "operationId": "ad577dc8405322465f6cc57c47d6e95d",
+                "responses": {
+                    "200": {
+                        "description": "A list of toms"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Tom"
+                ],
+                "summary": "Create a new tom",
+                "operationId": "df94b93d22681f4edd4fbc72b7b0e099",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "integer",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tom created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-tom/{id}": {
+            "get": {
+                "tags": [
+                    "Tom"
+                ],
+                "summary": "Get a tom by ID",
+                "operationId": "88e97dc4c71834d3c5c40def7c8cce49",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single tom object"
+                    },
+                    "404": {
+                        "description": "Tom not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Tom"
+                ],
+                "summary": "Update an existing tom",
+                "operationId": "0a717b61e9126262a44d7e923c739749",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "integer",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tom updated successfully"
+                    },
+                    "404": {
+                        "description": "Tom not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Tom"
+                ],
+                "summary": "Delete a tom by ID",
+                "operationId": "30db6518dc864b04d1eb4df5af5a73e1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the tom to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Tom deleted successfully"
+                    },
+                    "404": {
+                        "description": "Tom not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-zero": {
+            "get": {
+                "tags": [
+                    "Zero"
+                ],
+                "summary": "Get all zeros",
+                "operationId": "6b1fb3c9201b47560083e7ca21a22950",
+                "responses": {
+                    "200": {
+                        "description": "A list of zeros"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Zero"
+                ],
+                "summary": "Create a new zero",
+                "operationId": "7b3c094a71a457bac52a8bfeefa7305c",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -538,7 +874,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Product created successfully"
+                        "description": "Zero created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -551,13 +887,13 @@
                 ]
             }
         },
-        "/api/admin/api-product/{id}": {
+        "/api/admin/api-zero/{id}": {
             "get": {
                 "tags": [
-                    "Product"
+                    "Zero"
                 ],
-                "summary": "Get a product by ID",
-                "operationId": "2cded4c94ce7bbd89da58cd903eae5ef",
+                "summary": "Get a zero by ID",
+                "operationId": "0b3ab35acfe41c634937591242510ce5",
                 "parameters": [
                     {
                         "name": "id",
@@ -570,10 +906,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single product object"
+                        "description": "A single zero object"
                     },
                     "404": {
-                        "description": "Product not found"
+                        "description": "Zero not found"
                     }
                 },
                 "security": [
@@ -584,10 +920,10 @@
             },
             "put": {
                 "tags": [
-                    "Product"
+                    "Zero"
                 ],
-                "summary": "Update an existing product",
-                "operationId": "e1e371f95e5f79688024124dd2340d2f",
+                "summary": "Update an existing zero",
+                "operationId": "c9b24477ab882895a5f95b35aea8e845",
                 "parameters": [
                     {
                         "name": "id",
@@ -620,10 +956,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Product updated successfully"
+                        "description": "Zero updated successfully"
                     },
                     "404": {
-                        "description": "Product not found"
+                        "description": "Zero not found"
                     }
                 },
                 "security": [
@@ -634,15 +970,15 @@
             },
             "delete": {
                 "tags": [
-                    "Product"
+                    "Zero"
                 ],
-                "summary": "Delete a product by ID",
-                "operationId": "e833874b6161135740fd0d41b773a947",
+                "summary": "Delete a zero by ID",
+                "operationId": "177aced90d425cca320ffb28737af380",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the product to delete",
+                        "description": "ID of the zero to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -651,10 +987,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Product deleted successfully"
+                        "description": "Zero deleted successfully"
                     },
                     "404": {
-                        "description": "Product not found"
+                        "description": "Zero not found"
                     }
                 },
                 "security": [
@@ -676,16 +1012,24 @@
     },
     "tags": [
         {
-            "name": "Commnet",
-            "description": "Commnet management operations"
+            "name": "Boss",
+            "description": "Boss management operations"
         },
         {
-            "name": "Post",
-            "description": "Post management operations"
+            "name": "Dos",
+            "description": "Dos management operations"
         },
         {
-            "name": "Product",
-            "description": "Product management operations"
+            "name": "Robot",
+            "description": "Robot management operations"
+        },
+        {
+            "name": "Tom",
+            "description": "Tom management operations"
+        },
+        {
+            "name": "Zero",
+            "description": "Zero management operations"
         },
         {
             "name": "Authentication",
