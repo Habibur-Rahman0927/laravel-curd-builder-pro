@@ -77,64 +77,80 @@
                         </div>
 
                         <!-- Language Translation Fields -->
-                        @foreach ($combinedLanguageKeys as $section => $translations)
-                            <h3>{{ ucfirst($section) }} Translations</h3> <!-- First level header -->
-                            <div class="row">
-                                @foreach ($translations as $key => $value)
-                                    @if (is_array($value))
-                                        <!-- Second level header -->
-                                        <h4 class="mt-4">{{ ucfirst($key) }}</h4>
-                                        <div class="row">
-                                            @foreach ($value as $subKey => $subValue)
-                                                @if (is_array($subValue))
-                                                    <!-- Third level header -->
-                                                    <h5 class="mt-3">{{ ucfirst($subKey) }}</h5>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="code" class="form-label">Language Translations</label>
+                                <div class="accordion mb-3" id="accordionTranslations">
+                                    @foreach ($combinedLanguageKeys as $section => $translations)
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="heading_{{ $section }}">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                                        data-bs-target="#collapse_{{ $section }}" aria-expanded="false"
+                                                        aria-controls="collapse_{{ $section }}">
+                                                    {{ ucfirst($section) }} Translations
+                                                </button>
+                                            </h2>
+                                            <div id="collapse_{{ $section }}" class="accordion-collapse collapse"
+                                                 aria-labelledby="heading_{{ $section }}" data-bs-parent="#accordionTranslations">
+                                                <div class="accordion-body">
                                                     <div class="row">
-                                                        @foreach ($subValue as $subSubKey => $subSubValue)
-                                                            <!-- Fourth level input -->
-                                                            <div class="col-md-4">
-                                                                <div class="form-group mb-3">
-                                                                    <label
-                                                                        for="key_{{ $section . '_' . $key . '_' . $subKey . '_' . $subSubKey }}">{{ ucfirst($subSubKey) }}</label>
-                                                                    <input type="text" class="form-control"
-                                                                        name="translations[{{ $section }}][{{ $key }}][{{ $subKey }}][{{ $subSubKey }}]"
-                                                                        id="key_{{ $section . '_' . $key . '_' . $subKey . '_' . $subSubKey }}"
-                                                                        value="{{ old('translations.' . $section . '.' . $key . '.' . $subKey . '.' . $subSubKey, $subSubValue) }}">
+                                                        @foreach ($translations as $key => $value)
+                                                            @if (is_array($value))
+                                                                <h4 class="mt-4">{{ ucfirst($key) }}</h4>
+                                                                <div class="row">
+                                                                    @foreach ($value as $subKey => $subValue)
+                                                                        @if (is_array($subValue))
+                                                                            <h5 class="mt-3">{{ ucfirst($subKey) }}</h5>
+                                                                            <div class="row">
+                                                                                @foreach ($subValue as $subSubKey => $subSubValue)
+                                                                                    <div class="col-md-4">
+                                                                                        <div class="form-group mb-3">
+                                                                                            <label
+                                                                                                for="key_{{ $section . '_' . $key . '_' . $subKey . '_' . $subSubKey }}">{{ ucfirst($subSubKey) }}</label>
+                                                                                            <input type="text" class="form-control"
+                                                                                                   name="translations[{{ $section }}][{{ $key }}][{{ $subKey }}][{{ $subSubKey }}]"
+                                                                                                   id="key_{{ $section . '_' . $key . '_' . $subKey . '_' . $subSubKey }}"
+                                                                                                   value="{{ old('translations.' . $section . '.' . $key . '.' . $subKey . '.' . $subSubKey, $subSubValue) }}">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endforeach
+                                                                            </div>
+                                                                        @else
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group mb-3">
+                                                                                    <label
+                                                                                        for="key_{{ $section . '_' . $key . '_' . $subKey }}">{{ ucfirst($subKey) }}</label>
+                                                                                    <input type="text" class="form-control"
+                                                                                           name="translations[{{ $section }}][{{ $key }}][{{ $subKey }}]"
+                                                                                           id="key_{{ $section . '_' . $key . '_' . $subKey }}"
+                                                                                           value="{{ old('translations.' . $section . '.' . $key . '.' . $subKey, $subValue) }}">
+                                                                                </div>
+                                                                            </div>
+                                                                        @endif
+                                                                    @endforeach
                                                                 </div>
-                                                            </div>
+                                                            @else
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group mb-3">
+                                                                        <label for="key_{{ $section . '_' . $key }}">{{ ucfirst($key) }}</label>
+                                                                        <input type="text" class="form-control"
+                                                                               name="translations[{{ $section }}][{{ $key }}]"
+                                                                               id="key_{{ $section . '_' . $key }}"
+                                                                               value="{{ old('translations.' . $section . '.' . $key, $value) }}">
+                                                                    </div>
+                                                                </div>
+                                                            @endif
                                                         @endforeach
                                                     </div>
-                                                @else
-                                                    <!-- Third level input -->
-                                                    <div class="col-md-4">
-                                                        <div class="form-group mb-3">
-                                                            <label
-                                                                for="key_{{ $section . '_' . $key . '_' . $subKey }}">{{ ucfirst($subKey) }}</label>
-                                                            <input type="text" class="form-control"
-                                                                name="translations[{{ $section }}][{{ $key }}][{{ $subKey }}]"
-                                                                id="key_{{ $section . '_' . $key . '_' . $subKey }}"
-                                                                value="{{ old('translations.' . $section . '.' . $key . '.' . $subKey, $subValue) }}">
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    @else
-                                        <!-- Second level input -->
-                                        <div class="col-md-4">
-                                            <div class="form-group mb-3">
-                                                <label for="key_{{ $section . '_' . $key }}">{{ ucfirst($key) }}</label>
-                                                <input type="text" class="form-control"
-                                                    name="translations[{{ $section }}][{{ $key }}]"
-                                                    id="key_{{ $section . '_' . $key }}"
-                                                    value="{{ old('translations.' . $section . '.' . $key, $value) }}">
+                                                </div>
                                             </div>
                                         </div>
-                                    @endif
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
-                            <hr> <!-- Divider between each section -->
-                        @endforeach
+                        </div>
+                        
+                        
 
                         <div class="row">
                             <div class="col-md-12 text-end">

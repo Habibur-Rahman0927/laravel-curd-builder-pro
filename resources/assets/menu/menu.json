@@ -3,14 +3,14 @@
         {
             "url": "admin-dashboard",
             "icon": "fas fa-tachometer-alt",
-            "name": "Dashboard",
+            "name": "sidebar.dashboard",
             "slug": "admin-dashboard",
             "permission": [
                 "admin-dashboard"
             ]
         },
         {
-            "name": "User",
+            "name": "sidebar.user",
             "icon": "fas fa-users",
             "slug": "user",
             "permission": [
@@ -20,18 +20,18 @@
             "submenu": [
                 {
                     "url": "user.index",
-                    "name": "List",
+                    "name": "sidebar.list",
                     "icon": "fas fa-circle small-icon"
                 },
                 {
                     "url": "user.create",
-                    "name": "Create",
+                    "name": "sidebar.create",
                     "icon": "fas fa-circle small-icon"
                 }
             ]
         },
         {
-            "name": "Role",
+            "name": "sidebar.role",
             "icon": "fas fa-lock",
             "slug": "role",
             "permission": [
@@ -41,18 +41,18 @@
             "submenu": [
                 {
                     "url": "role.index",
-                    "name": "List",
+                    "name": "sidebar.list",
                     "icon": "fas fa-circle small-icon"
                 },
                 {
                     "url": "role.create",
-                    "name": "Create",
+                    "name": "sidebar.create",
                     "icon": "fas fa-circle small-icon"
                 }
             ]
         },
         {
-            "name": "Permission Group",
+            "name": "sidebar.permission_group",
             "icon": "fas fa-folder",
             "slug": "permissiongroup",
             "permission": [
@@ -62,18 +62,18 @@
             "submenu": [
                 {
                     "url": "permissiongroup.index",
-                    "name": "List",
+                    "name": "sidebar.list",
                     "icon": "fas fa-circle small-icon"
                 },
                 {
                     "url": "permissiongroup.create",
-                    "name": "Create",
+                    "name": "sidebar.create",
                     "icon": "fas fa-circle small-icon"
                 }
             ]
         },
         {
-            "name": "Permission",
+            "name": "sidebar.permission",
             "icon": "fas fa-key",
             "slug": "permission",
             "permission": [
@@ -83,18 +83,18 @@
             "submenu": [
                 {
                     "url": "permission.index",
-                    "name": "List",
+                    "name": "sidebar.list",
                     "icon": "fas fa-circle small-icon"
                 },
                 {
                     "url": "permission.create",
-                    "name": "Create",
+                    "name": "sidebar.create",
                     "icon": "fas fa-circle small-icon"
                 }
             ]
         },
         {
-            "name": "Role Has Permission",
+            "name": "sidebar.role_has_permission",
             "icon": "fas fa-gear",
             "slug": "rolehaspermission",
             "permission": [
@@ -104,21 +104,21 @@
             "submenu": [
                 {
                     "url": "rolehaspermission.index",
-                    "name": "List",
+                    "name": "sidebar.list",
                     "slug": "rolehaspermission.index",
                     "icon": "fas fa-circle small-icon"
                 },
                 {
                     "url": "rolehaspermission.create",
-                    "name": "Create",
+                    "name": "sidebar.create",
                     "slug": "rolehaspermission.create",
                     "icon": "fas fa-circle small-icon"
                 }
             ]
         },
         {
-            "name": "Language",
-            "icon": "fas fa-list",
+            "name": "language",
+            "icon": "fas fa-language",
             "slug": "language",
             "permission": [
                 "language.index",
@@ -127,12 +127,12 @@
             "submenu": [
                 {
                     "url": "language.index",
-                    "name": "List",
+                    "name": "sidebar.list",
                     "icon": "fas fa-circle small-icon"
                 },
                 {
                     "url": "language.create",
-                    "name": "Create",
+                    "name": "sidebar.create",
                     "icon": "fas fa-circle small-icon"
                 }
             ]
@@ -140,7 +140,7 @@
         {
             "url": "crud.generator.create",
             "icon": "fas fa-code",
-            "name": "Generate CURD",
+            "name": "sidebar.genarate_curd",
             "slug": "crud.generator.create",
             "permission": [
                 "crud.generator.create"

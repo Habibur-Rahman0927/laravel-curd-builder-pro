@@ -14,7 +14,7 @@
                         @endphp
                         <a class="nav-link collapsed {{ $isActive ? 'active' : 'collapsed' }}" href="#" data-bs-toggle="collapse" data-bs-target="#{{ $item['slug'] }}" aria-expanded="false">
                             <i class="{{ $item['icon'] }}"></i>
-                            <span class="nav-text">{{ $item['name'] }}</span>
+                            <span class="nav-text">{{ __($item['name']) }}</span>
                             <i class="fas fa-caret-right indicator ms-auto"></i>
                         </a>
                         <div class="collapse {{ $isActive ? 'show' : '' }}" id="{{ $item['slug'] }}">
@@ -24,7 +24,7 @@
                                         <li>
                                             <a class="nav-link {{ Route::currentRouteName() === $subitem['url'] ? 'active-sub' : '' }}" href="{{ route($subitem['url']) }}">
                                                 <i class="{{ $subitem['icon'] ?? 'fas fa-circle small-icon' }}"></i>
-                                                <span>{{ $subitem['name'] }}</span>
+                                                <span>{{ __($subitem['name']) }}</span>
                                             </a>
                                         </li>
                                     @endif
@@ -37,7 +37,7 @@
                         @if (Auth::user()->can($item['url']))
                             <a class="nav-link {{ Route::currentRouteName() === $item['url'] ? 'active' : 'collapsed' }}" href="{{ route($item['url']) }}">
                                 <i class="{{ $item['icon'] }}"></i>
-                                <span class="nav-text">{{ $item['name'] }}</span>
+                                <span class="nav-text">{{ __($item['name']) }}</span>
                             </a>
                         @endif
                     @endif

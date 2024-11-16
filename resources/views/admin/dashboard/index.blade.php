@@ -1,6 +1,6 @@
 @extends('layouts/layout')
 
-@section('title',  __('dashboard_label.page_title') )
+@section('title',  __('dashboard_module.page_title') )
 
 @section('page-style')
     @vite([])
@@ -14,8 +14,8 @@
     <div class="content">
         <div class="row">
             <div class="col-md-12 page-header">
-                <div class="page-pretitle">{{ __('dashboard_label.overview') }}</div>
-                <h2 class="page-title">{{ __('dashboard_label.dashboard') }}</h2>
+                <div class="page-pretitle">{{ __('dashboard_module.overview') }}</div>
+                <h2 class="page-title">{{ __('dashboard_module.dashboard') }}</h2>
             </div>
         </div>
         <div class="row">
@@ -30,7 +30,7 @@
                             </div>
                             <div class="col-sm-8">
                                 <div class="detail">
-                                    <p class="detail-subtitle">{{ __('dashboard_label.users') }}</p>
+                                    <p class="detail-subtitle">{{ __('dashboard_module.users') }}</p>
                                     <span class="number">{{$userCount}}</span>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                             </div>
                             <div class="col-sm-8">
                                 <div class="detail">
-                                    <p class="detail-subtitle">{{ __('dashboard_label.roles') }}</p>
+                                    <p class="detail-subtitle">{{ __('dashboard_module.roles') }}</p>
                                     <span class="number">{{$roleCount}}</span>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-sm-8">
                                 <div class="detail">
-                                    <p class="detail-subtitle">{{ __('dashboard_label.permissions') }}</p>
+                                    <p class="detail-subtitle">{{ __('dashboard_module.permissions') }}</p>
                                     <span class="number">{{ $permissionCount }}</span>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                             </div>
                             <div class="col-sm-8">
                                 <div class="detail">
-                                    <p class="detail-subtitle">{{ __('dashboard_label.permission_groups') }}</p>
+                                    <p class="detail-subtitle">{{ __('dashboard_module.permission_groups') }}</p>
                                     <span class="number">{{ $permissionGroupCount }}</span>
                                 </div>
                             </div>
