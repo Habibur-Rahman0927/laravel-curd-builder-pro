@@ -1,6 +1,6 @@
 @extends('layouts/layout')
 
-@section('title', 'Create Role Has Permission')
+@section('title', __('role_has_permission_module.create_list_edit.create_page_title'))
 
 @section('page-style')
     @vite([])
@@ -14,8 +14,8 @@
     <div class="content">
         <div class="row">
             <div class="col-md-12 page-header mb-2">
-                <div class="page-pretitle">Role Has Permission</div>
-                <h1 class="page-title">Create Role Has Permission</h1>
+                <div class="page-pretitle">{{ __('role_has_permission_module.create_list_edit.role_has_permission') }}</div>
+                <h1 class="page-title">{{ __('role_has_permission_module.create_list_edit.create_page_title') }}</h1>
             </div>
         </div>
         <div class="row">
@@ -50,11 +50,11 @@
                         @csrf
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Role Name</h6>
+                                <h6 class="mb-0">{{ __('role_has_permission_module.field_label.role_name') }}</h6>
                             </div>
                             <div class="form-group col-sm-9 text-secondary">
                                 <select class="form-select" name="role_id" id="">
-                                    <option value=""> -- Select Role -- </option>
+                                    <option value=""> -- {{ __('role_has_permission_module.field_label.select_role') }} -- </option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->name }}</option>
                                     @endforeach
@@ -63,7 +63,7 @@
                         </div>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" name="" id="permission_all">
-                            <label for="permission_all" class="form-check-label">Permission All</label>
+                            <label for="permission_all" class="form-check-label">{{ __('role_has_permission_module.field_label.permission_all') }}</label>
                         </div>
                         <hr>
                         @foreach ($permission_groups as $group => $permissions)
@@ -93,8 +93,8 @@
 
                         <div class="row">
                             <div class="col-md-12 text-end">
-                                <a href="{{ route('rolehaspermission.index') }}" class="btn btn-danger me-2">Cancel</a>
-                                <button type="submit" class="btn add-btn">Submit</button>
+                                <a href="{{ route('rolehaspermission.index') }}" class="btn btn-danger me-2">{{ __('standard_curd_common_label.cancel') }}</a>
+                                <button type="submit" class="btn add-btn">{{ __('standard_curd_common_label.submit') }}</button>
                             </div>
                         </div>
                     </form>

@@ -71,13 +71,13 @@ class RoleController extends Controller
             $response = $this->roleService->create($request->all());
 
             if ($response) {
-                return redirect()->back()->with('success', 'Role added successfully.');
+                return redirect()->back()->with('success', __('role_module.create_list_edit.role') . __('standard_curd_common_label.success'));
             }
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', __('standard_curd_common_label.error'));
         }
 
-        return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        return redirect()->back()->with('error', __('standard_curd_common_label.error'));
     }
 
     /**
@@ -106,7 +106,7 @@ class RoleController extends Controller
                 'data' => $response,
             ]);
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error retrieving the resource.');
+            return redirect()->back()->with('error', __('standard_curd_common_label.error'));
         }
     }
 
@@ -123,9 +123,9 @@ class RoleController extends Controller
             $data = $request->except(['_token', '_method']);
             $this->roleService->update(['id' => $id], $data);
 
-            return redirect()->back()->with('success', 'Role updated successfully.');
+            return redirect()->back()->with('success', __('role_module.create_list_edit.role') . __('standard_curd_common_label.update_success'));
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong while updating.' . $e->getMessage());
+            return redirect()->back()->with('error', __('standard_curd_common_label.error'));
         }
     }
 
@@ -142,20 +142,20 @@ class RoleController extends Controller
 
             if ($data) {
                 return response()->json([
-                    'message' => 'Role deleted successfully',
+                    'message' => __('role_module.create_list_edit.role') . __('standard_curd_common_label.delete'),
                     'status_code' => ResponseAlias::HTTP_OK,
                     'data' => []
                 ], ResponseAlias::HTTP_OK);
             }
 
             return response()->json([
-                'message' => 'Role is not deleted successfully',
+                'message' => __('role_module.create_list_edit.role') . __('standard_curd_common_label.delete_is_not'),
                 'status_code' => ResponseAlias::HTTP_BAD_REQUEST,
                 'data' => []
             ], ResponseAlias::HTTP_BAD_REQUEST);
         } catch (Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while trying to delete.',
+                'message' => __('standard_curd_common_label.error'),
                 'status_code' => ResponseAlias::HTTP_INTERNAL_SERVER_ERROR,
                 'data' => []
             ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);

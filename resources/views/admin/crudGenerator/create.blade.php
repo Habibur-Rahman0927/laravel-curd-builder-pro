@@ -1,6 +1,6 @@
 @extends('layouts/layout')
 
-@section('title', 'Generate Curd')
+@section('title', __('generate_curd_module.create_page_title'))
 
 @section('page-style')
     @vite([])
@@ -58,8 +58,8 @@
     <div class="content">
             <div class="row">
                 <div class="col-md-12 page-header mb-2">
-                    <div class="page-pretitle">Curd</div>
-                    <h1 class="page-title">Generate Curd</h1>
+                    <div class="page-pretitle">{{ __('generate_curd_module.curd') }}</div>
+                    <h1 class="page-title">{{ __('generate_curd_module.create_page_title') }}</h1>
                 </div>
             </div>
             <div class="row">
@@ -209,7 +209,7 @@
                                 </table>
                             </div>
         
-                            <button type="button" class="btn add-btn" id="add-field">➕ Add Field</button>
+                            <button type="button" class="btn add-btn" id="add-field">➕ {{ __('generate_curd_module.add_field') }}</button>
                     </div>
                 </div>
                 <div class="card shadow">
@@ -256,8 +256,8 @@
                             </div>
         
                             <div>
-                                <button type="button" class="btn add-btn" id="add-relationship">➕ Add Relationship</button>
-                                <button type="button" class="btn btn-warning" id="preview-button">Preview</button>
+                                <button type="button" class="btn add-btn" id="add-relationship">➕ {{ __('generate_curd_module.add_relationship') }}</button>
+                                <button type="button" class="btn btn-warning" id="preview-button">{{ __('generate_curd_module.preview') }}</button>
                             </div>
                     </div>
                 </div>
@@ -366,8 +366,8 @@
         
                             <!-- Submit Button -->
                             <div class="form-group text-end">
-                                <button type="reset" class="btn btn-danger text-white">Reset</button> 
-                                <button type="submit" class="btn add-btn">Generate</button>
+                                <button type="reset" class="btn btn-danger text-white">{{ __('standard_curd_common_label.reset') }}</button> 
+                                <button type="submit" class="btn add-btn">{{ __('generate_curd_module.generate') }}</button>
                             </div>
                     </div>
                     
@@ -375,14 +375,14 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="previewModalLabel">Preview Generated CRUD</h5>
+                                        <h5 class="modal-title" id="previewModalLabel">{{ __('generate_curd_module.preview') }} {{ __('generate_curd_module.create_page_title') }}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <pre id="preview-content"></pre> <!-- Display preview content here -->
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('standard_curd_common_label.close') }}</button>
                                     </div>
                                 </div>
                             </div>

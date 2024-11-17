@@ -71,13 +71,13 @@ class PermissionGroupController extends Controller
             $response = $this->permissionGroupService->create($request->all());
 
             if ($response) {
-                return redirect()->back()->with('success', 'Permission Group added successfully.');
+                return redirect()->back()->with('success', __('permission_group_module.create_list_edit.permission_group') . __('standard_curd_common_label.success'));
             }
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', __('standard_curd_common_label.error'));
         }
 
-        return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        return redirect()->back()->with('error', __('standard_curd_common_label.error'));
     }
 
     /**
@@ -106,7 +106,7 @@ class PermissionGroupController extends Controller
                 'data' => $response,
             ]);
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error retrieving the resource.');
+            return redirect()->back()->with('error', __('standard_curd_common_label.error'));
         }
     }
 
@@ -123,9 +123,9 @@ class PermissionGroupController extends Controller
             $data = $request->except(['_token', '_method']);
             $this->permissionGroupService->update(['id' => $id], $data);
 
-            return redirect()->back()->with('success', 'Permission Group updated successfully.');
+            return redirect()->back()->with('success', __('permission_group_module.create_list_edit.permission_group') . __('standard_curd_common_label.update_success'));
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong while updating.');
+            return redirect()->back()->with('error', __('standard_curd_common_label.error'));
         }
     }
 
@@ -142,20 +142,20 @@ class PermissionGroupController extends Controller
 
             if ($data) {
                 return response()->json([
-                    'message' => 'Permission Group deleted successfully',
+                    'message' => __('permission_group_module.create_list_edit.permission_group') . __('standard_curd_common_label.delete'),
                     'status_code' => ResponseAlias::HTTP_OK,
                     'data' => []
                 ], ResponseAlias::HTTP_OK);
             }
 
             return response()->json([
-                'message' => 'Permission Group is not deleted successfully',
+                'message' => __('permission_group_module.create_list_edit.permission_group') . __('standard_curd_common_label.delete_is_not'),
                 'status_code' => ResponseAlias::HTTP_BAD_REQUEST,
                 'data' => []
             ], ResponseAlias::HTTP_BAD_REQUEST);
         } catch (Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while trying to delete.',
+                'message' => __('standard_curd_common_label.error'),
                 'status_code' => ResponseAlias::HTTP_INTERNAL_SERVER_ERROR,
                 'data' => []
             ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);

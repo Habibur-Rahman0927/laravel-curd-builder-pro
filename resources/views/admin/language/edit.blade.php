@@ -1,7 +1,6 @@
-
 @extends('layouts/layout')
 
-@section('title', 'Edit Language')
+@section('title', __('language_module.create_list_edit.edit_page_title'))
 
 @section('page-style')
     @vite([])
@@ -15,8 +14,8 @@
     <div class="content">
         <div class="row">
             <div class="col-md-12 page-header mb-2">
-                <div class="page-pretitle">Language</div>
-                <h1 class="page-title">Edit Language</h1>
+                <div class="page-pretitle">{{ __('language_module.create_list_edit.language') }}</div>
+                <h1 class="page-title">{{ __('language_module.create_list_edit.edit_page_title') }}</h1>
             </div>
         </div>
         <div class="row">
@@ -52,7 +51,7 @@
                         @method('PUT')
 						<div class="row mb-3">
 						    <div class="col-md-12">
-						        <label for="name" class="form-label">Name</label>
+						        <label for="name" class="form-label">{{ __('language_module.field_label.name') }}</label>
 						        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{ old('name', $data->name) }}" required>
 						        @error('name')
 						            <div class="invalid-feedback">
@@ -63,7 +62,7 @@
 						</div>
 						<div class="row mb-3">
 						    <div class="col-md-12">
-						        <label for="code" class="form-label">Code</label>
+						        <label for="code" class="form-label">{{ __('language_module.field_label.code') }}</label>
 						        <input type="text" name="code" class="form-control @error('code') is-invalid @enderror" id="code" value="{{ old('code', $data->code) }}" required>
 						        @error('code')
 						            <div class="invalid-feedback">
@@ -76,7 +75,7 @@
                         <!-- Language Translation Fields -->
                         <div class="row mb-3">
                             <div class="col-md-12">
-                                <label for="code" class="form-label">Language Translations</label>
+                                <label for="code" class="form-label">{{ __('language_module.field_label.language_translations') }}</label>
                                 <div class="accordion mb-3" id="accordionTranslations">
                                     @foreach ($combinedLanguageKeys as $section => $translations)
                                         <div class="accordion-item">
@@ -150,8 +149,8 @@
 
                         <div class="row">
                             <div class="col-md-12 text-end"> 
-                                <a href="{{ route('language.index') }}" class="btn btn-danger me-2">Back</a>
-                                <button type="submit" class="btn add-btn">Submit</button>
+                                <a href="{{ route('language.index') }}" class="btn btn-danger me-2">{{ __('standard_curd_common_label.back') }}</a>
+                                <button type="submit" class="btn add-btn">{{ __('standard_curd_common_label.update') }}</button>
                             </div>
                         </div>
                     </form>

@@ -50,11 +50,11 @@
                                     <th>{{ __('standard_curd_common_label.action') }}</th>
                                 </tr>
                                 <tr>
-                                    <th><input type="text" placeholder="Search ID" class="column-search form-control" />
+                                    <th><input type="text" placeholder="{{ __('standard_curd_common_label.search') }} {{ __('standard_curd_common_label.id') }}" class="column-search form-control" />
                                     </th>
-                                    <th><input type="text" placeholder="Search Name"
+                                    <th><input type="text" placeholder="{{ __('standard_curd_common_label.search') }} {{ __('user_module.field_label.name') }}"
                                             class="column-search form-control" /></th>
-                                    <th><input type="text" placeholder="Search Email"
+                                    <th><input type="text" placeholder="{{ __('standard_curd_common_label.search') }} {{ __('user_module.field_label.email') }}"
                                             class="column-search form-control" /></th>
                                     <th></th>
                                 </tr>

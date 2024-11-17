@@ -1,6 +1,6 @@
 @extends('layouts/layout')
 
-@section('title', 'List Role Has Permission')
+@section('title', __('role_has_permission_module.create_list_edit.list_page_title'))
 
 @section('page-style')
     @vite([])
@@ -15,7 +15,7 @@
         <div class="modal-dialog modal-lg custom-modal-dialog">
             <div class="modal-content ">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="permissionModalLabel">Permission List</h5>
+                    <h5 class="modal-title" id="permissionModalLabel">{{ __('role_has_permission_module.field_label.permission_list') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('standard_curd_common_label.close') }}</button>
                 </div>
             </div>
         </div>
@@ -34,8 +34,8 @@
         <div id="routeData" data-url="{{ route('rolehaspermission-list') }}"></div>
         <div class="row">
             <div class="col-md-12 page-header mb-2">
-                <div class="page-pretitle">Role Has Permission</div>
-                <h1 class="page-title">Role Has Permission List</h1>
+                <div class="page-pretitle">{{ __('role_has_permission_module.create_list_edit.role_has_permission') }}</div>
+                <h1 class="page-title">{{ __('role_has_permission_module.create_list_edit.list_role_has_permission_list') }}</h1>
             </div>
         </div>
         <div class="row">
@@ -45,17 +45,17 @@
                         <div class="export-dropdown">
                             <button type="button" class="btn btn-primary dropdown-toggle export-btn"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                Export
+                                {{ __('standard_curd_common_label.export') }}
                             </button>
                             <ul class="dropdown-menu">
-                                <li><button type="button" class="btn btn-secondary mb-1" id="csvExport">CSV</button></li>
-                                <li><button type="button" class="btn btn-secondary mb-1" id="excelExport">Excel</button>
+                                <li><button type="button" class="btn btn-secondary mb-1" id="csvExport">{{ __('standard_curd_common_label.csv') }}</button></li>
+                                <li><button type="button" class="btn btn-secondary mb-1" id="excelExport">{{ __('standard_curd_common_label.excel') }}</button>
                                 </li>
-                                <li><button type="button" class="btn btn-secondary mb-1" id="printExport">Print</button>
+                                <li><button type="button" class="btn btn-secondary mb-1" id="printExport">{{ __('standard_curd_common_label.print') }}</button>
                                 </li>
                             </ul>
                         </div>
-                        <a href="{{ route('rolehaspermission.create') }}" class="btn btn-success add-btn">Add New</a>
+                        <a href="{{ route('rolehaspermission.create') }}" class="btn btn-success add-btn">{{ __('standard_curd_common_label.add_new') }}</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -63,15 +63,15 @@
                         <table class="table table-bordered yajra-datatable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Role Name</th>
-                                    <th>Permissions</th>
-                                    <th>Action</th>
+                                    <th>{{ __('standard_curd_common_label.id') }}</th>
+                                    <th>{{ __('role_has_permission_module.field_label.role_name') }}</th>
+                                    <th>{{ __('role_has_permission_module.field_label.permission_list') }}</th>
+                                    <th>{{ __('standard_curd_common_label.action') }}</th>
                                 </tr>
                                 <tr>
-                                    <th><input type="text" placeholder="Search ID" class="column-search form-control" />
+                                    <th><input type="text" placeholder="{{ __('standard_curd_common_label.search') }} {{ __('standard_curd_common_label.id') }}" class="column-search form-control" />
                                     </th>
-                                    <th><input type="text" placeholder="Search Role Name"
+                                    <th><input type="text" placeholder="{{ __('standard_curd_common_label.search') }} {{ __('role_has_permission_module.field_label.role_name') }}"
                                             class="column-search form-control" /></th>
                                     <th></th>
                                     <th></th>
