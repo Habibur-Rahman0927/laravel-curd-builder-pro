@@ -15,7 +15,7 @@ interface ICurdGeneratorService extends IBaseService
      * @param array $relationships An array of relationships to define for the model.
      * @return array
      */
-    public function generateModel(string $modelName, bool $softDelete, array $fields, array $relationships): array;
+    public function generateModel(string $modelName, bool $softDelete, array $fields, array $relationships = null): array;
 
     /**
      * Generate a migration file for the specified model.
@@ -114,4 +114,13 @@ interface ICurdGeneratorService extends IBaseService
      * @return array
      */
     public function generateRoutes(string $modelName, bool $isApi = false): array;
+
+    /**
+     * Generate Language for the specified Module.
+     *
+     * @param string $modelName The name of the model.
+     * @param array $fields An array of fields for the form and blade.
+     * @return array
+     */
+    public function generateLanguage(string $modelName, array $fields): array;
 }

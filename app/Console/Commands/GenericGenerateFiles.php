@@ -46,8 +46,9 @@ class GenericGenerateFiles extends BaseCommand
             $serviceGenerated = $this->generateServiceInterfaceFile($nameUcfirst) &&
                                 $this->generateImplementServiceFile($nameUcfirst);
             $viewGenereated =  $this->generateViewTemplateFile($name);
-            if ($controllerGenerated && $repositoryGenerated && $serviceGenerated && $viewGenereated) {
-                $this->info("Controller, Repository, Service, View, Js, and associated request files generated successfully: " . $nameUcfirst);
+            $languageGenerated = $this->generateLanguage($nameUcfirst);
+            if ($controllerGenerated && $repositoryGenerated && $serviceGenerated && $viewGenereated && $languageGenerated) {
+                $this->info("Controller, Repository, Service, View, Js, language and associated request files generated successfully: " . $nameUcfirst);
             } else {
                 $this->error('Some files were not generated. Please check the errors and try again.');
             }

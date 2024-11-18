@@ -72,11 +72,13 @@ class CrudGeneratorController extends Controller
         }
 
         if ($useCaseType === 'curd') {
+            $this->curdGeneratorService->generateLanguage($modelName, $fieldNames);
             Artisan::call('app:controller-gen', ['name' => $modelName]);
             return $this->handleCurd($modelName, $fieldNames);
         } elseif ($useCaseType === 'api') {
             return $this->handleApi($modelName, $fields);
         } elseif ($useCaseType === 'api_curd') {
+            $this->curdGeneratorService->generateLanguage($modelName, $fieldNames);
             Artisan::call('app:controller-gen', ['name' => $modelName]);
             return $this->handleApiCurd($modelName, $fieldNames, $fields);
         }
@@ -90,9 +92,6 @@ class CrudGeneratorController extends Controller
         $routeResult = $this->curdGeneratorService->generateRoutes($modelName);
         if ($routeResult['success']) {
             $this->generateViews($modelName, $fieldNames);
-            if (app()->environment('production')) {
-                exec('sudo npm run build');
-            }
             return redirect()->back()->with('success', 'CRUD resources created successfully with routes.');
         }
         return redirect()->back()->with('error', 'CRUD resources created, but route generation failed.');
@@ -121,9 +120,6 @@ class CrudGeneratorController extends Controller
             $apiControllerResult = $this->curdGeneratorService->generateApiController($modelName, $fields);
             if ($apiControllerResult['success']) {
                 Artisan::call('l5-swagger:generate');
-                if (app()->environment('production')) {
-                    exec('sudo npm run build');
-                }
                 return redirect()->back()->with('success', 'Full CRUD and API resources created successfully with routes.');
             }
             return redirect()->back()->with('error', 'Full resources created, but API controller generation failed.');

@@ -80,7 +80,7 @@ $(function () {
                         if (response.status_code === 200) {
                             Swal.fire(
                                 'Deleted!',
-                                'The user has been deleted.',
+                                response.message,
                                 'success'
                             );
                             table.row(row).remove().draw();

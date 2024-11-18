@@ -85,15 +85,15 @@ class RoleHasPermissionController extends Controller
             $role->syncPermissions($permissions);
 
             if (!empty($permissions)) {
-                return redirect()->back()->with('success', 'Role has permissions added successfully.');
+                return redirect()->back()->with('success', __('role_has_permission_module.create_list_edit.role_has_permission') . __('standard_curd_common_label.success'));
             } else {
-                return redirect()->back()->with('error', 'No permissions were provided to assign.');
+                return redirect()->back()->with('error', __('role_has_permission_module.response.no_permission'));
             }
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+            return redirect()->back()->with('error', __('standard_curd_common_label.error'));
         }
 
-        return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        return redirect()->back()->with('error', __('standard_curd_common_label.error'));
     }
 
     /**
@@ -128,7 +128,7 @@ class RoleHasPermissionController extends Controller
                 'permission_groups' => $permission_groups,
             ]);
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error retrieving the resource.');
+            return redirect()->back()->with('error', __('standard_curd_common_label.error'));
         }
     }
 
@@ -149,9 +149,9 @@ class RoleHasPermissionController extends Controller
                               ->toArray();
             $role->syncPermissions($permissions);
 
-            return redirect()->back()->with('success', 'RoleHasPermission updated successfully.');
+            return redirect()->back()->with('success', __('role_has_permission_module.create_list_edit.role_has_permission') . __('standard_curd_common_label.update_success'));
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong while updating.');
+            return redirect()->back()->with('error', __('standard_curd_common_label.error'));
         }
     }
 
@@ -168,20 +168,20 @@ class RoleHasPermissionController extends Controller
 
             if ($data) {
                 return response()->json([
-                    'message' => 'RoleHasPermission deleted successfully',
+                    'message' => __('role_has_permission_module.create_list_edit.role_has_permission') . __('standard_curd_common_label.delete'),
                     'status_code' => ResponseAlias::HTTP_OK,
                     'data' => []
                 ], ResponseAlias::HTTP_OK);
             }
 
             return response()->json([
-                'message' => 'RoleHasPermission is not deleted successfully',
+                'message' => __('role_has_permission_module.create_list_edit.role_has_permission') . __('standard_curd_common_label.delete_is_not'),
                 'status_code' => ResponseAlias::HTTP_BAD_REQUEST,
                 'data' => []
             ], ResponseAlias::HTTP_BAD_REQUEST);
         } catch (Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while trying to delete.',
+                'message' => __('standard_curd_common_label.error'),
                 'status_code' => ResponseAlias::HTTP_INTERNAL_SERVER_ERROR,
                 'data' => []
             ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);

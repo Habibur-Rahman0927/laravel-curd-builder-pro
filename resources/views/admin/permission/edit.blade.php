@@ -1,6 +1,6 @@
 @extends('layouts/layout')
 
-@section('title', 'Edit Permission')
+@section('title', __('permission_module.create_list_edit.edit_page_title'))
 
 @section('page-style')
     @vite([])
@@ -14,8 +14,8 @@
     <div class="content">
         <div class="row">
             <div class="col-md-12 page-header mb-2">
-                <div class="page-pretitle">Permission</div>
-                <h1 class="page-title">Edit Permission</h1>
+                <div class="page-pretitle">{{ __('permission_module.create_list_edit.permission') }}</div>
+                <h1 class="page-title">{{ __('permission_module.create_list_edit.edit_page_title') }}</h1>
             </div>
         </div>
         <div class="row">
@@ -52,9 +52,9 @@
                         @method('PUT') <!-- Use PUT method for updating -->
                         <div class="row mb-3">
                             <div class="col-md-12">
-                                <label class="form-label">Permission Group Name</label>
+                                <label class="form-label">{{ __('permission_module.field_label.permission_group_name') }}</label>
                                 <select class="form-select @error('group_name') is-invalid @enderror" name="group_name">
-                                    <option value="" selected> -- Select Permission Group -- </option>
+                                    <option value="" selected> -- {{ __('permission_module.field_label.select_permission_group') }} -- </option>
                                     @foreach ($permissionGroups as $index => $value)
                                         <option value="{{ $value->name }}"
                                             {{ $data->group_name == $value->name ? 'selected' : '' }}>
@@ -71,9 +71,9 @@
 
                         <div class="row mb-3">
                             <div class="col-md-12">
-                                <label class="form-label">Permission Name</label>
+                                <label class="form-label">{{ __('permission_module.field_label.permission_name') }}</label>
                                 <select class="form-select @error('name') is-invalid @enderror" name="name">
-                                    <option value="" selected> -- Select Permission -- </option>
+                                    <option value="" selected> -- {{ __('permission_module.field_label.select_permission') }} -- </option>
                                     @foreach ($permissions as $value => $text)
                                         <option value="{{ $value }}" {{ $data->name == $value ? 'selected' : '' }}>
                                             {{ $text }}</option>
@@ -89,8 +89,8 @@
 
                         <div class="row">
                             <div class="col-md-12 text-end">
-                                <a href="{{ route('permission.index') }}" class="btn btn-danger me-2">Back</a>
-                                <button type="submit" class="btn add-btn">Update</button>
+                                <a href="{{ route('permission.index') }}" class="btn btn-danger me-2">{{ __('standard_curd_common_label.back') }}</a>
+                                <button type="submit" class="btn add-btn">{{ __('standard_curd_common_label.update') }}</button>
                             </div>
                         </div>
                     </form>

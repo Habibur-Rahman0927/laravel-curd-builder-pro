@@ -81,18 +81,18 @@ class UserController extends Controller
                 $role = Role::find($request->role_id);
                 $response->assignRole($role->name);
             } else {
-                return redirect()->back()->with('error', 'Role does not exist.');
+                return redirect()->back()->with('error', __('user_module.response.role_does_not_exist'));
             }
 
             DB::commit();
-            return redirect()->back()->with('success', 'User added successfully.');
+            return redirect()->back()->with('success', __('user_module.create_list_edit.user') . __('standard_curd_common_label.success'));
 
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Something went wrong. Please try again. ' . $e->getMessage());
+            return redirect()->back()->with('error',  __('standard_curd_common_label.error'));
         }
 
-        return redirect()->back()->with('error', 'Something went wrong. Please try again.');
+        return redirect()->back()->with('error',  __('standard_curd_common_label.error'));
     }
 
     /**
@@ -122,7 +122,7 @@ class UserController extends Controller
                 'roles' => $roles
             ]);
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error retrieving the resource.');
+            return redirect()->back()->with('error', __('standard_curd_common_label.error'));
         }
     }
 
@@ -152,12 +152,12 @@ class UserController extends Controller
                 $role = Role::find($request->role_id);
                 $user->assignRole($role->name);
             } else {
-                return redirect()->back()->with('error', 'Role does not exist.');
+                return redirect()->back()->with('error', __('user_module.response.role_does_not_exist'));
             }
 
-            return redirect()->back()->with('success', 'User updated successfully.');
+            return redirect()->back()->with('success', __('user_module.create_list_edit.user') . __('standard_curd_common_label.update_success'));
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Something went wrong while updating.');
+            return redirect()->back()->with('error', __('standard_curd_common_label.error'));
         }
     }
 
@@ -174,20 +174,20 @@ class UserController extends Controller
 
             if ($data) {
                 return response()->json([
-                    'message' => 'User deleted successfully',
+                    'message' => __('user_module.create_list_edit.user') . __('standard_curd_common_label.delete'),
                     'status_code' => ResponseAlias::HTTP_OK,
                     'data' => []
                 ], ResponseAlias::HTTP_OK);
             }
 
             return response()->json([
-                'message' => 'User is not deleted successfully',
+                'message' => __('user_module.create_list_edit.user') . __('standard_curd_common_label.delete_is_not'),
                 'status_code' => ResponseAlias::HTTP_BAD_REQUEST,
                 'data' => []
             ], ResponseAlias::HTTP_BAD_REQUEST);
         } catch (Exception $e) {
             return response()->json([
-                'message' => 'An error occurred while trying to delete.',
+                'message' => __('standard_curd_common_label.error'),
                 'status_code' => ResponseAlias::HTTP_INTERNAL_SERVER_ERROR,
                 'data' => []
             ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);

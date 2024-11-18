@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         //     'is_active' => User::USER_IS_ACTIVE,
         // ]);
         $this->call(RolePermissionSeeder::class);
+        $this->call(LanguageSeeder::class);
     }
 }

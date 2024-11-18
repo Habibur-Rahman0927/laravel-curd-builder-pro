@@ -4,6 +4,27 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="nav navbar-nav ms-auto">
+            {{-- lang --}}
+            <li class="nav-item dropdown">
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{-- @dd(app()->getLocale()) --}}
+                        <i class="fas fa-globe"></i> <span>{{ \App\Models\Language::where('code', app()->getLocale())->value('name') ?? 'Language' }}</span> <i class="fas fa-caret-down" style="font-size: .8em;"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end nav-link-menu" aria-labelledby="nav1">
+                        <ul class="nav-list">
+                            @foreach (\App\Models\Language::all() as $language)
+                                <li>
+                                    <a href="{{ route('lang.switch', $language->code) }}" class="dropdown-item">
+                                    {{ $language->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            {{-- lang --}}
             <li class="nav-item dropdown">
                 <div class="nav-dropdown">
                     <a href="#" id="nav1" class="nav-item nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

@@ -76,6 +76,15 @@ class RolePermissionSeeder extends Seeder
             ['name' => PermissionEnum::ROLE_HAS_PERMISSION_STORE->value, 'guard_name' => 'web', 'group_name' => PermissionGroupEnum::ROLE_HAS_PERMISSION->value, 'created_at' => now(), 'updated_at' => now()],
             ['name' => PermissionEnum::ROLE_HAS_PERMISSION_UPDATE->value, 'guard_name' => 'web', 'group_name' => PermissionGroupEnum::ROLE_HAS_PERMISSION->value, 'created_at' => now(), 'updated_at' => now()],
             ['name' => PermissionEnum::ROLE_HAS_PERMISSION_DESTROY->value, 'guard_name' => 'web', 'group_name' => PermissionGroupEnum::ROLE_HAS_PERMISSION->value, 'created_at' => now(), 'updated_at' => now()],
+
+            // Language
+            ['name' => PermissionEnum::LANGUAGE_INDEX->value, 'guard_name' => 'web', 'group_name' => PermissionGroupEnum::LANGUAGE->value, 'created_at' => now(), 'updated_at' => now()],
+            ['name' => PermissionEnum::LANGUAGE_LIST->value, 'guard_name' => 'web', 'group_name' => PermissionGroupEnum::LANGUAGE->value, 'created_at' => now(), 'updated_at' => now()],
+            ['name' => PermissionEnum::LANGUAGE_CREATE->value, 'guard_name' => 'web', 'group_name' => PermissionGroupEnum::LANGUAGE->value, 'created_at' => now(), 'updated_at' => now()],
+            ['name' => PermissionEnum::LANGUAGE_EDIT->value, 'guard_name' => 'web', 'group_name' => PermissionGroupEnum::LANGUAGE->value, 'created_at' => now(), 'updated_at' => now()],
+            ['name' => PermissionEnum::LANGUAGE_STORE->value, 'guard_name' => 'web', 'group_name' => PermissionGroupEnum::LANGUAGE->value, 'created_at' => now(), 'updated_at' => now()],
+            ['name' => PermissionEnum::LANGUAGE_UPDATE->value, 'guard_name' => 'web', 'group_name' => PermissionGroupEnum::LANGUAGE->value, 'created_at' => now(), 'updated_at' => now()],
+            ['name' => PermissionEnum::LANGUAGE_DESTROY->value, 'guard_name' => 'web', 'group_name' => PermissionGroupEnum::LANGUAGE->value, 'created_at' => now(), 'updated_at' => now()],
         ];        
 
         foreach ($superAdminPermissions as $permission) {

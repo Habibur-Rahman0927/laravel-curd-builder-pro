@@ -24,6 +24,10 @@ use App\Repositories\PermissionGroup\IPermissionGroupRepository;
 use App\Repositories\PermissionGroup\PermissionGroupRepository;
 use App\Services\PermissionGroup\IPermissionGroupService;
 use App\Services\PermissionGroup\PermissionGroupService;
+use App\Repositories\Language\ILanguageRepository;
+use App\Repositories\Language\LanguageRepository;
+use App\Services\Language\ILanguageService;
+use App\Services\Language\LanguageService;
 use Illuminate\Support\ServiceProvider;
 
 class ServiceRepositoryServiceProvider extends ServiceProvider
@@ -34,6 +38,7 @@ class ServiceRepositoryServiceProvider extends ServiceProvider
     public function register(): void
     {
         $repositories = [
+            ILanguageRepository::class => LanguageRepository::class,
             IPermissionGroupRepository::class => PermissionGroupRepository::class,
             IRoleHasPermissionRepository::class => RoleHasPermissionRepository::class,
             IPermissionRepository::class => PermissionRepository::class,
@@ -42,6 +47,7 @@ class ServiceRepositoryServiceProvider extends ServiceProvider
         ];
 
         $services = [
+            ILanguageService::class => LanguageService::class,
             IPermissionGroupService::class => PermissionGroupService::class,
             IRoleHasPermissionService::class => RoleHasPermissionService::class,
             IPermissionService::class => PermissionService::class,
