@@ -304,7 +304,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
             $viewContent = "
 @extends('layouts/layout')
 
-@section('title', 'Create {$modelName}')
+@section('title', __('{$lowerCaseModelName}_module.create_list_edit.create_page_title'))
 
 @section('page-style')
     @vite([])
@@ -318,8 +318,8 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
     <div class=\"content\">
         <div class=\"row\">
             <div class=\"col-md-12 page-header mb-2\">
-                <div class=\"page-pretitle\">{$modelName}</div>
-                <h1 class=\"page-title\">Create {$modelName}</h1>
+                <div class=\"page-pretitle\">{{ __('{$lowerCaseModelName}_module.create_list_edit.{$lowerCaseModelName}') }}</div>
+                <h1 class=\"page-title\">{{ __('{$lowerCaseModelName}_module.create_list_edit.create_page_title') }}</h1>
             </div>
         </div>
 
@@ -357,7 +357,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
         foreach ($fields as $fieldName => $attributes) {
             // Only create the input if the "create" attribute is "on"
             if (isset($attributes['create']) && $attributes['create'] === 'on') {
-                $label = ucwords(str_replace('_', ' ', $attributes['name']));
+                $label = Str::snake($attributes['name']);
                 $inputType = $attributes['input_type'] ?? 'text'; // Default to text
                 $errorClass = "@error('{$fieldName}') is-invalid @enderror";
                 $oldValue = "old('{$fieldName}')";
@@ -365,7 +365,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                 // Start input generation
                 $viewContent .= "\t\t\t\t\t\t<div class=\"row mb-3\">\n";
                 $viewContent .= "\t\t\t\t\t\t    <div class=\"col-md-12\">\n";
-                $viewContent .= "\t\t\t\t\t\t        <label for=\"{$fieldName}\" class=\"form-label\">{$label}</label>\n";
+                $viewContent .= "\t\t\t\t\t\t        <label for=\"{$fieldName}\" class=\"form-label\">{{ __('{$lowerCaseModelName}_module.field_label.{$label}') }}</label>\n";
 
                 switch ($inputType) {
                     case 'text':
@@ -401,8 +401,8 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
         $viewContent .= "
                         <div class=\"row\">
                             <div class=\"col-md-12 text-end\"> 
-                                <a href=\"{{ route('{$lowerCaseModelName}.index') }}\" class=\"btn btn-danger me-2\">Back</a>
-                                <button type=\"submit\" class=\"btn add-btn\">Submit</button>
+                                <a href=\"{{ route('{$lowerCaseModelName}.index') }}\" class=\"btn btn-danger me-2\">{{ __('standard_curd_common_label.cancel') }}</a>
+                                <button type=\"submit\" class=\"btn add-btn\">{{ __('standard_curd_common_label.submit') }}</button>
                             </div>
                         </div>
                     </form>
@@ -446,7 +446,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
             $viewContent = "
 @extends('layouts/layout')
 
-@section('title', 'Edit {$modelName}')
+@section('title', __('{$lowerCaseModelName}_module.create_list_edit.edit_page_title'))
 
 @section('page-style')
     @vite([])
@@ -460,8 +460,8 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
     <div class=\"content\">
         <div class=\"row\">
             <div class=\"col-md-12 page-header mb-2\">
-                <div class=\"page-pretitle\">{$modelName}</div>
-                <h1 class=\"page-title\">Edit {$modelName}</h1>
+                <div class=\"page-pretitle\">{{ __('{$lowerCaseModelName}_module.create_list_edit.{$lowerCaseModelName}') }}</div>
+                <h1 class=\"page-title\">{{ __('{$lowerCaseModelName}_module.create_list_edit.edit_page_title') }}</h1>
             </div>
         </div>
         <div class=\"row\">
@@ -499,7 +499,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
         foreach ($fields as $fieldName => $attributes) {
             // Only create the input if the "create" attribute is "on"
             if (isset($attributes['create']) && $attributes['create'] === 'on') {
-                $label = ucwords(str_replace('_', ' ', $attributes['name']));
+                $label = Str::snake($attributes['name']);
                 $inputType = $attributes['input_type'] ?? 'text'; // Default to text
                 $errorClass = "@error('{$fieldName}') is-invalid @enderror";
                 $oldValue = "old('{$fieldName}', \$data->{$fieldName})";
@@ -507,7 +507,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                 // Start input generation
                 $viewContent .= "\t\t\t\t\t\t<div class=\"row mb-3\">\n";
                 $viewContent .= "\t\t\t\t\t\t    <div class=\"col-md-12\">\n";
-                $viewContent .= "\t\t\t\t\t\t        <label for=\"{$fieldName}\" class=\"form-label\">{$label}</label>\n";
+                $viewContent .= "\t\t\t\t\t\t        <label for=\"{$fieldName}\" class=\"form-label\">{{ __('{$lowerCaseModelName}_module.field_label.{$label}') }}</label>\n";
 
                 switch ($inputType) {
                     case 'text':
@@ -538,8 +538,8 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
         $viewContent .= "
                         <div class=\"row\">
                             <div class=\"col-md-12 text-end\"> 
-                                <a href=\"{{ route('{$lowerCaseModelName}.index') }}\" class=\"btn btn-danger me-2\">Back</a>
-                                <button type=\"submit\" class=\"btn add-btn\">Submit</button>
+                                <a href=\"{{ route('{$lowerCaseModelName}.index') }}\" class=\"btn btn-danger me-2\">{{ __('standard_curd_common_label.back') }}</a>
+                                <button type=\"submit\" class=\"btn add-btn\">{{ __('standard_curd_common_label.update') }}</button>
                             </div>
                         </div>
                     </form>
@@ -583,7 +583,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
             $viewContent = "
 @extends('layouts/layout')
 
-@section('title', 'List {$modelName}')
+@section('title', __('{$lowerCaseModelName}_module.create_list_edit.list_page_title'))
 
 @section('page-style')
     @vite([])
@@ -600,8 +600,8 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
     <div class=\"content\">
         <div class=\"row\">
             <div class=\"col-md-12 page-header mb-2\">
-                <div class=\"page-pretitle\">{$modelName}</div>
-                <h1 class=\"page-title\">Edit {$modelName}</h1>
+                <div class=\"page-pretitle\">{{ __('{$lowerCaseModelName}_module.create_list_edit.{$lowerCaseModelName}') }}</div>
+                <h1 class=\"page-title\">{{ __('{$lowerCaseModelName}_module.create_list_edit.list_{$lowerCaseModelName}_list') }}</h1>
             </div>
         </div>
         <div class=\"row\">
@@ -610,15 +610,15 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                     <div class=\"btn-group-wrapper\">
                         <div class=\"export-dropdown\">
                             <button type=\"button\" class=\"btn btn-primary dropdown-toggle export-btn\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">
-                                Export
+                                {{ __('standard_curd_common_label.export')}}
                             </button>
                             <ul class=\"dropdown-menu\">
-                                <li><button type=\"button\" class=\"btn btn-secondary mb-1\" id=\"csvExport\">CSV</button></li>
-                                <li><button type=\"button\" class=\"btn btn-secondary mb-1\" id=\"excelExport\">Excel</button></li>
-                                <li><button type=\"button\" class=\"btn btn-secondary mb-1\" id=\"printExport\">Print</button></li>
+                                <li><button type=\"button\" class=\"btn btn-secondary mb-1\" id=\"csvExport\">{{ __('standard_curd_common_label.csv') }}</button></li>
+                                <li><button type=\"button\" class=\"btn btn-secondary mb-1\" id=\"excelExport\">{{ __('standard_curd_common_label.excel') }}</button></li>
+                                <li><button type=\"button\" class=\"btn btn-secondary mb-1\" id=\"printExport\">{{ __('standard_curd_common_label.print') }}</button></li>
                             </ul>
                         </div>
-                        <a href=\"{{ route('{$lowerCaseModelName}.create') }}\" class=\"btn btn-success add-btn\">Add New</a>
+                        <a href=\"{{ route('{$lowerCaseModelName}.create') }}\" class=\"btn btn-success add-btn\">{{ __('standard_curd_common_label.add_new') }}</a>
                     </div>
                 </div>
 
@@ -627,22 +627,22 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                          <table class=\"table table-bordered yajra-datatable\">
                             <thead>
                             <tr>
-                                <th>ID</th>\n";
+                                <th>{{ __('standard_curd_common_label.id') }}</th>\n";
                                 foreach($fields as $fieldName => $attributes) {
                                     if (isset($attributes['list']) && $attributes['list'] === 'on') {
-                                        $label = ucwords(str_replace('_', ' ', $attributes['name']));
-                                        $viewContent .= "\t\t\t\t\t\t\t\t\t<th>{$label}</th>\n";
+                                        $label = Str::snake($attributes['name']);
+                                        $viewContent .= "\t\t\t\t\t\t\t\t\t<th>{{ __('{$lowerCaseModelName}_module.field_label.{$label}') }}</th>\n";
                                     }
                                 }
                                 $viewContent.= "
-                                <th>Action</th>
+                                <th>{{ __('standard_curd_common_label.action') }}</th>
                             </tr>
                             <tr>
-                                <th><input type=\"text\" placeholder=\"Search ID\" class=\"column-search form-control\" /></th>\n";
+                                <th><input type=\"text\" placeholder=\"{{ __('standard_curd_common_label.search') }} {{ __('standard_curd_common_label.id') }}\" class=\"column-search form-control\" /></th>\n";
                                 foreach($fields as $fieldName => $attributes) {
                                     if (isset($attributes['list']) && $attributes['list'] === 'on') {
-                                        $label = ucwords(str_replace('_', ' ', $attributes['name']));
-                                        $viewContent .= "\t\t\t\t\t\t\t\t\t<th><input type=\"text\" placeholder=\"Search {$label}\" class=\"column-search form-control\" /></th>\n";
+                                        $label = Str::snake($attributes['name']);
+                                        $viewContent .= "\t\t\t\t\t\t\t\t\t<th><input type=\"text\" placeholder=\"{{ __('standard_curd_common_label.search') }} {{ __('{$lowerCaseModelName}_module.field_label.{$label}') }}\" class=\"column-search form-control\" /></th>\n";
                                     }
                                 }
                                 $viewContent.= "
@@ -828,19 +828,19 @@ $(function () {
             }
 
             $newMenuItem = [
-                "name" => $modelName,
+                "name" => "sidebar.{$lowerCaseModelName}",
                 "icon" => "fas fa-list",
                 "slug" => $lowerCaseModelName,
                 "permission" => [$lowerCaseModelName . '.index', $lowerCaseModelName . '.create'],
                 "submenu" => [
                     [
                         "url" => $lowerCaseModelName . '.index',
-                        "name" => "List",
+                        "name" => "sidebar.list",
                         "icon" => "fas fa-circle small-icon"
                     ],
                     [
                         "url" => $lowerCaseModelName . '.create',
-                        "name" => "Create",
+                        "name" => "sidebar.create",
                         "icon" => "fas fa-circle small-icon"
                     ]
                 ]
@@ -1282,6 +1282,70 @@ $(function () {
             // Append route content
             file_put_contents($routeFilePath, $routeContent, FILE_APPEND);
             
+            return ['success' => true];
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * Generate Language for the specified Module.
+     *
+     * @param string $modelName The name of the model.
+     * @param array $fields An array of fields for the form and blade.
+     * @return array
+     */
+    public function generateLanguage(string $modelName, array $fields): array
+    {
+        try {
+            $langBasePath = base_path('lang');
+            
+            if (!is_dir($langBasePath)) {
+                return ['success' => false, 'error' => 'Language directory does not exist.'];
+            }
+
+            $languageFolders = array_filter(glob($langBasePath . '/*'), 'is_dir');
+
+            $languageContent = [
+                'create_list_edit' => [
+                    'list_page_title' => 'List ' . ucwords(str_replace('_', ' ', Str::snake($modelName))),
+                    strtolower($modelName) => Str::camel($modelName),
+                    'list_' . strtolower($modelName) . '_list' => ucwords(str_replace('_', ' ', Str::snake($modelName))) . ' List',
+                    'create_page_title' => 'Create ' . ucwords(str_replace('_', ' ', Str::snake($modelName))),
+                    'edit_page_title' => 'Edit ' . ucwords(str_replace('_', ' ', Str::snake($modelName))),
+                ],
+                'field_label' => [],
+            ];
+
+            foreach ($fields as $field) {
+                $fieldName = $field['name'] ?? '';
+                $key = Str::snake($fieldName);
+                $label = ucwords(str_replace('_', ' ', $fieldName));
+                $languageContent['field_label'][$key] = $label;
+            }
+
+            foreach ($languageFolders as $folder) {
+                $langFilePath = $folder . '/' . strtolower($modelName) . '_module.php';
+
+                if (!file_exists($langFilePath)) {
+                    $content = "<?php\n\nreturn " . var_export($languageContent, true) . ";\n";
+                    file_put_contents($langFilePath, $content);
+                }
+    
+                $sidebarFilePath = $folder . '/sidebar.php';
+                if (file_exists($sidebarFilePath)) {
+                    $sidebarContent = include $sidebarFilePath;
+                    if (!is_array($sidebarContent)) {
+                        $sidebarContent = [];
+                    }
+
+                    $sidebarContent[strtolower($modelName)] = ucwords(str_replace('_', ' ', $modelName));
+                    
+                    $updatedContent = "<?php\n\nreturn " . var_export($sidebarContent, true) . ";\n";
+                    file_put_contents($sidebarFilePath, $updatedContent);
+                }
+            }
+
             return ['success' => true];
         } catch (Exception $e) {
             return ['success' => false, 'error' => $e->getMessage()];

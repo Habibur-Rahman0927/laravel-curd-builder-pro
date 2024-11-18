@@ -127,4 +127,27 @@ class LanguageService extends BaseService implements ILanguageService
 
         return $combinedLanguageKeys;
     }
+
+    /**
+     * Delete a language folder by its code.
+     *
+     * @param string $languageCode The code of the language to delete (e.g., 'fr').
+     * @return bool Indicates whether the folder was successfully deleted.
+     */
+    public function deleteLanguageFolderByCode(string $languageCode): bool
+    {
+        $langDirectory = base_path("lang/{$languageCode}");
+
+        if (File::exists($langDirectory)) {
+            try {
+                File::deleteDirectory($langDirectory);
+                return true;
+            } catch (Exception $e) {
+                throw new Exception("Could not delete the language folder: {$e->getMessage()}");
+            }
+        }
+
+        throw new Exception("Language folder '{$languageCode}' does not exist.");
+    }
+
 }

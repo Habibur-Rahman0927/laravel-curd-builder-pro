@@ -13,170 +13,6 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/admin/api-all": {
-            "get": {
-                "tags": [
-                    "All"
-                ],
-                "summary": "Get all alls",
-                "operationId": "1e08e0355dd1a58af237bea0c930e77e",
-                "responses": {
-                    "200": {
-                        "description": "A list of alls"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "All"
-                ],
-                "summary": "Create a new all",
-                "operationId": "0329b8cb911d6f6f3b347804bbf4780c",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "first_name": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "All created successfully"
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/admin/api-all/{id}": {
-            "get": {
-                "tags": [
-                    "All"
-                ],
-                "summary": "Get a all by ID",
-                "operationId": "0175656c07ced013c879143244346cde",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "A single all object"
-                    },
-                    "404": {
-                        "description": "All not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "All"
-                ],
-                "summary": "Update an existing all",
-                "operationId": "a9ff1ead3653fe35713f488a83ac1bab",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "first_name": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "All updated successfully"
-                    },
-                    "404": {
-                        "description": "All not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "All"
-                ],
-                "summary": "Delete a all by ID",
-                "operationId": "d8ad5fd5bf1d258d8e8326e5a836162e",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the all to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "All deleted successfully"
-                    },
-                    "404": {
-                        "description": "All not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
         "/api/register": {
             "post": {
                 "tags": [
@@ -312,16 +148,16 @@
                 ]
             }
         },
-        "/api/admin/api-fack": {
+        "/api/admin/api-long": {
             "get": {
                 "tags": [
-                    "Fack"
+                    "Long"
                 ],
-                "summary": "Get all facks",
-                "operationId": "1cb6ada327d603aae6939f9e1e007906",
+                "summary": "Get all longs",
+                "operationId": "c9084ae6cac36680d3c47e05685b6cd6",
                 "responses": {
                     "200": {
-                        "description": "A list of facks"
+                        "description": "A list of longs"
                     }
                 },
                 "security": [
@@ -332,10 +168,10 @@
             },
             "post": {
                 "tags": [
-                    "Fack"
+                    "Long"
                 ],
-                "summary": "Create a new fack",
-                "operationId": "becaaa30c503a19f035bea41fbb16056",
+                "summary": "Create a new long",
+                "operationId": "e322727539fbb3e70301279878bbed45",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -343,6 +179,10 @@
                             "schema": {
                                 "properties": {
                                     "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
                                         "type": "string",
                                         "example": "example_value"
                                     }
@@ -354,7 +194,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Fack created successfully"
+                        "description": "Long created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -367,13 +207,13 @@
                 ]
             }
         },
-        "/api/admin/api-fack/{id}": {
+        "/api/admin/api-long/{id}": {
             "get": {
                 "tags": [
-                    "Fack"
+                    "Long"
                 ],
-                "summary": "Get a fack by ID",
-                "operationId": "c2fba75d1bd9f01236b5f7226c742acd",
+                "summary": "Get a long by ID",
+                "operationId": "f9ee51ea3c5ce098a38b650dbf4645b7",
                 "parameters": [
                     {
                         "name": "id",
@@ -386,10 +226,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single fack object"
+                        "description": "A single long object"
                     },
                     "404": {
-                        "description": "Fack not found"
+                        "description": "Long not found"
                     }
                 },
                 "security": [
@@ -400,10 +240,10 @@
             },
             "put": {
                 "tags": [
-                    "Fack"
+                    "Long"
                 ],
-                "summary": "Update an existing fack",
-                "operationId": "1844e32272706b8ee168fd8800c6fa99",
+                "summary": "Update an existing long",
+                "operationId": "dea306245e6afe52b2abf201cc89dfed",
                 "parameters": [
                     {
                         "name": "id",
@@ -423,6 +263,10 @@
                                     "first_name": {
                                         "type": "string",
                                         "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
                                     }
                                 },
                                 "type": "object"
@@ -432,10 +276,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Fack updated successfully"
+                        "description": "Long updated successfully"
                     },
                     "404": {
-                        "description": "Fack not found"
+                        "description": "Long not found"
                     }
                 },
                 "security": [
@@ -446,15 +290,15 @@
             },
             "delete": {
                 "tags": [
-                    "Fack"
+                    "Long"
                 ],
-                "summary": "Delete a fack by ID",
-                "operationId": "92d859269dfd61c609cf7f09b799af18",
+                "summary": "Delete a long by ID",
+                "operationId": "c6abd44ba13edcbee9bbc1288abf2cbe",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the fack to delete",
+                        "description": "ID of the long to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -463,10 +307,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Fack deleted successfully"
+                        "description": "Long deleted successfully"
                     },
                     "404": {
-                        "description": "Fack not found"
+                        "description": "Long not found"
                     }
                 },
                 "security": [
@@ -476,16 +320,16 @@
                 ]
             }
         },
-        "/api/admin/api-jens": {
+        "/api/admin/api-top": {
             "get": {
                 "tags": [
-                    "Jens"
+                    "Top"
                 ],
-                "summary": "Get all jenss",
-                "operationId": "afc580e1fb449b4c5a549fe59a4c6c8f",
+                "summary": "Get all tops",
+                "operationId": "f01d5010ef48768f0667075aa67dec7f",
                 "responses": {
                     "200": {
-                        "description": "A list of jenss"
+                        "description": "A list of tops"
                     }
                 },
                 "security": [
@@ -496,10 +340,10 @@
             },
             "post": {
                 "tags": [
-                    "Jens"
+                    "Top"
                 ],
-                "summary": "Create a new jens",
-                "operationId": "2d6231ff8f06defb70701d6b98453597",
+                "summary": "Create a new top",
+                "operationId": "954d9eb508ca4530f5dfea72e5e289a6",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -507,6 +351,10 @@
                             "schema": {
                                 "properties": {
                                     "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
                                         "type": "string",
                                         "example": "example_value"
                                     }
@@ -518,7 +366,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Jens created successfully"
+                        "description": "Top created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -531,13 +379,13 @@
                 ]
             }
         },
-        "/api/admin/api-jens/{id}": {
+        "/api/admin/api-top/{id}": {
             "get": {
                 "tags": [
-                    "Jens"
+                    "Top"
                 ],
-                "summary": "Get a jens by ID",
-                "operationId": "405b9b3fc116fedeae59b468b575726b",
+                "summary": "Get a top by ID",
+                "operationId": "ebbab25b59b0b6449957418dffb7115b",
                 "parameters": [
                     {
                         "name": "id",
@@ -550,10 +398,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single jens object"
+                        "description": "A single top object"
                     },
                     "404": {
-                        "description": "Jens not found"
+                        "description": "Top not found"
                     }
                 },
                 "security": [
@@ -564,10 +412,10 @@
             },
             "put": {
                 "tags": [
-                    "Jens"
+                    "Top"
                 ],
-                "summary": "Update an existing jens",
-                "operationId": "58a3de020ac514151ecd089804fe18c5",
+                "summary": "Update an existing top",
+                "operationId": "13901ea81d227df157bae4a99ad59f17",
                 "parameters": [
                     {
                         "name": "id",
@@ -587,6 +435,10 @@
                                     "first_name": {
                                         "type": "string",
                                         "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
                                     }
                                 },
                                 "type": "object"
@@ -596,10 +448,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Jens updated successfully"
+                        "description": "Top updated successfully"
                     },
                     "404": {
-                        "description": "Jens not found"
+                        "description": "Top not found"
                     }
                 },
                 "security": [
@@ -610,15 +462,15 @@
             },
             "delete": {
                 "tags": [
-                    "Jens"
+                    "Top"
                 ],
-                "summary": "Delete a jens by ID",
-                "operationId": "ac24d2875d7ea50dc1edb85d7ab0abeb",
+                "summary": "Delete a top by ID",
+                "operationId": "0bb6a10b06ac7aacbe275e4770a33abe",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the jens to delete",
+                        "description": "ID of the top to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -627,174 +479,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Jens deleted successfully"
+                        "description": "Top deleted successfully"
                     },
                     "404": {
-                        "description": "Jens not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/admin/api-real": {
-            "get": {
-                "tags": [
-                    "Real"
-                ],
-                "summary": "Get all reals",
-                "operationId": "abc72159e1898cf6c83cac3e9e978164",
-                "responses": {
-                    "200": {
-                        "description": "A list of reals"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Real"
-                ],
-                "summary": "Create a new real",
-                "operationId": "c7a89a39379fc81a7a259fef6dd16cdd",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "first_name": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Real created successfully"
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/admin/api-real/{id}": {
-            "get": {
-                "tags": [
-                    "Real"
-                ],
-                "summary": "Get a real by ID",
-                "operationId": "4ea240804e548accedd50822ab0e0337",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "A single real object"
-                    },
-                    "404": {
-                        "description": "Real not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Real"
-                ],
-                "summary": "Update an existing real",
-                "operationId": "2832a0d50882d25817326e27845ada4a",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "first_name": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Real updated successfully"
-                    },
-                    "404": {
-                        "description": "Real not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Real"
-                ],
-                "summary": "Delete a real by ID",
-                "operationId": "9c7cfdca1cc645682e20c6cfb2fd8e90",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the real to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Real deleted successfully"
-                    },
-                    "404": {
-                        "description": "Real not found"
+                        "description": "Top not found"
                     }
                 },
                 "security": [
@@ -816,20 +504,12 @@
     },
     "tags": [
         {
-            "name": "All",
-            "description": "All management operations"
+            "name": "Long",
+            "description": "Long management operations"
         },
         {
-            "name": "Fack",
-            "description": "Fack management operations"
-        },
-        {
-            "name": "Jens",
-            "description": "Jens management operations"
-        },
-        {
-            "name": "Real",
-            "description": "Real management operations"
+            "name": "Top",
+            "description": "Top management operations"
         },
         {
             "name": "Authentication",

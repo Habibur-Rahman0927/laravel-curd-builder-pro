@@ -32,4 +32,12 @@ interface ILanguageService extends IBaseService
      * @return array
      */
     public function getLanguageFiles(string $languageCode = 'en'): array;
+
+    /**
+     * Delete a language folder by its code.
+     *
+     * @param string $languageCode The code of the language to delete (e.g., 'fr').
+     * @return bool Indicates whether the folder was successfully deleted.
+     */
+    public function deleteLanguageFolderByCode(string $languageCode): bool;
 }

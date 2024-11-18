@@ -72,11 +72,13 @@ class CrudGeneratorController extends Controller
         }
 
         if ($useCaseType === 'curd') {
+            $this->curdGeneratorService->generateLanguage($modelName, $fieldNames);
             Artisan::call('app:controller-gen', ['name' => $modelName]);
             return $this->handleCurd($modelName, $fieldNames);
         } elseif ($useCaseType === 'api') {
             return $this->handleApi($modelName, $fields);
         } elseif ($useCaseType === 'api_curd') {
+            $this->curdGeneratorService->generateLanguage($modelName, $fieldNames);
             Artisan::call('app:controller-gen', ['name' => $modelName]);
             return $this->handleApiCurd($modelName, $fieldNames, $fields);
         }

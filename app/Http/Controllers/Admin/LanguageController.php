@@ -143,14 +143,18 @@ class LanguageController extends Controller
     public function destroy(string $id): JsonResponse
     {
         try {
-            $data = $this->languageService->deleteById($id);
+            $response = $this->languageService->findById($id);
+            $deleteLanguageFolderByCode = $this->languageService->deleteLanguageFolderByCode($response->code);
+            if ($deleteLanguageFolderByCode) {
+                $data = $this->languageService->deleteById($id);
 
-            if ($data) {
-                return response()->json([
-                    'message' => __('language_module.create_list_edit.language') . __('standard_curd_common_label.delete'),
-                    'status_code' => ResponseAlias::HTTP_OK,
-                    'data' => []
-                ], ResponseAlias::HTTP_OK);
+                if ($data) {
+                    return response()->json([
+                        'message' => __('language_module.create_list_edit.language') . __('standard_curd_common_label.delete'),
+                        'status_code' => ResponseAlias::HTTP_OK,
+                        'data' => []
+                    ], ResponseAlias::HTTP_OK);
+                }
             }
 
             return response()->json([

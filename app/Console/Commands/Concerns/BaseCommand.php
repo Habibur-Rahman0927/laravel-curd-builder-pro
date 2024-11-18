@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands\Concerns;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 abstract class BaseCommand extends Command
 {
@@ -358,4 +360,51 @@ abstract class BaseCommand extends Command
         return str_replace('{{ name }}', $name, $content);
     }
 
+    /**
+     * Generate Language for the specified Module.
+     *
+     * @param string $name The name of the model.
+     * @param array $fields An array of fields for the form and blade.
+     * @return \Exception|bool
+     */
+    public function generateLanguage(string $name): bool|Exception
+    {
+        try {
+            $langBasePath = base_path('lang');
+            
+            if (!is_dir($langBasePath)) {
+                throw new \Exception("Source directory not found: {$langBasePath}");
+            }
+
+            $languageFolders = array_filter(glob($langBasePath . '/*'), 'is_dir');
+
+            $languageContent = [
+                'create_list_edit' => [
+                    'list_page_title' => 'List ' . ucwords(str_replace('_', ' ', Str::snake($name))),
+                    lcfirst($name) => $name,
+                    'list_' . lcfirst($name) . '_list' => ucwords(str_replace('_', ' ', Str::snake($name))) . ' List',
+                    'create_page_title' => 'Create ' . ucwords(str_replace('_', ' ', Str::snake($name))),
+                    'edit_page_title' => 'Edit ' . ucwords(str_replace('_', ' ', Str::snake($name))),
+                ],
+                'field_label' => [
+                    'name' => 'Name'
+                ],
+            ];
+
+            foreach ($languageFolders as $folder) {
+                $langFilePath = $folder . '/' . $name . '_module.php';
+
+                if (!file_exists($langFilePath)) {
+                    $content = "<?php\n\nreturn " . var_export($languageContent, true) . ";\n";
+                    file_put_contents($langFilePath, $content);
+                } else {
+                    throw new \Exception("File already exist: {$langFilePath}");
+                } 
+            }
+            return true;
+        } catch (\Exception $e) {
+            $this->error("Error creating Language files: " . $e->getMessage());
+            throw $e;
+        }
+    }
 }
