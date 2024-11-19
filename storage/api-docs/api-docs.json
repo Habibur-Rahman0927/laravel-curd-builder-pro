@@ -148,16 +148,16 @@
                 ]
             }
         },
-        "/api/admin/api-long": {
+        "/api/admin/api-now": {
             "get": {
                 "tags": [
-                    "Long"
+                    "Now"
                 ],
-                "summary": "Get all longs",
-                "operationId": "c9084ae6cac36680d3c47e05685b6cd6",
+                "summary": "Get all nows",
+                "operationId": "4f8e6a9e2dd78bb055456c53f7c95dfc",
                 "responses": {
                     "200": {
-                        "description": "A list of longs"
+                        "description": "A list of nows"
                     }
                 },
                 "security": [
@@ -168,17 +168,181 @@
             },
             "post": {
                 "tags": [
-                    "Long"
+                    "Now"
                 ],
-                "summary": "Create a new long",
-                "operationId": "e322727539fbb3e70301279878bbed45",
+                "summary": "Create a new now",
+                "operationId": "d6d28bcbfef9627d0410f45f47aaccc7",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "first_name": {
+                                    "user_id,users": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Now created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-now/{id}": {
+            "get": {
+                "tags": [
+                    "Now"
+                ],
+                "summary": "Get a now by ID",
+                "operationId": "43f47d60773faa8737d874b331c0b617",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single now object"
+                    },
+                    "404": {
+                        "description": "Now not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Now"
+                ],
+                "summary": "Update an existing now",
+                "operationId": "0c5cbcc116768a698c729bef2f2da170",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id,users": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Now updated successfully"
+                    },
+                    "404": {
+                        "description": "Now not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Now"
+                ],
+                "summary": "Delete a now by ID",
+                "operationId": "aace9322cb562f8c60fae3f4aab91005",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the now to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Now deleted successfully"
+                    },
+                    "404": {
+                        "description": "Now not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-rock": {
+            "get": {
+                "tags": [
+                    "Rock"
+                ],
+                "summary": "Get all rocks",
+                "operationId": "1a3587f57c869ada1ae70c7f83bbc6b1",
+                "responses": {
+                    "200": {
+                        "description": "A list of rocks"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Rock"
+                ],
+                "summary": "Create a new rock",
+                "operationId": "b83afea554714a75362aa2ca559f2273",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id,users": {
                                         "type": "string",
                                         "example": "example_value"
                                     },
@@ -194,7 +358,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Long created successfully"
+                        "description": "Rock created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -207,13 +371,13 @@
                 ]
             }
         },
-        "/api/admin/api-long/{id}": {
+        "/api/admin/api-rock/{id}": {
             "get": {
                 "tags": [
-                    "Long"
+                    "Rock"
                 ],
-                "summary": "Get a long by ID",
-                "operationId": "f9ee51ea3c5ce098a38b650dbf4645b7",
+                "summary": "Get a rock by ID",
+                "operationId": "5ca4af32138025758803ee81963e8de8",
                 "parameters": [
                     {
                         "name": "id",
@@ -226,10 +390,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single long object"
+                        "description": "A single rock object"
                     },
                     "404": {
-                        "description": "Long not found"
+                        "description": "Rock not found"
                     }
                 },
                 "security": [
@@ -240,10 +404,10 @@
             },
             "put": {
                 "tags": [
-                    "Long"
+                    "Rock"
                 ],
-                "summary": "Update an existing long",
-                "operationId": "dea306245e6afe52b2abf201cc89dfed",
+                "summary": "Update an existing rock",
+                "operationId": "389c1b6823eb613eee609ffc7ecf7791",
                 "parameters": [
                     {
                         "name": "id",
@@ -260,7 +424,7 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "first_name": {
+                                    "user_id,users": {
                                         "type": "string",
                                         "example": "example_value"
                                     },
@@ -276,10 +440,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Long updated successfully"
+                        "description": "Rock updated successfully"
                     },
                     "404": {
-                        "description": "Long not found"
+                        "description": "Rock not found"
                     }
                 },
                 "security": [
@@ -290,15 +454,15 @@
             },
             "delete": {
                 "tags": [
-                    "Long"
+                    "Rock"
                 ],
-                "summary": "Delete a long by ID",
-                "operationId": "c6abd44ba13edcbee9bbc1288abf2cbe",
+                "summary": "Delete a rock by ID",
+                "operationId": "cf117c28516dbfa80eb6c02013710f43",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the long to delete",
+                        "description": "ID of the rock to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -307,10 +471,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Long deleted successfully"
+                        "description": "Rock deleted successfully"
                     },
                     "404": {
-                        "description": "Long not found"
+                        "description": "Rock not found"
                     }
                 },
                 "security": [
@@ -320,16 +484,16 @@
                 ]
             }
         },
-        "/api/admin/api-top": {
+        "/api/admin/api-toot": {
             "get": {
                 "tags": [
-                    "Top"
+                    "Toot"
                 ],
-                "summary": "Get all tops",
-                "operationId": "f01d5010ef48768f0667075aa67dec7f",
+                "summary": "Get all toots",
+                "operationId": "d2532a3f2e68cec5934b1b9abe81c7f6",
                 "responses": {
                     "200": {
-                        "description": "A list of tops"
+                        "description": "A list of toots"
                     }
                 },
                 "security": [
@@ -340,10 +504,10 @@
             },
             "post": {
                 "tags": [
-                    "Top"
+                    "Toot"
                 ],
-                "summary": "Create a new top",
-                "operationId": "954d9eb508ca4530f5dfea72e5e289a6",
+                "summary": "Create a new toot",
+                "operationId": "45b966a341c8d2b155e0dd315a9f0298",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -355,6 +519,10 @@
                                         "example": "example_value"
                                     },
                                     "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "user_id,users": {
                                         "type": "string",
                                         "example": "example_value"
                                     }
@@ -366,7 +534,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Top created successfully"
+                        "description": "Toot created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -379,13 +547,13 @@
                 ]
             }
         },
-        "/api/admin/api-top/{id}": {
+        "/api/admin/api-toot/{id}": {
             "get": {
                 "tags": [
-                    "Top"
+                    "Toot"
                 ],
-                "summary": "Get a top by ID",
-                "operationId": "ebbab25b59b0b6449957418dffb7115b",
+                "summary": "Get a toot by ID",
+                "operationId": "b0d6e00b8eedf9e263f87acfa8d556bf",
                 "parameters": [
                     {
                         "name": "id",
@@ -398,10 +566,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single top object"
+                        "description": "A single toot object"
                     },
                     "404": {
-                        "description": "Top not found"
+                        "description": "Toot not found"
                     }
                 },
                 "security": [
@@ -412,10 +580,10 @@
             },
             "put": {
                 "tags": [
-                    "Top"
+                    "Toot"
                 ],
-                "summary": "Update an existing top",
-                "operationId": "13901ea81d227df157bae4a99ad59f17",
+                "summary": "Update an existing toot",
+                "operationId": "e46375f28e5401f7a40edbb2392468c8",
                 "parameters": [
                     {
                         "name": "id",
@@ -439,6 +607,10 @@
                                     "last_name": {
                                         "type": "string",
                                         "example": "example_value"
+                                    },
+                                    "user_id,users": {
+                                        "type": "string",
+                                        "example": "example_value"
                                     }
                                 },
                                 "type": "object"
@@ -448,10 +620,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Top updated successfully"
+                        "description": "Toot updated successfully"
                     },
                     "404": {
-                        "description": "Top not found"
+                        "description": "Toot not found"
                     }
                 },
                 "security": [
@@ -462,15 +634,15 @@
             },
             "delete": {
                 "tags": [
-                    "Top"
+                    "Toot"
                 ],
-                "summary": "Delete a top by ID",
-                "operationId": "0bb6a10b06ac7aacbe275e4770a33abe",
+                "summary": "Delete a toot by ID",
+                "operationId": "349dc0b89ecb8418f9dd4dc8b760444a",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the top to delete",
+                        "description": "ID of the toot to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -479,10 +651,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Top deleted successfully"
+                        "description": "Toot deleted successfully"
                     },
                     "404": {
-                        "description": "Top not found"
+                        "description": "Toot not found"
                     }
                 },
                 "security": [
@@ -504,12 +676,16 @@
     },
     "tags": [
         {
-            "name": "Long",
-            "description": "Long management operations"
+            "name": "Now",
+            "description": "Now management operations"
         },
         {
-            "name": "Top",
-            "description": "Top management operations"
+            "name": "Rock",
+            "description": "Rock management operations"
+        },
+        {
+            "name": "Toot",
+            "description": "Toot management operations"
         },
         {
             "name": "Authentication",

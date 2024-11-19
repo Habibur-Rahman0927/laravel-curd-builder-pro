@@ -72,8 +72,14 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
             if ($softDelete) {
                 $modelTemplate .= "\tuse SoftDeletes;\n\n";
             }
-
-            $fillableFields = array_column($fields, 'name');
+            $fillableFields = [];
+            foreach ($fields as $field) {
+                if ($field['type'] === 'foreignId') {
+                    $fillableFields[] = explode(',', $field['name'])[0]; 
+                } else {
+                    $fillableFields[] = $field['name'];
+                }
+            }
             $modelTemplate .= "\t/**\n\t * The attributes that are mass assignable.\n\t *\n\t * @var array\n\t */\n";
             $modelTemplate .= "\tprotected \$fillable = [\n\t\t'" . implode("',\n\t\t'", $fillableFields) . "'\n\t];\n";
 
@@ -140,6 +146,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger',
                 'float', 'double', 'decimal', 'boolean'
             ];
+            $foreignIdTypes = ['foreignId'];
 
             foreach ($fields as $field) {
                 $fieldType = $field['type'];
@@ -148,6 +155,14 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                 $nullable = isset($field['nullable']) ? '->nullable()' : '';
                 $unique = isset($field['unique']) ? '->unique()' : '';
                 $unsigned = isset($field['unsigned']) ? '->unsigned()' : '';
+
+                if (in_array($fieldType, $foreignIdTypes)) {
+                    $fieldName = explode(",", $field['name'])[0];
+                    $constrainedTable = explode(",", $field['name'])[1];
+                    $foreignId = "->constrained('{$constrainedTable}')->cascadeOnDelete()->cascadeOnUpdate()";
+                } else {
+                    $foreignId = '';
+                }
 
                 if (isset($field['default'])) {
                     if (in_array($fieldType, $numericTypes)) {
@@ -161,7 +176,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
 
                 $comment = isset($field['comment']) ? "->comment('{$field['comment']}')" : '';
 
-                $migrationTemplate .= "\t\t\t\$table->{$fieldType}('{$fieldName}'{$length}){$nullable}{$unique}{$unsigned}{$default}{$comment};\n";
+                $migrationTemplate .= "\t\t\t\$table->{$fieldType}('{$fieldName}'{$length}){$nullable}{$unique}{$unsigned}{$default}{$foreignId}{$comment};\n";
 
                 if (isset($field['index'])) {
                     $migrationTemplate .= "\t\t\t\$table->index('{$fieldName}');\n";

@@ -185,7 +185,8 @@
                                                                 'unsignedMediumInteger' => 'unsignedMediumInteger()',
                                                                 'unsignedSmallInteger' => 'unsignedSmallInteger()',
                                                                 'unsignedTinyInteger' => 'unsignedTinyInteger()',
-                                                                'year' => 'year()' ] as $value => $label)
+                                                                'year' => 'year()',
+                                                                'foreignId' => 'foreignId()' ] as $value => $label)
                                                         <option value="{{ $value }}">{{ $label }}</option>
                                                     @endforeach
                                                 </select>
@@ -447,7 +448,8 @@
                                     'unsignedMediumInteger' => 'unsignedMediumInteger()',
                                     'unsignedSmallInteger' => 'unsignedSmallInteger()',
                                     'unsignedTinyInteger' => 'unsignedTinyInteger()',
-                                    'year' => 'year()' ] as $value => $label)
+                                    'year' => 'year()',
+                                    'foreignId' => 'foreignId()' ] as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
                     </select>
@@ -501,17 +503,19 @@
             const uniqueCheckbox = fieldRowElement.querySelector('input[name*="[unique]"]');
             const indexCheckbox = fieldRowElement.querySelector('input[name*="[index]"]');
             const unsignedCheckbox = fieldRowElement.querySelector('input[name*="[unsigned]"]');
+            const fieldNameInput = fieldRowElement.querySelector('input[name*="[name]"]');
             const lengthInput = fieldRowElement.querySelector('input[name*="[length]"]');
             const defaultInput = fieldRowElement.querySelector('input[name*="[default]"]');
             const commentInput = fieldRowElement.querySelector('input[name*="[comment]"]');
 
             const allowedUnsignedTypes = ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'float', 'double', 'decimal'];
             const noLengthRequiredTypes = ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'binary', 'boolean', 'text', 'date', 'dateTime', 'time', 'json', 'uuid', 'foreignId', 'mediumText', 'longText', 'year'];
-            const noDefualtRequiredTypes = ['text', 'mediumText', 'longText', 'tinyText', 'binary', 'json'];
+            const noDefualtRequiredTypes = ['text', 'mediumText', 'longText', 'tinyText', 'binary', 'json', 'foreignId'];
             const defualtNumberTypeInput = ['integer', 'bigInteger', 'mediumInteger', 'mediumInteger', 'smallInteger', 'tinyInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger'];
-            const noUniqueRequiredTypes = ['boolean', 'binary', 'text', 'mediumText', 'longText', 'tinyText', 'json'];
+            const noUniqueRequiredTypes = ['boolean', 'binary', 'text', 'mediumText', 'longText', 'tinyText', 'json', 'foreignId'];
             const noIndexRequiredTypes = ['boolean', 'binary', 'text', 'mediumText', 'longText', 'tinyText', 'json'];
             const floatTypes = ['float', 'double', 'decimal'];
+            const noNullableTypes = ['foreignId'];
 
             // Reset all inputs before applying new settings
             if (nullableCheckbox) {
@@ -545,11 +549,8 @@
                 commentInput.placeholder = 'Comment';
             }
 
-            if (unsignedCheckbox) {
-                unsignedCheckbox.disabled = !allowedUnsignedTypes.includes(selectElement.value);
-                if (!unsignedCheckbox.disabled) {
-                    unsignedCheckbox.checked = false;
-                }
+            if (nullableCheckbox) {
+                nullableCheckbox.disabled = noNullableTypes.includes(selectElement.value);
             }
 
             if (uniqueCheckbox) {
@@ -558,6 +559,21 @@
 
             if (indexCheckbox) {
                 indexCheckbox.disabled = noIndexRequiredTypes.includes(selectElement.value);
+            }
+
+            if (unsignedCheckbox) {
+                unsignedCheckbox.disabled = !allowedUnsignedTypes.includes(selectElement.value);
+                if (!unsignedCheckbox.disabled) {
+                    unsignedCheckbox.checked = false;
+                }
+            }
+
+            if (fieldNameInput) {
+                if (selectElement.value === 'foreignId') {
+                    fieldNameInput.placeholder = 'Demo: user_id,users';
+                } else {
+                    fieldNameInput.placeholder = 'Field name';
+                }
             }
 
             if (lengthInput) {
@@ -796,7 +812,16 @@
             fields.forEach(field => {
                 let fieldLine = '';
                 if (field.name) {
-                    fieldLine += `            $table->${field.type}('${field.name}'${field.length ? `, ${field.length}` : ''})`;
+                    let fieldName = field.name;
+                    let tableName = '';
+                    if (['foreignId'].includes(field.type)) {
+                        fieldName = field.name.split(',')[0];
+                        tableName = field.name.split(',')[1];
+                    }
+                    fieldLine += `            $table->${field.type}('${fieldName}'${field.length ? `, ${field.length}` : ''})`;
+                    if (['foreignId'].includes(field.type)) {
+                        fieldLine += `->constrained('${tableName}')->cascadeOnDelete()->cascadeOnUpdate()`;
+                    }
 
                     if (['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'float', 'double', 'decimal'].includes(field.type) && field.unsigned) {
                         fieldLine += '->unsigned()';
@@ -882,8 +907,11 @@
         tableBody.innerHTML = '';
 
         fieldContainer.forEach(function (row) {
-            const fieldName = row.querySelector('input[name^="fields"][name$="[name]"]').value;
-
+            const fieldType = row.querySelector('select[name^="fields"][name$="[type]"]').value;
+            let fieldName = row.querySelector('input[name^="fields"][name$="[name]"]').value;
+            if (['foreignId'].includes(fieldType)) {
+                fieldName = fieldName.split(',')[0];
+            }
             if (fieldName) {
                 const tr = document.createElement('tr');
                 
