@@ -74,8 +74,10 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
             }
             $fillableFields = [];
             foreach ($fields as $field) {
-                if ($field['type'] === 'foreignId') {
+                if (in_array($field['type'], ['foreignId'])) {
                     $fillableFields[] = explode(',', $field['name'])[0]; 
+                } else if (in_array($field['type'], ['foreignIdFor'])) {
+                    $fillableFields[] = Str::snake($field['name']) . '_id';
                 } else {
                     $fillableFields[] = $field['name'];
                 }
@@ -147,6 +149,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                 'float', 'double', 'decimal', 'boolean'
             ];
             $foreignIdTypes = ['foreignId'];
+            $foreignIdForTypes = ['foreignIdFor'];
 
             foreach ($fields as $field) {
                 $fieldType = $field['type'];
@@ -160,7 +163,14 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                     $fieldName = explode(",", $field['name'])[0];
                     $constrainedTable = explode(",", $field['name'])[1];
                     $foreignId = "->constrained('{$constrainedTable}')->cascadeOnDelete()->cascadeOnUpdate()";
-                } else {
+                } else if (in_array($fieldType, $foreignIdForTypes)) {
+                    $fieldName = "\App\Models\\" . $fieldName . "::class";
+                    $foreignId = '';
+                    if (isset($field['index'])) {
+                        $foreignId .='->index()';
+                    }
+                    $foreignId .= "->constrained()->cascadeOnDelete()->cascadeOnUpdate()";
+                }else {
                     $foreignId = '';
                 }
 
@@ -176,9 +186,13 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
 
                 $comment = isset($field['comment']) ? "->comment('{$field['comment']}')" : '';
 
-                $migrationTemplate .= "\t\t\t\$table->{$fieldType}('{$fieldName}'{$length}){$nullable}{$unique}{$unsigned}{$default}{$foreignId}{$comment};\n";
+                if ($fieldType === 'foreignIdFor') {
+                    $migrationTemplate .= "\t\t\t\$table->{$fieldType}({$fieldName}){$nullable}{$default}{$foreignId}{$comment};\n";
+                } else {
+                    $migrationTemplate .= "\t\t\t\$table->{$fieldType}('{$fieldName}'{$length}){$nullable}{$unique}{$unsigned}{$default}{$foreignId}{$comment};\n";
+                }
 
-                if (isset($field['index'])) {
+                if (isset($field['index']) && !in_array($fieldType, $foreignIdForTypes)) {
                     $migrationTemplate .= "\t\t\t\$table->index('{$fieldName}');\n";
                 }
             }

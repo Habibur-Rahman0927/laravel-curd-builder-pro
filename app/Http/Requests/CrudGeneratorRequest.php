@@ -26,7 +26,7 @@ class CrudGeneratorRequest extends FormRequest
             'use_case_type' => 'required',
             'softdelete' => 'nullable|boolean',
             'fields' => 'required|array',
-            'fields.*.type' => 'required|string|in:bigInteger,binary,boolean,char,dateTime,date,decimal,double,float,integer,ipAddress,json,longText,macAddress,mediumInteger,mediumText,smallInteger,string,text,time,tinyInteger,tinyText,unsignedBigInteger,unsignedInteger,unsignedMediumInteger,unsignedSmallInteger,unsignedTinyInteger,uuid,year,foreignId',
+            'fields.*.type' => 'required|string|in:bigInteger,binary,boolean,char,dateTime,date,decimal,double,float,integer,ipAddress,json,longText,macAddress,mediumInteger,mediumText,smallInteger,string,text,time,tinyInteger,tinyText,unsignedBigInteger,unsignedInteger,unsignedMediumInteger,unsignedSmallInteger,unsignedTinyInteger,uuid,year,foreignId,foreignIdFor',
             'fields.*.name' => 'required|string|max:255',
             'fields.*.nullable' => 'nullable|string|in:nullable',
             'fields.*.unique' => 'nullable|string|in:unique',

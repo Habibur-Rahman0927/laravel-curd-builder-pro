@@ -186,7 +186,8 @@
                                                                 'unsignedSmallInteger' => 'unsignedSmallInteger()',
                                                                 'unsignedTinyInteger' => 'unsignedTinyInteger()',
                                                                 'year' => 'year()',
-                                                                'foreignId' => 'foreignId()' ] as $value => $label)
+                                                                'foreignId' => 'foreignId()',
+                                                                'foreignIdFor' => 'foreignIdFor()', ] as $value => $label)
                                                         <option value="{{ $value }}">{{ $label }}</option>
                                                     @endforeach
                                                 </select>
@@ -449,7 +450,8 @@
                                     'unsignedSmallInteger' => 'unsignedSmallInteger()',
                                     'unsignedTinyInteger' => 'unsignedTinyInteger()',
                                     'year' => 'year()',
-                                    'foreignId' => 'foreignId()' ] as $value => $label)
+                                    'foreignId' => 'foreignId()',
+                                    'foreignIdFor' => 'foreignIdFor()', ] as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
                     </select>
@@ -509,13 +511,13 @@
             const commentInput = fieldRowElement.querySelector('input[name*="[comment]"]');
 
             const allowedUnsignedTypes = ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'float', 'double', 'decimal'];
-            const noLengthRequiredTypes = ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'binary', 'boolean', 'text', 'date', 'dateTime', 'time', 'json', 'uuid', 'foreignId', 'mediumText', 'longText', 'year'];
-            const noDefualtRequiredTypes = ['text', 'mediumText', 'longText', 'tinyText', 'binary', 'json', 'foreignId'];
-            const defualtNumberTypeInput = ['integer', 'bigInteger', 'mediumInteger', 'mediumInteger', 'smallInteger', 'tinyInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger'];
-            const noUniqueRequiredTypes = ['boolean', 'binary', 'text', 'mediumText', 'longText', 'tinyText', 'json', 'foreignId'];
+            const noLengthRequiredTypes = ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'binary', 'boolean', 'text', 'date', 'dateTime', 'time', 'json', 'uuid', 'foreignId', 'foreignIdFor', 'mediumText', 'longText', 'year'];
+            const noDefualtRequiredTypes = ['text', 'mediumText', 'longText', 'tinyText', 'binary', 'json'];
+            const defualtNumberTypeInput = ['integer', 'bigInteger', 'mediumInteger', 'mediumInteger', 'smallInteger', 'tinyInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'foreignId', 'foreignIdFor'];
+            const noUniqueRequiredTypes = ['boolean', 'binary', 'text', 'mediumText', 'longText', 'tinyText', 'json', 'foreignId', 'foreignIdFor'];
             const noIndexRequiredTypes = ['boolean', 'binary', 'text', 'mediumText', 'longText', 'tinyText', 'json'];
             const floatTypes = ['float', 'double', 'decimal'];
-            const noNullableTypes = ['foreignId'];
+            const noNullableTypes = [];
 
             // Reset all inputs before applying new settings
             if (nullableCheckbox) {
@@ -570,9 +572,56 @@
 
             if (fieldNameInput) {
                 if (selectElement.value === 'foreignId') {
+                    fieldNameInput.style.display = 'block';
+                    fieldNameInput.readOnly = false;
+                    fieldNameInput.value = '';
                     fieldNameInput.placeholder = 'Demo: user_id,users';
+                    let modelSelect = fieldRowElement.querySelector('select[name="modelSelect"]');
+                    if (modelSelect) {
+                        modelSelect.remove();
+                    }
+                } else if (selectElement.value === 'foreignIdFor') {
+                    fieldNameInput.style.display = 'none';
+                    fieldNameInput.type = 'text';
+                    fieldNameInput.readOnly = true;
+                    let modelSelect = fieldRowElement.querySelector('select[name="modelSelect"]');
+                    if (!modelSelect) {
+                        modelSelect = document.createElement('select');
+                        modelSelect.name = 'modelSelect';
+                        modelSelect.classList.add('form-control');
+                        modelSelect.style.display = 'inline-block';
+                        modelSelect.style.width = '100%';
+                        modelSelect.style.marginTop = '5px';
+
+                        const defaultOption = document.createElement('option');
+                        defaultOption.value = '';
+                        defaultOption.textContent = ' -- Select a model -- ';
+                        defaultOption.disabled = true;
+                        defaultOption.selected = true;
+                        modelSelect.appendChild(defaultOption);
+
+                        modelNames.forEach(model => {
+                            const option = document.createElement('option');
+                            option.value = model;
+                            option.textContent = model;
+                            modelSelect.appendChild(option);
+                        });
+
+                        fieldNameInput.insertAdjacentElement('afterend', modelSelect);
+
+                        modelSelect.addEventListener('change', function () {
+                            fieldNameInput.value = modelSelect.value;
+                        });
+                    }
                 } else {
+                    fieldNameInput.style.display = 'block';
                     fieldNameInput.placeholder = 'Field name';
+                    fieldNameInput.readOnly = false;
+                    fieldNameInput.value = '';
+                    let modelSelect = fieldRowElement.querySelector('select[name="modelSelect"]');
+                    if (modelSelect) {
+                        modelSelect.remove();
+                    }
                 }
             }
 
@@ -818,9 +867,10 @@
                         fieldName = field.name.split(',')[0];
                         tableName = field.name.split(',')[1];
                     }
-                    fieldLine += `            $table->${field.type}('${fieldName}'${field.length ? `, ${field.length}` : ''})`;
-                    if (['foreignId'].includes(field.type)) {
-                        fieldLine += `->constrained('${tableName}')->cascadeOnDelete()->cascadeOnUpdate()`;
+                    if (['foreignIdFor'].includes(field.type)) {
+                        fieldLine += `$table->${field.type}(\\App\\Models\\${fieldName}::class)`;
+                    } else {
+                        fieldLine += `            $table->${field.type}('${fieldName}'${field.length ? `, ${field.length}` : ''})`;
                     }
 
                     if (['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'float', 'double', 'decimal'].includes(field.type) && field.unsigned) {
@@ -829,12 +879,18 @@
 
                     if (field.nullable) fieldLine += '->nullable()';
                     if (field.default) {
-                        if (field.type === 'boolean' || ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'float', 'double', 'decimal'].includes(field.type)) {
+                        if (field.type === 'boolean' || ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'float', 'double', 'decimal', 'foreignId', 'foreignIdFor'].includes(field.type)) {
                             fieldLine += `->default(${field.default})`;
                         } else {
                             fieldLine += `->default('${field.default}')`;
                         }
-                    } 
+                    }
+                    if (['foreignId'].includes(field.type)) {
+                        fieldLine += `->constrained('${tableName}')->cascadeOnDelete()->cascadeOnUpdate()`;
+                    }
+                    if (['foreignIdFor'].includes(field.type)) {
+                        fieldLine += `->constrained()->cascadeOnDelete()->cascadeOnUpdate()`;
+                    }
                     if (field.unique) fieldLine += '->unique()';
                     if (field.index) fieldLine += '->index()';
                     if (field.comment) fieldLine += `->comment('${field.comment}')`;
@@ -871,7 +927,19 @@
 
         modelContent += `\nclass ${modelName} extends Model\n{\n    use HasFactory${softDeleteEnabled ? ', SoftDeletes' : ''};\n\n    protected $fillable = [\n`;
 
-        const fillableFields = fields.map(field => `'${field.name}'`).join(',\n\t');
+        const fillableFields = fields.map(field => {
+            let fieldName = field.name;
+
+            if (['foreignIdFor'].includes(field.type)) {
+                fieldName = fieldName.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase() + '_id';
+            }
+
+            if (['foreignId'].includes(field.type)) {
+                fieldName = field.name.split(',')[0];
+            }
+
+            return `'${fieldName}'`;
+        }).join(',\n\t');
         modelContent += `        ${fillableFields}\n    ];\n\n`;
 
         relationships.forEach(relationship => {
@@ -911,6 +979,9 @@
             let fieldName = row.querySelector('input[name^="fields"][name$="[name]"]').value;
             if (['foreignId'].includes(fieldType)) {
                 fieldName = fieldName.split(',')[0];
+            }
+            if (['foreignIdFor'].includes(fieldType)) {
+                fieldName = fieldName.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase() + '_id';
             }
             if (fieldName) {
                 const tr = document.createElement('tr');

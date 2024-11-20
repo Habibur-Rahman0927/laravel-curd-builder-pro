@@ -148,16 +148,16 @@
                 ]
             }
         },
-        "/api/admin/api-now": {
+        "/api/admin/api-bok": {
             "get": {
                 "tags": [
-                    "Now"
+                    "Bok"
                 ],
-                "summary": "Get all nows",
-                "operationId": "4f8e6a9e2dd78bb055456c53f7c95dfc",
+                "summary": "Get all boks",
+                "operationId": "7d132efac38f137ee23c081666c0310c",
                 "responses": {
                     "200": {
-                        "description": "A list of nows"
+                        "description": "A list of boks"
                     }
                 },
                 "security": [
@@ -168,346 +168,10 @@
             },
             "post": {
                 "tags": [
-                    "Now"
+                    "Bok"
                 ],
-                "summary": "Create a new now",
-                "operationId": "d6d28bcbfef9627d0410f45f47aaccc7",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "user_id,users": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Now created successfully"
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/admin/api-now/{id}": {
-            "get": {
-                "tags": [
-                    "Now"
-                ],
-                "summary": "Get a now by ID",
-                "operationId": "43f47d60773faa8737d874b331c0b617",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "A single now object"
-                    },
-                    "404": {
-                        "description": "Now not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Now"
-                ],
-                "summary": "Update an existing now",
-                "operationId": "0c5cbcc116768a698c729bef2f2da170",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "user_id,users": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Now updated successfully"
-                    },
-                    "404": {
-                        "description": "Now not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Now"
-                ],
-                "summary": "Delete a now by ID",
-                "operationId": "aace9322cb562f8c60fae3f4aab91005",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the now to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Now deleted successfully"
-                    },
-                    "404": {
-                        "description": "Now not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/admin/api-rock": {
-            "get": {
-                "tags": [
-                    "Rock"
-                ],
-                "summary": "Get all rocks",
-                "operationId": "1a3587f57c869ada1ae70c7f83bbc6b1",
-                "responses": {
-                    "200": {
-                        "description": "A list of rocks"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Rock"
-                ],
-                "summary": "Create a new rock",
-                "operationId": "b83afea554714a75362aa2ca559f2273",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "user_id,users": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    },
-                                    "last_name": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Rock created successfully"
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/admin/api-rock/{id}": {
-            "get": {
-                "tags": [
-                    "Rock"
-                ],
-                "summary": "Get a rock by ID",
-                "operationId": "5ca4af32138025758803ee81963e8de8",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "A single rock object"
-                    },
-                    "404": {
-                        "description": "Rock not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Rock"
-                ],
-                "summary": "Update an existing rock",
-                "operationId": "389c1b6823eb613eee609ffc7ecf7791",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "user_id,users": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    },
-                                    "last_name": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Rock updated successfully"
-                    },
-                    "404": {
-                        "description": "Rock not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Rock"
-                ],
-                "summary": "Delete a rock by ID",
-                "operationId": "cf117c28516dbfa80eb6c02013710f43",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the rock to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Rock deleted successfully"
-                    },
-                    "404": {
-                        "description": "Rock not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/admin/api-toot": {
-            "get": {
-                "tags": [
-                    "Toot"
-                ],
-                "summary": "Get all toots",
-                "operationId": "d2532a3f2e68cec5934b1b9abe81c7f6",
-                "responses": {
-                    "200": {
-                        "description": "A list of toots"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Toot"
-                ],
-                "summary": "Create a new toot",
-                "operationId": "45b966a341c8d2b155e0dd315a9f0298",
+                "summary": "Create a new bok",
+                "operationId": "d240324c6989af87734e05b1384335ff",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -518,11 +182,11 @@
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "last_name": {
+                                    "user_id,users": {
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "user_id,users": {
+                                    "PermissionGroup": {
                                         "type": "string",
                                         "example": "example_value"
                                     }
@@ -534,7 +198,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Toot created successfully"
+                        "description": "Bok created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -547,13 +211,13 @@
                 ]
             }
         },
-        "/api/admin/api-toot/{id}": {
+        "/api/admin/api-bok/{id}": {
             "get": {
                 "tags": [
-                    "Toot"
+                    "Bok"
                 ],
-                "summary": "Get a toot by ID",
-                "operationId": "b0d6e00b8eedf9e263f87acfa8d556bf",
+                "summary": "Get a bok by ID",
+                "operationId": "ff0db4903da9b396fa3fa93a9f67e66f",
                 "parameters": [
                     {
                         "name": "id",
@@ -566,10 +230,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single toot object"
+                        "description": "A single bok object"
                     },
                     "404": {
-                        "description": "Toot not found"
+                        "description": "Bok not found"
                     }
                 },
                 "security": [
@@ -580,10 +244,10 @@
             },
             "put": {
                 "tags": [
-                    "Toot"
+                    "Bok"
                 ],
-                "summary": "Update an existing toot",
-                "operationId": "e46375f28e5401f7a40edbb2392468c8",
+                "summary": "Update an existing bok",
+                "operationId": "62c9ea3b040f1a2d675ac953fb8b3b6d",
                 "parameters": [
                     {
                         "name": "id",
@@ -604,11 +268,11 @@
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "last_name": {
+                                    "user_id,users": {
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "user_id,users": {
+                                    "PermissionGroup": {
                                         "type": "string",
                                         "example": "example_value"
                                     }
@@ -620,10 +284,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Toot updated successfully"
+                        "description": "Bok updated successfully"
                     },
                     "404": {
-                        "description": "Toot not found"
+                        "description": "Bok not found"
                     }
                 },
                 "security": [
@@ -634,15 +298,15 @@
             },
             "delete": {
                 "tags": [
-                    "Toot"
+                    "Bok"
                 ],
-                "summary": "Delete a toot by ID",
-                "operationId": "349dc0b89ecb8418f9dd4dc8b760444a",
+                "summary": "Delete a bok by ID",
+                "operationId": "2d7f63156c45b678c1c84298bd6921fe",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the toot to delete",
+                        "description": "ID of the bok to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -651,10 +315,190 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Toot deleted successfully"
+                        "description": "Bok deleted successfully"
                     },
                     "404": {
-                        "description": "Toot not found"
+                        "description": "Bok not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-khan": {
+            "get": {
+                "tags": [
+                    "Khan"
+                ],
+                "summary": "Get all khans",
+                "operationId": "fdd00a7adc972b0115ae2a975781ef4f",
+                "responses": {
+                    "200": {
+                        "description": "A list of khans"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Khan"
+                ],
+                "summary": "Create a new khan",
+                "operationId": "418f2b9f1ef51a2b31b7cc5acad76b97",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "user_id,users": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "PermissionGroup": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Khan created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-khan/{id}": {
+            "get": {
+                "tags": [
+                    "Khan"
+                ],
+                "summary": "Get a khan by ID",
+                "operationId": "e731aaab2af48e9c5bfc3e9e61d535da",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single khan object"
+                    },
+                    "404": {
+                        "description": "Khan not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Khan"
+                ],
+                "summary": "Update an existing khan",
+                "operationId": "035978af652ce792aa677df133275b1f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "user_id,users": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "PermissionGroup": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Khan updated successfully"
+                    },
+                    "404": {
+                        "description": "Khan not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Khan"
+                ],
+                "summary": "Delete a khan by ID",
+                "operationId": "7e90ff1ae7f540c9cc6a9d8be4936ef4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the khan to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Khan deleted successfully"
+                    },
+                    "404": {
+                        "description": "Khan not found"
                     }
                 },
                 "security": [
@@ -676,16 +520,12 @@
     },
     "tags": [
         {
-            "name": "Now",
-            "description": "Now management operations"
+            "name": "Bok",
+            "description": "Bok management operations"
         },
         {
-            "name": "Rock",
-            "description": "Rock management operations"
-        },
-        {
-            "name": "Toot",
-            "description": "Toot management operations"
+            "name": "Khan",
+            "description": "Khan management operations"
         },
         {
             "name": "Authentication",
