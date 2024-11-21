@@ -46,6 +46,17 @@
         .table {
             min-width: 800px;
         }
+        .applicable-placeholder {
+            font-style: italic;
+            color: #6c757d;
+            background-color: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+            width: 100%;
+        }
+
     
     </style>
 @endsection
@@ -157,18 +168,19 @@
                                         <tr class="field-row">
                                             <td>
                                                 <select name="fields[0][type]" class="form-select" required>
-                                                    @foreach ([ 'bigInteger' => 'bigInteger()',
+                                                    @foreach ([ 'string' => 'string()',
+                                                                'integer' => 'integer()',
+                                                                'decimal' => 'decimal()',
+                                                                'uuid' => 'uuid()',
+                                                                'ulid' => 'ulid()',
+                                                                'bigInteger' => 'bigInteger()',
                                                                 'boolean' => 'boolean()',
                                                                 'dateTime' => 'dateTime()',
                                                                 'date' => 'date()',
-                                                                'decimal' => 'decimal()',
-                                                                'integer' => 'integer()',
                                                                 'json' => 'json()',
                                                                 'longText' => 'longText()',
-                                                                'string' => 'string()',
                                                                 'text' => 'text()',
                                                                 'time' => 'time()',
-                                                                'uuid' => 'uuid()',
                                                                 'binary' => 'binary()',
                                                                 'char' => 'char()',
                                                                 'double' => 'double()',
@@ -326,6 +338,7 @@
                                                             <th>Edit</th>
                                                             <th>List</th>
                                                             <th>Input Type</th>
+                                                            <th>Model/Other Options</th>
                                                             <th>Validation</th>
                                                         </tr>
                                                     </thead>
@@ -421,18 +434,19 @@
         row.innerHTML = `
                 <td>
                     <select name="fields[${fieldIndex}][type]" class="form-select" required>
-                        @foreach ([ 'bigInteger' => 'bigInteger()',
+                        @foreach ([ 'string' => 'string()',
+                                    'decimal' => 'decimal()',
+                                    'integer' => 'integer()',
+                                    'uuid' => 'uuid()',
+                                    'ulid' => 'ulid()',
+                                    'bigInteger' => 'bigInteger()',
                                     'boolean' => 'boolean()',
                                     'dateTime' => 'dateTime()',
                                     'date' => 'date()',
-                                    'decimal' => 'decimal()',
-                                    'integer' => 'integer()',
                                     'json' => 'json()',
                                     'longText' => 'longText()',
-                                    'string' => 'string()',
                                     'text' => 'text()',
                                     'time' => 'time()',
-                                    'uuid' => 'uuid()',
                                     'binary' => 'binary()',
                                     'char' => 'char()',
                                     'double' => 'double()',
@@ -511,7 +525,7 @@
             const commentInput = fieldRowElement.querySelector('input[name*="[comment]"]');
 
             const allowedUnsignedTypes = ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'float', 'double', 'decimal'];
-            const noLengthRequiredTypes = ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'binary', 'boolean', 'text', 'date', 'dateTime', 'time', 'json', 'uuid', 'foreignId', 'foreignIdFor', 'mediumText', 'longText', 'year'];
+            const noLengthRequiredTypes = ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'binary', 'boolean', 'text', 'date', 'dateTime', 'time', 'json', 'uuid', 'ulid', 'foreignId', 'foreignIdFor', 'mediumText', 'longText', 'year'];
             const noDefualtRequiredTypes = ['text', 'mediumText', 'longText', 'tinyText', 'binary', 'json'];
             const defualtNumberTypeInput = ['integer', 'bigInteger', 'mediumInteger', 'mediumInteger', 'smallInteger', 'tinyInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'foreignId', 'foreignIdFor'];
             const noUniqueRequiredTypes = ['boolean', 'binary', 'text', 'mediumText', 'longText', 'tinyText', 'json', 'foreignId', 'foreignIdFor'];
@@ -1050,7 +1064,7 @@
                 inputTypeSelect.name = `fieldNames[${fieldName}][input_type]`;
 
                 // List of input types
-                const inputTypes = ['text', 'number', 'date', 'email', 'password', 'checkbox', 'textarea'];
+                const inputTypes = ['text', 'email', 'number', 'date', 'password', 'select', 'checkbox', 'radio', 'textarea'];
                 inputTypes.forEach(type => {
                     const option = document.createElement('option');
                     option.value = type;
@@ -1062,6 +1076,66 @@
                 inputTypeSelect.disabled = true;
                 tdInputType.appendChild(inputTypeSelect);
                 tr.appendChild(tdInputType);
+
+                const tdModelAndOtherOptions = document.createElement('td');
+
+                // Create the select dropdown for models
+                const modelSelect = document.createElement('select');
+                modelSelect.classList.add('form-control');
+                modelSelect.name = `fieldNames[${fieldName}][model_name]`;
+                modelSelect.style.display = 'none';
+                modelSelect.disabled = true;
+
+                modelNames.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model;
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+                tdModelAndOtherOptions.appendChild(modelSelect);
+
+                // Create a placeholder span for "Not Applicable"
+                const placeholder = document.createElement('span');
+                placeholder.textContent = 'Not Applicable';
+                placeholder.style.display = 'block';
+                placeholder.classList.add('applicable-placeholder');
+                tdModelAndOtherOptions.appendChild(placeholder);
+
+                const extraInput = document.createElement('input');
+                extraInput.type = 'text';
+                extraInput.name = `fieldNames[${fieldName}][extra_values]`;
+                extraInput.placeholder = 'Enter comma-separated values';
+                extraInput.classList.add('form-control');
+                extraInput.style.display = 'none';
+                extraInput.disabled = true;
+                tdModelAndOtherOptions.appendChild(extraInput);
+
+                // Add logic to toggle between dropdown and placeholder
+                inputTypeSelect.addEventListener('change', function () {
+                    if (inputTypeSelect.value === 'select') {
+                        modelSelect.style.display = 'block';
+                        modelSelect.disabled = false;
+                        placeholder.style.display = 'none';
+                        extraInput.style.display = 'none';
+                        extraInput.disabled = true;
+                    } else if (inputTypeSelect.value === 'radio' || inputTypeSelect.value === 'checkbox') {
+                        modelSelect.style.display = 'none';
+                        modelSelect.disabled = true;
+                        placeholder.style.display = 'none';
+                        extraInput.style.display = 'block';
+                        extraInput.disabled = false;
+                    } else {
+                        modelSelect.style.display = 'none';
+                        modelSelect.disabled = true;
+                        placeholder.style.display = 'block';
+                        extraInput.style.display = 'none';
+                        extraInput.disabled = false;
+                    }
+                });
+
+                
+                tr.appendChild(tdModelAndOtherOptions);
+
 
                 // Validation container setup
                 const tdValidation = document.createElement('td');
