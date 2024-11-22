@@ -148,16 +148,16 @@
                 ]
             }
         },
-        "/api/admin/api-bok": {
+        "/api/admin/api-enter": {
             "get": {
                 "tags": [
-                    "Bok"
+                    "Enter"
                 ],
-                "summary": "Get all boks",
-                "operationId": "7d132efac38f137ee23c081666c0310c",
+                "summary": "Get all enters",
+                "operationId": "2de46bb8a0945c2db0486e22511b5ecb",
                 "responses": {
                     "200": {
-                        "description": "A list of boks"
+                        "description": "A list of enters"
                     }
                 },
                 "security": [
@@ -168,10 +168,10 @@
             },
             "post": {
                 "tags": [
-                    "Bok"
+                    "Enter"
                 ],
-                "summary": "Create a new bok",
-                "operationId": "d240324c6989af87734e05b1384335ff",
+                "summary": "Create a new enter",
+                "operationId": "7fedfb679f8377dba5e0dd115e9b356d",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -182,11 +182,7 @@
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "user_id,users": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    },
-                                    "PermissionGroup": {
+                                    "last_name": {
                                         "type": "string",
                                         "example": "example_value"
                                     }
@@ -198,7 +194,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Bok created successfully"
+                        "description": "Enter created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -211,13 +207,13 @@
                 ]
             }
         },
-        "/api/admin/api-bok/{id}": {
+        "/api/admin/api-enter/{id}": {
             "get": {
                 "tags": [
-                    "Bok"
+                    "Enter"
                 ],
-                "summary": "Get a bok by ID",
-                "operationId": "ff0db4903da9b396fa3fa93a9f67e66f",
+                "summary": "Get a enter by ID",
+                "operationId": "d19e6134a74fca45262bc19caa11aeb4",
                 "parameters": [
                     {
                         "name": "id",
@@ -230,10 +226,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single bok object"
+                        "description": "A single enter object"
                     },
                     "404": {
-                        "description": "Bok not found"
+                        "description": "Enter not found"
                     }
                 },
                 "security": [
@@ -244,10 +240,10 @@
             },
             "put": {
                 "tags": [
-                    "Bok"
+                    "Enter"
                 ],
-                "summary": "Update an existing bok",
-                "operationId": "62c9ea3b040f1a2d675ac953fb8b3b6d",
+                "summary": "Update an existing enter",
+                "operationId": "541f4be3843c588c138dc76d400dc73a",
                 "parameters": [
                     {
                         "name": "id",
@@ -268,11 +264,7 @@
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "user_id,users": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    },
-                                    "PermissionGroup": {
+                                    "last_name": {
                                         "type": "string",
                                         "example": "example_value"
                                     }
@@ -284,10 +276,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Bok updated successfully"
+                        "description": "Enter updated successfully"
                     },
                     "404": {
-                        "description": "Bok not found"
+                        "description": "Enter not found"
                     }
                 },
                 "security": [
@@ -298,15 +290,15 @@
             },
             "delete": {
                 "tags": [
-                    "Bok"
+                    "Enter"
                 ],
-                "summary": "Delete a bok by ID",
-                "operationId": "2d7f63156c45b678c1c84298bd6921fe",
+                "summary": "Delete a enter by ID",
+                "operationId": "00212db28a80050907d9b4616e743535",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the bok to delete",
+                        "description": "ID of the enter to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -315,190 +307,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Bok deleted successfully"
+                        "description": "Enter deleted successfully"
                     },
                     "404": {
-                        "description": "Bok not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/admin/api-khan": {
-            "get": {
-                "tags": [
-                    "Khan"
-                ],
-                "summary": "Get all khans",
-                "operationId": "fdd00a7adc972b0115ae2a975781ef4f",
-                "responses": {
-                    "200": {
-                        "description": "A list of khans"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Khan"
-                ],
-                "summary": "Create a new khan",
-                "operationId": "418f2b9f1ef51a2b31b7cc5acad76b97",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "first_name": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    },
-                                    "user_id,users": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    },
-                                    "PermissionGroup": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Khan created successfully"
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/admin/api-khan/{id}": {
-            "get": {
-                "tags": [
-                    "Khan"
-                ],
-                "summary": "Get a khan by ID",
-                "operationId": "e731aaab2af48e9c5bfc3e9e61d535da",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "A single khan object"
-                    },
-                    "404": {
-                        "description": "Khan not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Khan"
-                ],
-                "summary": "Update an existing khan",
-                "operationId": "035978af652ce792aa677df133275b1f",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "first_name": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    },
-                                    "user_id,users": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    },
-                                    "PermissionGroup": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Khan updated successfully"
-                    },
-                    "404": {
-                        "description": "Khan not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Khan"
-                ],
-                "summary": "Delete a khan by ID",
-                "operationId": "7e90ff1ae7f540c9cc6a9d8be4936ef4",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the khan to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Khan deleted successfully"
-                    },
-                    "404": {
-                        "description": "Khan not found"
+                        "description": "Enter not found"
                     }
                 },
                 "security": [
@@ -520,12 +332,8 @@
     },
     "tags": [
         {
-            "name": "Bok",
-            "description": "Bok management operations"
-        },
-        {
-            "name": "Khan",
-            "description": "Khan management operations"
+            "name": "Enter",
+            "description": "Enter management operations"
         },
         {
             "name": "Authentication",

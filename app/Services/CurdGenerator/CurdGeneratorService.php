@@ -307,6 +307,138 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
         }
     }
 
+    public function generateController(string $modelName, $fieldNames): array
+    {
+        try {
+            $className = ucfirst($modelName) . 'Controller';
+            $serviceName = lcfirst($modelName) . 'Service';
+
+            $filePath = app_path("Http/Controllers/Admin/{$className}.php");
+
+            if (File::exists($filePath)) {
+                return ['success' => false, 'error' => 'File Already Exist'];
+            }
+
+            // Initialize an array to store services to inject
+            $serviceImports = [];
+            $serviceImports[] = "use App\Services\\$modelName\\I{$modelName}Service;\n";
+            $serviceInjections = [];
+            $serviceInjections[] = "private I{$modelName}Service \${$serviceName},\n";
+
+            // Loop through field names and check if the field is of 'select' type and has a 'model_name'
+            foreach ($fieldNames as $field => $fieldData) {
+                if ($fieldData['input_type'] === 'select' && isset($fieldData['model_name']) && ($fieldData['create'] === 'on' || $fieldData['edit'] === 'on')) {
+                    $serviceImports[] = "use App\Services\\{$fieldData['model_name']}\\I{$fieldData['model_name']}Service;\n"; 
+                    $serviceInjections[] = "private I{$fieldData['model_name']}Service \$" . lcfirst($fieldData['model_name']) . "Service,\n";
+                }
+            }
+
+            $template = "<?php\n\n" .
+    "namespace App\Http\Controllers\Admin;\n\n" .
+    "use App\Http\Controllers\Controller;\n" ;
+    foreach($serviceImports as $serviceImport) {
+        $template .= $serviceImport;
+    }
+    $template .= "use Illuminate\Http\Request;\n" .
+    "use Symfony\Component\HttpFoundation\Response as ResponseAlias;\n" .
+    "use Illuminate\View\View;\n" .
+    "use Illuminate\Http\RedirectResponse;\n" .
+    "use App\Http\Requests\Create{$modelName}Request;\n" .
+    "use App\Http\Requests\Update{$modelName}Request;\n" .
+    "use Illuminate\Http\JsonResponse;\n" .
+    "use Exception;\n\n" .
+    "class $className extends Controller\n" .
+    "{\n" .
+    "    public function __construct(";
+    foreach($serviceInjections as $serviceInjection) {
+        $template .= "\t\t\t\t\t\t\t\t{$serviceInjection}";
+    }
+    $template .= ")\n" .
+    "    {\n" .
+    "    }\n\n" .
+    "    public function index(): View\n" .
+    "    {\n" .
+    "        return view('admin." . lcfirst($modelName) . ".index');\n" .
+    "    }\n\n" .
+    "    public function getDatatables(Request \$request): JsonResponse\n" .
+    "    {\n" .
+    "        if (\$request->ajax()) {\n" .
+    "            return \$this->{$serviceName}->get{$modelName}Data();\n" .
+    "        }\n" .
+    "        return response()->json([\n" .
+    "            'success' => false,\n" .
+    "            'message' => 'Invalid request.',\n" .
+    "        ]);\n" .
+    "    }\n\n" .
+    "    public function create(): View\n" .
+    "    {\n" .
+    "        return view('admin." . lcfirst($modelName) . ".create');\n" .
+    "    }\n\n" .
+    "    public function store(Create{$modelName}Request \$request): RedirectResponse\n" .
+    "    {\n" .
+    "        try {\n" .
+    "            \$response = \$this->{$serviceName}->create(\$request->all());\n" .
+    "            if (\$response) {\n" .
+    "                return redirect()->back()->with('success', __('". strtolower($modelName)."_module.create_list_edit.". strtolower($modelName)."') . __('standard_curd_common_label.success'));\n" .
+    "            }\n" .
+    "        } catch (Exception \$e) {\n" .
+    "            return redirect()->back()->with('error', __('standard_curd_common_label.error'));\n" .
+    "        }\n\n" .
+    "        return redirect()->back()->with('error', __('standard_curd_common_label.error'));\n" .
+    "    }\n\n" .
+    "    public function edit(string \$id): View\n" .
+    "    {\n" .
+    "        try {\n" .
+    "            \$response = \$this->{$serviceName}->findById(\$id);\n" .
+    "            return view('admin." . lcfirst($modelName) . ".edit')->with(['data' => \$response]);\n" .
+    "        } catch (Exception \$e) {\n" .
+    "            return redirect()->back()->with('error', __('standard_curd_common_label.error'));\n" .
+    "        }\n" .
+    "    }\n\n" .
+    "    public function update(Update{$modelName}Request \$request, string \$id): RedirectResponse\n" .
+    "    {\n" .
+    "        try {\n" .
+    "            \$data = \$request->except(['_token', '_method']);\n" .
+    "            \$this->{$serviceName}->update(['id' => \$id], \$data);\n" .
+    "            return redirect()->back()->with('success', __('". strtolower($modelName)."_module.create_list_edit.". strtolower($modelName)."') . __('standard_curd_common_label.update_success'));\n" .
+    "        } catch (Exception \$e) {\n" .
+    "            return redirect()->back()->with('error', __('standard_curd_common_label.error'));\n" .
+    "        }\n" .
+    "    }\n\n" .
+    "    public function destroy(string \$id): JsonResponse\n" .
+    "    {\n" .
+    "        try {\n" .
+    "            \$data = \$this->{$serviceName}->deleteById(\$id);\n" .
+    "            if (\$data) {\n" .
+    "                return response()->json([\n" .
+    "                    'message' => __('". strtolower($modelName)."_module.create_list_edit.". strtolower($modelName)."') . __('standard_curd_common_label.delete'),\n" .
+    "                    'status_code' => ResponseAlias::HTTP_OK,\n" .
+    "                    'data' => []\n" .
+    "                ], ResponseAlias::HTTP_OK);\n" .
+    "            }\n" .
+    "            return response()->json([\n" .
+    "                'message' => __('". strtolower($modelName)."_module.create_list_edit.". strtolower($modelName)."') . __('standard_curd_common_label.delete_is_not'),\n" .
+    "                'status_code' => ResponseAlias::HTTP_BAD_REQUEST,\n" .
+    "                'data' => []\n" .
+    "            ], ResponseAlias::HTTP_BAD_REQUEST);\n" .
+    "        } catch (Exception \$e) {\n" .
+    "            return response()->json([\n" .
+    "                'message' => __('standard_curd_common_label.error'),\n" .
+    "                'status_code' => ResponseAlias::HTTP_INTERNAL_SERVER_ERROR,\n" .
+    "                'data' => []\n" .
+    "            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);\n" .
+    "        }\n" .
+    "    }\n" .
+    "}\n";
+
+
+        File::put($filePath, $template);
+            return ['success' => true];
+        } catch (\Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
     /**
      * Generate a create view for the specified model.
      *
@@ -1338,7 +1470,7 @@ $(function () {
             $languageContent = [
                 'create_list_edit' => [
                     'list_page_title' => 'List ' . ucwords(str_replace('_', ' ', Str::snake($modelName))),
-                    strtolower($modelName) => Str::camel($modelName),
+                    strtolower($modelName) => ucwords(str_replace('_', ' ', Str::snake($modelName))),
                     'list_' . strtolower($modelName) . '_list' => ucwords(str_replace('_', ' ', Str::snake($modelName))) . ' List',
                     'create_page_title' => 'Create ' . ucwords(str_replace('_', ' ', Str::snake($modelName))),
                     'edit_page_title' => 'Edit ' . ucwords(str_replace('_', ' ', Str::snake($modelName))),

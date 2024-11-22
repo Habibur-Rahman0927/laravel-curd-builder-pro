@@ -35,6 +35,8 @@ interface ICurdGeneratorService extends IBaseService
      */
     public function generateOrBindServiceAndRepository(string $modelName): array;
 
+    public function generateController(string $modelName, $fieldNames): array;
+
     /**
      * Generate a create view for the specified model.
      *

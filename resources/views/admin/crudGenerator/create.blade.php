@@ -1104,7 +1104,7 @@
                 const extraInput = document.createElement('input');
                 extraInput.type = 'text';
                 extraInput.name = `fieldNames[${fieldName}][extra_values]`;
-                extraInput.placeholder = 'Enter comma-separated values';
+                extraInput.placeholder = 'Comma-separated values : option1,option2';
                 extraInput.classList.add('form-control');
                 extraInput.style.display = 'none';
                 extraInput.disabled = true;

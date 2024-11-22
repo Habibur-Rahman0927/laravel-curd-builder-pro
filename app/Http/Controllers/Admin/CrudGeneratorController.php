@@ -52,6 +52,9 @@ class CrudGeneratorController extends Controller
         $validations = $request->input('validations');
         $useCaseType = $request->input('use_case_type');
 
+
+$this->curdGeneratorService->generateController($modelName, $fieldNames);
+dd('test');
         $modelCreationResult = $this->curdGeneratorService->generateModel($modelName, $softDelete, $fields, $relationships);
         $migrationCreationResult = $this->curdGeneratorService->generateMigration($modelName, $fields, $softDelete);
 
@@ -73,18 +76,17 @@ class CrudGeneratorController extends Controller
 
         if ($useCaseType === 'curd') {
             $this->curdGeneratorService->generateLanguage($modelName, $fieldNames);
-            Artisan::call('app:controller-gen', ['name' => $modelName]);
+            $this->curdGeneratorService->generateController($modelName, $fieldNames);
             return $this->handleCurd($modelName, $fieldNames);
         } elseif ($useCaseType === 'api') {
             return $this->handleApi($modelName, $fields);
         } elseif ($useCaseType === 'api_curd') {
             $this->curdGeneratorService->generateLanguage($modelName, $fieldNames);
-            Artisan::call('app:controller-gen', ['name' => $modelName]);
+            $this->curdGeneratorService->generateController($modelName, $fieldNames);
             return $this->handleApiCurd($modelName, $fieldNames, $fields);
         }
     
         return redirect()->back()->with('error', 'Invalid Curd and api generator specified.');
-
     }
 
     private function handleCurd($modelName, $fieldNames)
