@@ -322,14 +322,18 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
             // Initialize an array to store services to inject
             $serviceImports = [];
             $serviceImports[] = "use App\Services\\$modelName\\I{$modelName}Service;\n";
+
             $serviceInjections = [];
             $serviceInjections[] = "private I{$modelName}Service \${$serviceName},\n";
+
+            $serviceInjectionNames = [];
 
             // Loop through field names and check if the field is of 'select' type and has a 'model_name'
             foreach ($fieldNames as $field => $fieldData) {
                 if ($fieldData['input_type'] === 'select' && isset($fieldData['model_name']) && ($fieldData['create'] === 'on' || $fieldData['edit'] === 'on')) {
                     $serviceImports[] = "use App\Services\\{$fieldData['model_name']}\\I{$fieldData['model_name']}Service;\n"; 
                     $serviceInjections[] = "private I{$fieldData['model_name']}Service \$" . lcfirst($fieldData['model_name']) . "Service,\n";
+                    $serviceInjectionNames[lcfirst($fieldData['model_name'])] = lcfirst($fieldData['model_name']) . "Service";
                 }
             }
 
@@ -349,11 +353,11 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
     "use Exception;\n\n" .
     "class $className extends Controller\n" .
     "{\n" .
-    "    public function __construct(";
+    "    public function __construct(\n";
     foreach($serviceInjections as $serviceInjection) {
         $template .= "\t\t\t\t\t\t\t\t{$serviceInjection}";
     }
-    $template .= ")\n" .
+    $template .= "\t)\n" .
     "    {\n" .
     "    }\n\n" .
     "    public function index(): View\n" .
@@ -371,8 +375,17 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
     "        ]);\n" .
     "    }\n\n" .
     "    public function create(): View\n" .
-    "    {\n" .
-    "        return view('admin." . lcfirst($modelName) . ".create');\n" .
+    "    {\n" ;
+
+    foreach($serviceInjectionNames as $modelName => $serviceInjectionName) {
+        $template .= "\t\t\${$modelName}s = \$this->{$serviceInjectionName}->findAll();\n";
+    }
+
+    $template .= "        return view('admin." . lcfirst($modelName) . ".create')->with([\n";
+    foreach($serviceInjectionNames as $modelName => $serviceInjectionName) {
+        $template .= "\t\t\t'{$modelName}s' => \${$modelName}s,\n";
+    }
+    $template .= "\t\t]);\n" .
     "    }\n\n" .
     "    public function store(Create{$modelName}Request \$request): RedirectResponse\n" .
     "    {\n" .
@@ -389,8 +402,18 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
     "    public function edit(string \$id): View\n" .
     "    {\n" .
     "        try {\n" .
-    "            \$response = \$this->{$serviceName}->findById(\$id);\n" .
-    "            return view('admin." . lcfirst($modelName) . ".edit')->with(['data' => \$response]);\n" .
+    "            \$response = \$this->{$serviceName}->findById(\$id);\n" ;
+
+    foreach($serviceInjectionNames as $modelName => $serviceInjectionName) {
+        $template .= "\t\t\t\${$modelName}s = \$this->{$serviceInjectionName}->findAll();\n";
+    }
+
+    $template .= "            return view('admin." . lcfirst($modelName) . ".edit')->with([\n";
+    $template .= "\t\t\t\t'data' => \$response,\n";
+    foreach($serviceInjectionNames as $modelName => $serviceInjectionName) {
+        $template .= "\t\t\t\t'{$modelName}s' => \${$modelName}s,\n";
+    }
+    $template .= "\t\t\t]);\n" .
     "        } catch (Exception \$e) {\n" .
     "            return redirect()->back()->with('error', __('standard_curd_common_label.error'));\n" .
     "        }\n" .
