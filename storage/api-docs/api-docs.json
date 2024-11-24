@@ -148,16 +148,16 @@
                 ]
             }
         },
-        "/api/admin/api-enter": {
+        "/api/admin/api-commnet": {
             "get": {
                 "tags": [
-                    "Enter"
+                    "Commnet"
                 ],
-                "summary": "Get all enters",
-                "operationId": "2de46bb8a0945c2db0486e22511b5ecb",
+                "summary": "Get all commnets",
+                "operationId": "cdcfa93536a6fe20c7d58d942cab22a1",
                 "responses": {
                     "200": {
-                        "description": "A list of enters"
+                        "description": "A list of commnets"
                     }
                 },
                 "security": [
@@ -168,10 +168,10 @@
             },
             "post": {
                 "tags": [
-                    "Enter"
+                    "Commnet"
                 ],
-                "summary": "Create a new enter",
-                "operationId": "7fedfb679f8377dba5e0dd115e9b356d",
+                "summary": "Create a new commnet",
+                "operationId": "8a841c1cc352f193840ce34d8ab7afd8",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -185,6 +185,14 @@
                                     "last_name": {
                                         "type": "string",
                                         "example": "example_value"
+                                    },
+                                    "user_id,users": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "PermissionGroup": {
+                                        "type": "string",
+                                        "example": "example_value"
                                     }
                                 },
                                 "type": "object"
@@ -194,7 +202,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Enter created successfully"
+                        "description": "Commnet created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -207,13 +215,13 @@
                 ]
             }
         },
-        "/api/admin/api-enter/{id}": {
+        "/api/admin/api-commnet/{id}": {
             "get": {
                 "tags": [
-                    "Enter"
+                    "Commnet"
                 ],
-                "summary": "Get a enter by ID",
-                "operationId": "d19e6134a74fca45262bc19caa11aeb4",
+                "summary": "Get a commnet by ID",
+                "operationId": "0445a8a75dcc480c1dd8066302ec7430",
                 "parameters": [
                     {
                         "name": "id",
@@ -226,10 +234,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single enter object"
+                        "description": "A single commnet object"
                     },
                     "404": {
-                        "description": "Enter not found"
+                        "description": "Commnet not found"
                     }
                 },
                 "security": [
@@ -240,10 +248,10 @@
             },
             "put": {
                 "tags": [
-                    "Enter"
+                    "Commnet"
                 ],
-                "summary": "Update an existing enter",
-                "operationId": "541f4be3843c588c138dc76d400dc73a",
+                "summary": "Update an existing commnet",
+                "operationId": "e8e7c011c4a09a635a06a4dec88a0428",
                 "parameters": [
                     {
                         "name": "id",
@@ -267,6 +275,14 @@
                                     "last_name": {
                                         "type": "string",
                                         "example": "example_value"
+                                    },
+                                    "user_id,users": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "PermissionGroup": {
+                                        "type": "string",
+                                        "example": "example_value"
                                     }
                                 },
                                 "type": "object"
@@ -276,10 +292,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Enter updated successfully"
+                        "description": "Commnet updated successfully"
                     },
                     "404": {
-                        "description": "Enter not found"
+                        "description": "Commnet not found"
                     }
                 },
                 "security": [
@@ -290,15 +306,15 @@
             },
             "delete": {
                 "tags": [
-                    "Enter"
+                    "Commnet"
                 ],
-                "summary": "Delete a enter by ID",
-                "operationId": "00212db28a80050907d9b4616e743535",
+                "summary": "Delete a commnet by ID",
+                "operationId": "0e47b062ec06a69f205e3377863656d0",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the enter to delete",
+                        "description": "ID of the commnet to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -307,10 +323,386 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Enter deleted successfully"
+                        "description": "Commnet deleted successfully"
                     },
                     "404": {
-                        "description": "Enter not found"
+                        "description": "Commnet not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-dog": {
+            "get": {
+                "tags": [
+                    "Dog"
+                ],
+                "summary": "Get all dogs",
+                "operationId": "5cc280ed20eb91f7a2b2564f65ca7585",
+                "responses": {
+                    "200": {
+                        "description": "A list of dogs"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Dog"
+                ],
+                "summary": "Create a new dog",
+                "operationId": "0d3e6d9ec32a5427687822f1dc3c5a36",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "user_id,users": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "PermissionGroup": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Dog created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-dog/{id}": {
+            "get": {
+                "tags": [
+                    "Dog"
+                ],
+                "summary": "Get a dog by ID",
+                "operationId": "993fcf66cf492f109d99c59c11a50b51",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single dog object"
+                    },
+                    "404": {
+                        "description": "Dog not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Dog"
+                ],
+                "summary": "Update an existing dog",
+                "operationId": "c2e89a5b33bd9d6f1cf19c54c742f927",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "user_id,users": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "PermissionGroup": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Dog updated successfully"
+                    },
+                    "404": {
+                        "description": "Dog not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Dog"
+                ],
+                "summary": "Delete a dog by ID",
+                "operationId": "bff370f1f83f8a484d8ef28174b051c5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the dog to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Dog deleted successfully"
+                    },
+                    "404": {
+                        "description": "Dog not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-post": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Get all posts",
+                "operationId": "5be814bb30e5ed17e741fd0fd6d3e32c",
+                "responses": {
+                    "200": {
+                        "description": "A list of posts"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Create a new post",
+                "operationId": "2f66a30c7e5edea279f5d42bb7356c18",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "user_id,users": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "PermissionGroup": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Post created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-post/{id}": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Get a post by ID",
+                "operationId": "9a5b0ccaee65f365a8b2d3b59438608e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single post object"
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Update an existing post",
+                "operationId": "a40bf86865acde36506738f16be616a8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "user_id,users": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "PermissionGroup": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Post updated successfully"
+                    },
+                    "404": {
+                        "description": "Post not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Delete a post by ID",
+                "operationId": "b99a5157a5c6d4c799c5a4993ae08a7f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the post to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Post deleted successfully"
+                    },
+                    "404": {
+                        "description": "Post not found"
                     }
                 },
                 "security": [
@@ -332,8 +724,16 @@
     },
     "tags": [
         {
-            "name": "Enter",
-            "description": "Enter management operations"
+            "name": "Commnet",
+            "description": "Commnet management operations"
+        },
+        {
+            "name": "Dog",
+            "description": "Dog management operations"
+        },
+        {
+            "name": "Post",
+            "description": "Post management operations"
         },
         {
             "name": "Authentication",

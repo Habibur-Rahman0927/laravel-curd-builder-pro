@@ -377,13 +377,13 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
     "    public function create(): View\n" .
     "    {\n" ;
 
-    foreach($serviceInjectionNames as $modelName => $serviceInjectionName) {
-        $template .= "\t\t\${$modelName}s = \$this->{$serviceInjectionName}->findAll();\n";
+    foreach($serviceInjectionNames as $modelNameAsKey => $serviceInjectionName) {
+        $template .= "\t\t\${$modelNameAsKey}s = \$this->{$serviceInjectionName}->findAll();\n";
     }
 
     $template .= "        return view('admin." . lcfirst($modelName) . ".create')->with([\n";
-    foreach($serviceInjectionNames as $modelName => $serviceInjectionName) {
-        $template .= "\t\t\t'{$modelName}s' => \${$modelName}s,\n";
+    foreach($serviceInjectionNames as $modelNameAsKey => $serviceInjectionName) {
+        $template .= "\t\t\t'{$modelNameAsKey}s' => \${$modelNameAsKey}s,\n";
     }
     $template .= "\t\t]);\n" .
     "    }\n\n" .
@@ -404,14 +404,14 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
     "        try {\n" .
     "            \$response = \$this->{$serviceName}->findById(\$id);\n" ;
 
-    foreach($serviceInjectionNames as $modelName => $serviceInjectionName) {
-        $template .= "\t\t\t\${$modelName}s = \$this->{$serviceInjectionName}->findAll();\n";
+    foreach($serviceInjectionNames as $modelNameAsKey => $serviceInjectionName) {
+        $template .= "\t\t\t\${$modelNameAsKey}s = \$this->{$serviceInjectionName}->findAll();\n";
     }
 
     $template .= "            return view('admin." . lcfirst($modelName) . ".edit')->with([\n";
     $template .= "\t\t\t\t'data' => \$response,\n";
-    foreach($serviceInjectionNames as $modelName => $serviceInjectionName) {
-        $template .= "\t\t\t\t'{$modelName}s' => \${$modelName}s,\n";
+    foreach($serviceInjectionNames as $modelNameAsKey => $serviceInjectionName) {
+        $template .= "\t\t\t\t'{$modelNameAsKey}s' => \${$modelNameAsKey}s,\n";
     }
     $template .= "\t\t\t]);\n" .
     "        } catch (Exception \$e) {\n" .
@@ -545,7 +545,8 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                 $inputType = $attributes['input_type'] ?? 'text'; // Default to text
                 $errorClass = "@error('{$fieldName}') is-invalid @enderror";
                 $oldValue = "old('{$fieldName}')";
-
+                $modelName = isset($attributes['model_name']) ? lcfirst($attributes['model_name']) .'s' : '';
+                $modelNameAs = isset($attributes['model_name']) ? lcfirst($attributes['model_name']) : '';
                 // Start input generation
                 $viewContent .= "\t\t\t\t\t\t<div class=\"row mb-3\">\n";
                 $viewContent .= "\t\t\t\t\t\t    <div class=\"col-md-12\">\n";
@@ -567,7 +568,14 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                     case 'checkbox':
                         $viewContent .= "\t\t\t\t\t\t        <input type=\"checkbox\" name=\"{$fieldName}\" class=\"form-check-input {$errorClass}\" id=\"{$fieldName}\" " . (old($fieldName) ? 'checked' : '') . ">\n";
                         break;
-
+                    case 'select':
+                        $viewContent .= "\t\t\t\t                <select class=\"form-select {$errorClass}\" name=\"{$fieldName}\" id=\"{$fieldName}\" required>\n";
+                        $viewContent .= "\t\t\t\t                     <option value='' selected> -- Select -- </option>\n";
+                        $viewContent .= "\t\t\t\t                     @foreach (\${$modelName} as \${$modelNameAs})\n";
+                        $viewContent .= "\t\t\t\t                     <option value=\"{{ \${$modelNameAs}->id }}\">{{ \${$modelNameAs}->name }}</option>\n";
+                        $viewContent .= "\t\t\t\t                     @endforeach\n";
+                        $viewContent .= "\t\t\t\t                 </select>\n";
+                        break;
                     default:
                         $viewContent .= "\t\t\t\t\t\t        <input type=\"text\" name=\"{$fieldName}\" class=\"form-control {$errorClass}\" id=\"{$fieldName}\" value=\"{{ {$oldValue} }}\" required>\n";
                 }
