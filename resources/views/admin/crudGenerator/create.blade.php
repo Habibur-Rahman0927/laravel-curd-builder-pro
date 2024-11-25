@@ -1182,124 +1182,8 @@
 
                 // Add logic to toggle between dropdown and placeholder
                 inputTypeSelect.addEventListener('change', function () {
-                    if (inputTypeSelect.value === 'select') {
-                        modelSelect.style.display = 'block';
-                        modelSelect.disabled = false;
-                        placeholder.style.display = 'none';
-                        extraInput.style.display = 'none';
-                        extraInput.disabled = true;
-
-                        modelSelect.addEventListener('change', function () {
-                        const selectedModel = modelSelect.value;
-
-                        // Fetch fillable fields via AJAX
-                        fetch(`/api/model-fillable?model=${selectedModel}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.error) {
-                                    alert(data.error);
-                                    return;
-                                }
-
-                                // Create a modal for fillable fields
-                                const modal = document.createElement('div');
-                                modal.classList.add('fillable-modal');
-                                modal.innerHTML = `
-                                    <div class="fillable-modal-header">
-                                        <h5>Select a Field for ${selectedModel} options</h5>
-                                        <button class="close-modal">&times;</button>
-                                    </div>
-                                    <div class="fillable-modal-body">
-                                        <div class="fillable-fields-grid"></div>
-                                    </div>
-                                    <div class="fillable-modal-footer">
-                                        <button class="save-selection add-btn">Save</button>
-                                        <button class="cancel-selection btn btn-danger text-white">Cancel</button>
-                                    </div>
-                                `;
-
-                                // Add field options as radio-style checkboxes
-                                const grid = modal.querySelector('.fillable-fields-grid');
-                                data.fields.forEach(field => {
-                                    const fieldWrapper = document.createElement('div');
-                                    fieldWrapper.classList.add('field-item');
-
-                                    const fieldCheckbox = document.createElement('input');
-                                    fieldCheckbox.type = 'checkbox';
-                                    fieldCheckbox.name = `fieldNames[${fieldName}][field_name]`;
-                                    fieldCheckbox.value = field;
-
-                                    fieldCheckbox.addEventListener('change', () => {
-                                        grid.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-                                            if (cb !== fieldCheckbox) {
-                                                cb.checked = false;  // Ensure only one checkbox is selected
-                                            }
-                                        });
-                                    });
-
-                                    const fieldLabel = document.createElement('label');
-                                    fieldLabel.textContent = field;
-
-                                    fieldWrapper.appendChild(fieldCheckbox);
-                                    fieldWrapper.appendChild(fieldLabel);
-                                    grid.appendChild(fieldWrapper);
-                                });
-
-                                const curdGeneratorForm = document.getElementById('curd-generator-form');
-                                curdGeneratorForm.appendChild(modal);
-
-                                modal.querySelector('.close-modal').addEventListener('click', () => {
-                                    modal.remove();
-                                });
-
-                                modal.querySelector('.cancel-selection').addEventListener('click', () => {
-                                    modal.remove();
-                                });
-
-                                modal.querySelector('.save-selection').addEventListener('click', (e) => {
-                                    const selectedField = grid.querySelector('input[type="checkbox"]:checked');
-                                    if (selectedField) {
-                                        let inputId = `${fieldName}-${selectedModel}-${selectedField}`;
-                                        const hiddenInput = document.getElementById(inputId);
-                                        if (!hiddenInput) {
-                                            const hiddenInput = document.createElement('input');
-                                            hiddenInput.type = 'hidden';
-                                            hiddenInput.id = inputId;
-                                            hiddenInput.name = `fieldNames[${fieldName}][field_name]`;
-                                            hiddenInput.value = selectedField.value;
-                                            curdGeneratorForm.appendChild(hiddenInput);
-                                        } else {
-                                            hiddenInput.value = selectedField.value;
-                                        }
-
-                                        alert(`You selected: ${selectedField.value}`);
-                                        modal.remove();
-                                    } else {
-                                        alert('Please select a field before saving.');
-                                    }
-                                });
-                            })
-                            .catch(error => {
-                                console.error('Error fetching fillable fields:', error);
-                            });
-                    });
-
-                    } else if (inputTypeSelect.value === 'radio' || inputTypeSelect.value === 'checkbox') {
-                        modelSelect.style.display = 'none';
-                        modelSelect.disabled = true;
-                        placeholder.style.display = 'none';
-                        extraInput.style.display = 'block';
-                        extraInput.disabled = false;
-                    } else {
-                        modelSelect.style.display = 'none';
-                        modelSelect.disabled = true;
-                        placeholder.style.display = 'block';
-                        extraInput.style.display = 'none';
-                        extraInput.disabled = false;
-                    }
+                    toggleInputType(inputTypeSelect, fieldName, modelSelect, placeholder, extraInput);
                 });
-
-                
                 tr.appendChild(tdModelAndOtherOptions);
 
 
@@ -1362,6 +1246,146 @@
             checkboxValidation.disabled = true;
         }
     }
+
+    function toggleInputType(inputTypeSelect, fieldName, modelSelect, placeholder, extraInput) {
+        if (inputTypeSelect.value === 'select') {
+            displayModelSelect(fieldName, modelSelect, placeholder, extraInput);
+        } else if (inputTypeSelect.value === 'radio' || inputTypeSelect.value === 'checkbox') {
+            displayExtraInput(modelSelect, placeholder, extraInput);
+        } else {
+            displayPlaceholder(modelSelect, placeholder, extraInput);
+        }
+    }
+
+    function displayModelSelect(fieldName, modelSelect, placeholder, extraInput) {
+        modelSelect.style.display = 'block';
+        modelSelect.disabled = false;
+        placeholder.style.display = 'none';
+        extraInput.style.display = 'none';
+        extraInput.disabled = true;
+
+        modelSelect.addEventListener('change', () => fetchFillableFields(fieldName, modelSelect));
+    }
+
+    function displayExtraInput(modelSelect, placeholder, extraInput) {
+        modelSelect.style.display = 'none';
+        modelSelect.disabled = true;
+        placeholder.style.display = 'none';
+        extraInput.style.display = 'block';
+        extraInput.disabled = false;
+    }
+
+    function displayPlaceholder(modelSelect, placeholder, extraInput) {
+        modelSelect.style.display = 'none';
+        modelSelect.disabled = true;
+        placeholder.style.display = 'block';
+        extraInput.style.display = 'none';
+        extraInput.disabled = false;
+    }
+
+    function fetchFillableFields(fieldName, modelSelect) {
+        const selectedModel = modelSelect.value;
+
+        fetch(`/api/model-fillable?model=${selectedModel}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+                createFillableFieldsModal(fieldName, selectedModel, data.fields);
+            })
+            .catch(error => {
+                console.error('Error fetching fillable fields:', error);
+            });
+    }
+
+    function createFillableFieldsModal(fieldName, selectedModel, fields) {
+        const modal = document.createElement('div');
+        modal.classList.add('fillable-modal');
+        modal.innerHTML = `
+            <div class="fillable-modal-header">
+                <h5>Select a Field for ${selectedModel} options</h5>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="fillable-modal-body">
+                <div class="fillable-fields-grid"></div>
+            </div>
+            <div class="fillable-modal-footer">
+                <button class="save-selection add-btn">Save</button>
+                <button class="cancel-selection btn btn-danger text-white">Cancel</button>
+            </div>
+        `;
+
+        populateFillableFieldsGrid(fieldName, modal.querySelector('.fillable-fields-grid'), fields, selectedModel);
+
+        const curdGeneratorForm = document.getElementById('curd-generator-form');
+        curdGeneratorForm.appendChild(modal);
+
+        modal.querySelector('.close-modal').addEventListener('click', () => modal.remove());
+        modal.querySelector('.cancel-selection').addEventListener('click', () => modal.remove());
+    }
+
+    function populateFillableFieldsGrid(fieldName, grid, fields, selectedModel) {
+        fields.forEach(field => {
+            const fieldWrapper = document.createElement('div');
+            fieldWrapper.classList.add('field-item');
+
+            const fieldCheckbox = document.createElement('input');
+            const fieldId = `${selectedModel}-${fieldName}-${field}`;
+            fieldCheckbox.type = 'checkbox';
+            fieldCheckbox.name = `fieldNames[${fieldName}][field_name]`;
+            fieldCheckbox.value = field;
+            fieldCheckbox.id = fieldId;
+
+            fieldCheckbox.addEventListener('change', () => {
+                grid.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    if (cb !== fieldCheckbox) cb.checked = false;
+                });
+            });
+
+            const fieldLabel = document.createElement('label');
+            fieldLabel.textContent = field;
+            fieldLabel.setAttribute('for', fieldId);
+
+            fieldWrapper.appendChild(fieldCheckbox);
+            fieldWrapper.appendChild(fieldLabel);
+            grid.appendChild(fieldWrapper);
+        });
+
+        attachSaveSelectionHandler(fieldName, grid, selectedModel);
+    }
+
+
+    function attachSaveSelectionHandler(fieldName, grid, selectedModel) {
+        const modal = grid.closest('.fillable-modal');
+        const curdGeneratorForm = document.getElementById('curd-generator-form');
+
+        modal.querySelector('.save-selection').addEventListener('click', () => {
+            const selectedField = grid.querySelector('input[type="checkbox"]:checked');
+            if (selectedField) {
+                const inputId = `${fieldName}-${selectedModel}-${selectedField.value}`;
+                let hiddenInput = document.getElementById(inputId);
+
+                if (!hiddenInput) {
+                    hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.id = inputId;
+                    hiddenInput.name = `fieldNames[${fieldName}][field_name]`;
+                    hiddenInput.value = selectedField.value;
+                    curdGeneratorForm.appendChild(hiddenInput);
+                } else {
+                    hiddenInput.value = selectedField.value;
+                }
+
+                alert(`You selected: ${selectedField.value}`);
+                modal.remove();
+            } else {
+                alert('Please select a field before saving.');
+            }
+        });
+    }
+
 
     const fieldValidations = {};
     function showValidationModal(event, fieldName) {
