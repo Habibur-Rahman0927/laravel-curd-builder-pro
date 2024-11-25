@@ -57,6 +57,69 @@
             width: 100%;
         }
 
+        .fillable-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .fillable-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .fillable-modal-header h5 {
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .fillable-modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .fillable-fields-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .field-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .fillable-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .fillable-modal-footer button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
     
     </style>
 @endsection
@@ -1086,6 +1149,13 @@
                 modelSelect.style.display = 'none';
                 modelSelect.disabled = true;
 
+                const placeholderOption = document.createElement('option');
+                placeholderOption.value = '';
+                placeholderOption.textContent = '-- Select Model --';
+                placeholderOption.disabled = true;
+                placeholderOption.selected = true; // Set it as the default selected option
+                modelSelect.appendChild(placeholderOption);
+
                 modelNames.forEach(model => {
                     const option = document.createElement('option');
                     option.value = model;
@@ -1118,6 +1188,102 @@
                         placeholder.style.display = 'none';
                         extraInput.style.display = 'none';
                         extraInput.disabled = true;
+
+                        modelSelect.addEventListener('change', function () {
+                        const selectedModel = modelSelect.value;
+
+                        // Fetch fillable fields via AJAX
+                        fetch(`/api/model-fillable?model=${selectedModel}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.error) {
+                                    alert(data.error);
+                                    return;
+                                }
+
+                                // Create a modal for fillable fields
+                                const modal = document.createElement('div');
+                                modal.classList.add('fillable-modal');
+                                modal.innerHTML = `
+                                    <div class="fillable-modal-header">
+                                        <h5>Select a Field for ${selectedModel} options</h5>
+                                        <button class="close-modal">&times;</button>
+                                    </div>
+                                    <div class="fillable-modal-body">
+                                        <div class="fillable-fields-grid"></div>
+                                    </div>
+                                    <div class="fillable-modal-footer">
+                                        <button class="save-selection add-btn">Save</button>
+                                        <button class="cancel-selection btn btn-danger text-white">Cancel</button>
+                                    </div>
+                                `;
+
+                                // Add field options as radio-style checkboxes
+                                const grid = modal.querySelector('.fillable-fields-grid');
+                                data.fields.forEach(field => {
+                                    const fieldWrapper = document.createElement('div');
+                                    fieldWrapper.classList.add('field-item');
+
+                                    const fieldCheckbox = document.createElement('input');
+                                    fieldCheckbox.type = 'checkbox';
+                                    fieldCheckbox.name = `fieldNames[${fieldName}][field_name]`;
+                                    fieldCheckbox.value = field;
+
+                                    fieldCheckbox.addEventListener('change', () => {
+                                        grid.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                                            if (cb !== fieldCheckbox) {
+                                                cb.checked = false;  // Ensure only one checkbox is selected
+                                            }
+                                        });
+                                    });
+
+                                    const fieldLabel = document.createElement('label');
+                                    fieldLabel.textContent = field;
+
+                                    fieldWrapper.appendChild(fieldCheckbox);
+                                    fieldWrapper.appendChild(fieldLabel);
+                                    grid.appendChild(fieldWrapper);
+                                });
+
+                                const curdGeneratorForm = document.getElementById('curd-generator-form');
+                                curdGeneratorForm.appendChild(modal);
+
+                                modal.querySelector('.close-modal').addEventListener('click', () => {
+                                    modal.remove();
+                                });
+
+                                modal.querySelector('.cancel-selection').addEventListener('click', () => {
+                                    modal.remove();
+                                });
+
+                                modal.querySelector('.save-selection').addEventListener('click', (e) => {
+                                    const selectedField = grid.querySelector('input[type="checkbox"]:checked');
+                                    if (selectedField) {
+                                        let inputId = `${fieldName}-${selectedModel}-${selectedField}`;
+                                        const hiddenInput = document.getElementById(inputId);
+                                        if (!hiddenInput) {
+                                            const hiddenInput = document.createElement('input');
+                                            hiddenInput.type = 'hidden';
+                                            hiddenInput.id = inputId;
+                                            hiddenInput.name = `fieldNames[${fieldName}][field_name]`;
+                                            hiddenInput.value = selectedField.value;
+                                            curdGeneratorForm.appendChild(hiddenInput);
+                                        } else {
+                                            hiddenInput.value = selectedField.value;
+                                        }
+
+                                        alert(`You selected: ${selectedField.value}`);
+                                        modal.remove();
+                                    } else {
+                                        alert('Please select a field before saving.');
+                                    }
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Error fetching fillable fields:', error);
+                            });
+                    });
+
                     } else if (inputTypeSelect.value === 'radio' || inputTypeSelect.value === 'checkbox') {
                         modelSelect.style.display = 'none';
                         modelSelect.disabled = true;
@@ -1369,8 +1535,6 @@
                 }
             });
             fieldValidations[fieldName] = selectedRules; 
-            console.log(validationRules)
-            console.log(fieldValidations)
             bootstrapModal.hide();
         });
         const bootstrapModal = new bootstrap.Modal(modal);

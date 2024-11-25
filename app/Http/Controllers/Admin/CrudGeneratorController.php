@@ -51,7 +51,7 @@ class CrudGeneratorController extends Controller
         $fieldNames = $request->input('fieldNames');
         $validations = $request->input('validations');
         $useCaseType = $request->input('use_case_type');
-
+        dd($request->toArray());
         $modelCreationResult = $this->curdGeneratorService->generateModel($modelName, $softDelete, $fields, $relationships);
         $migrationCreationResult = $this->curdGeneratorService->generateMigration($modelName, $fields, $softDelete);
 
@@ -137,6 +137,21 @@ class CrudGeneratorController extends Controller
             $this->curdGeneratorService->addMenuItem($modelName);
             $this->curdGeneratorService->createPermission($modelName);
         }
+    }
+
+    public function getModelFillable(Request $request)
+    {
+        $modelName = $request->input('model');
+        $modelClass = "App\\Models\\$modelName";
+
+        if (!class_exists($modelClass)) {
+            return response()->json(['error' => 'Model not found'], 404);
+        }
+
+        $model = new $modelClass;
+        $fillableFields = $model->getFillable();
+
+        return response()->json(['fields' => $fillableFields]);
     }
 
 }
