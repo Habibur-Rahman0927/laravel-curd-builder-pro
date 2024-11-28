@@ -148,16 +148,16 @@
                 ]
             }
         },
-        "/api/admin/api-commnet": {
+        "/api/admin/api-best": {
             "get": {
                 "tags": [
-                    "Commnet"
+                    "Best"
                 ],
-                "summary": "Get all commnets",
-                "operationId": "cdcfa93536a6fe20c7d58d942cab22a1",
+                "summary": "Get all bests",
+                "operationId": "ea1029a34ac4d985d46d2b3b9d565d83",
                 "responses": {
                     "200": {
-                        "description": "A list of commnets"
+                        "description": "A list of bests"
                     }
                 },
                 "security": [
@@ -168,10 +168,10 @@
             },
             "post": {
                 "tags": [
-                    "Commnet"
+                    "Best"
                 ],
-                "summary": "Create a new commnet",
-                "operationId": "8a841c1cc352f193840ce34d8ab7afd8",
+                "summary": "Create a new best",
+                "operationId": "039796928945959c5946fc317856141d",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -183,6 +183,202 @@
                                         "example": "example_value"
                                     },
                                     "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "relationship_status": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "checkbox_test": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Best created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-best/{id}": {
+            "get": {
+                "tags": [
+                    "Best"
+                ],
+                "summary": "Get a best by ID",
+                "operationId": "4e4b3e24d82ae4605aa6ad2b3c7c1749",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single best object"
+                    },
+                    "404": {
+                        "description": "Best not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Best"
+                ],
+                "summary": "Update an existing best",
+                "operationId": "4df1127b13a56d21672fef5294f9e54e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "relationship_status": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "checkbox_test": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Best updated successfully"
+                    },
+                    "404": {
+                        "description": "Best not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Best"
+                ],
+                "summary": "Delete a best by ID",
+                "operationId": "893481da7b671d60b582a5cf06e42daf",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the best to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Best deleted successfully"
+                    },
+                    "404": {
+                        "description": "Best not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-finall": {
+            "get": {
+                "tags": [
+                    "Finall"
+                ],
+                "summary": "Get all finalls",
+                "operationId": "1bb46d34d11c2af6b2bfac60d4c80729",
+                "responses": {
+                    "200": {
+                        "description": "A list of finalls"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Finall"
+                ],
+                "summary": "Create a new finall",
+                "operationId": "272b687076ceee9e04365d9ef5a6b45f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "relationship_status": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "checkbox_test": {
                                         "type": "string",
                                         "example": "example_value"
                                     },
@@ -202,7 +398,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Commnet created successfully"
+                        "description": "Finall created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -215,13 +411,13 @@
                 ]
             }
         },
-        "/api/admin/api-commnet/{id}": {
+        "/api/admin/api-finall/{id}": {
             "get": {
                 "tags": [
-                    "Commnet"
+                    "Finall"
                 ],
-                "summary": "Get a commnet by ID",
-                "operationId": "0445a8a75dcc480c1dd8066302ec7430",
+                "summary": "Get a finall by ID",
+                "operationId": "06a7c28307bedc477ac11923e6f8f442",
                 "parameters": [
                     {
                         "name": "id",
@@ -234,10 +430,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single commnet object"
+                        "description": "A single finall object"
                     },
                     "404": {
-                        "description": "Commnet not found"
+                        "description": "Finall not found"
                     }
                 },
                 "security": [
@@ -248,10 +444,10 @@
             },
             "put": {
                 "tags": [
-                    "Commnet"
+                    "Finall"
                 ],
-                "summary": "Update an existing commnet",
-                "operationId": "e8e7c011c4a09a635a06a4dec88a0428",
+                "summary": "Update an existing finall",
+                "operationId": "966d982989cb4e5cabf287ce100c5588",
                 "parameters": [
                     {
                         "name": "id",
@@ -273,6 +469,14 @@
                                         "example": "example_value"
                                     },
                                     "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "relationship_status": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "checkbox_test": {
                                         "type": "string",
                                         "example": "example_value"
                                     },
@@ -292,10 +496,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Commnet updated successfully"
+                        "description": "Finall updated successfully"
                     },
                     "404": {
-                        "description": "Commnet not found"
+                        "description": "Finall not found"
                     }
                 },
                 "security": [
@@ -306,15 +510,15 @@
             },
             "delete": {
                 "tags": [
-                    "Commnet"
+                    "Finall"
                 ],
-                "summary": "Delete a commnet by ID",
-                "operationId": "0e47b062ec06a69f205e3377863656d0",
+                "summary": "Delete a finall by ID",
+                "operationId": "10cfa3c94d71ba64adfa1603d84b7663",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the commnet to delete",
+                        "description": "ID of the finall to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -323,10 +527,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Commnet deleted successfully"
+                        "description": "Finall deleted successfully"
                     },
                     "404": {
-                        "description": "Commnet not found"
+                        "description": "Finall not found"
                     }
                 },
                 "security": [
@@ -336,16 +540,16 @@
                 ]
             }
         },
-        "/api/admin/api-dog": {
+        "/api/admin/api-gen": {
             "get": {
                 "tags": [
-                    "Dog"
+                    "Gen"
                 ],
-                "summary": "Get all dogs",
-                "operationId": "5cc280ed20eb91f7a2b2564f65ca7585",
+                "summary": "Get all gens",
+                "operationId": "7f057a6a6ff612dbf0e54bd9f69c51a7",
                 "responses": {
                     "200": {
-                        "description": "A list of dogs"
+                        "description": "A list of gens"
                     }
                 },
                 "security": [
@@ -356,10 +560,10 @@
             },
             "post": {
                 "tags": [
-                    "Dog"
+                    "Gen"
                 ],
-                "summary": "Create a new dog",
-                "operationId": "0d3e6d9ec32a5427687822f1dc3c5a36",
+                "summary": "Create a new gen",
+                "operationId": "293dd85be96a798b8ef488c66dd044f6",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -374,11 +578,11 @@
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "user_id,users": {
+                                    "relationship_status": {
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "PermissionGroup": {
+                                    "checkbox_test": {
                                         "type": "string",
                                         "example": "example_value"
                                     }
@@ -390,7 +594,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Dog created successfully"
+                        "description": "Gen created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -403,13 +607,13 @@
                 ]
             }
         },
-        "/api/admin/api-dog/{id}": {
+        "/api/admin/api-gen/{id}": {
             "get": {
                 "tags": [
-                    "Dog"
+                    "Gen"
                 ],
-                "summary": "Get a dog by ID",
-                "operationId": "993fcf66cf492f109d99c59c11a50b51",
+                "summary": "Get a gen by ID",
+                "operationId": "50e77f58e26460607c5403b438326100",
                 "parameters": [
                     {
                         "name": "id",
@@ -422,10 +626,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single dog object"
+                        "description": "A single gen object"
                     },
                     "404": {
-                        "description": "Dog not found"
+                        "description": "Gen not found"
                     }
                 },
                 "security": [
@@ -436,10 +640,10 @@
             },
             "put": {
                 "tags": [
-                    "Dog"
+                    "Gen"
                 ],
-                "summary": "Update an existing dog",
-                "operationId": "c2e89a5b33bd9d6f1cf19c54c742f927",
+                "summary": "Update an existing gen",
+                "operationId": "447f19f0fb136d9304aa9e1a3bfcba23",
                 "parameters": [
                     {
                         "name": "id",
@@ -464,11 +668,11 @@
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "user_id,users": {
+                                    "relationship_status": {
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "PermissionGroup": {
+                                    "checkbox_test": {
                                         "type": "string",
                                         "example": "example_value"
                                     }
@@ -480,10 +684,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Dog updated successfully"
+                        "description": "Gen updated successfully"
                     },
                     "404": {
-                        "description": "Dog not found"
+                        "description": "Gen not found"
                     }
                 },
                 "security": [
@@ -494,15 +698,15 @@
             },
             "delete": {
                 "tags": [
-                    "Dog"
+                    "Gen"
                 ],
-                "summary": "Delete a dog by ID",
-                "operationId": "bff370f1f83f8a484d8ef28174b051c5",
+                "summary": "Delete a gen by ID",
+                "operationId": "0ab5b0ab0a9b748bc3a56c16b2f88437",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the dog to delete",
+                        "description": "ID of the gen to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -511,10 +715,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Dog deleted successfully"
+                        "description": "Gen deleted successfully"
                     },
                     "404": {
-                        "description": "Dog not found"
+                        "description": "Gen not found"
                     }
                 },
                 "security": [
@@ -524,16 +728,16 @@
                 ]
             }
         },
-        "/api/admin/api-post": {
+        "/api/admin/api-let": {
             "get": {
                 "tags": [
-                    "Post"
+                    "Let"
                 ],
-                "summary": "Get all posts",
-                "operationId": "5be814bb30e5ed17e741fd0fd6d3e32c",
+                "summary": "Get all lets",
+                "operationId": "ee03d2e0427dd5d2ac092cb3ea8d45e7",
                 "responses": {
                     "200": {
-                        "description": "A list of posts"
+                        "description": "A list of lets"
                     }
                 },
                 "security": [
@@ -544,10 +748,10 @@
             },
             "post": {
                 "tags": [
-                    "Post"
+                    "Let"
                 ],
-                "summary": "Create a new post",
-                "operationId": "2f66a30c7e5edea279f5d42bb7356c18",
+                "summary": "Create a new let",
+                "operationId": "b22846987852e4f33261c7e0af97ac8e",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -562,11 +766,11 @@
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "user_id,users": {
+                                    "relationship_status": {
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "PermissionGroup": {
+                                    "checkbox_test": {
                                         "type": "string",
                                         "example": "example_value"
                                     }
@@ -578,7 +782,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Post created successfully"
+                        "description": "Let created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -591,13 +795,13 @@
                 ]
             }
         },
-        "/api/admin/api-post/{id}": {
+        "/api/admin/api-let/{id}": {
             "get": {
                 "tags": [
-                    "Post"
+                    "Let"
                 ],
-                "summary": "Get a post by ID",
-                "operationId": "9a5b0ccaee65f365a8b2d3b59438608e",
+                "summary": "Get a let by ID",
+                "operationId": "9eb2db3dabf62bd4d7941fe15d008de3",
                 "parameters": [
                     {
                         "name": "id",
@@ -610,10 +814,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single post object"
+                        "description": "A single let object"
                     },
                     "404": {
-                        "description": "Post not found"
+                        "description": "Let not found"
                     }
                 },
                 "security": [
@@ -624,10 +828,10 @@
             },
             "put": {
                 "tags": [
-                    "Post"
+                    "Let"
                 ],
-                "summary": "Update an existing post",
-                "operationId": "a40bf86865acde36506738f16be616a8",
+                "summary": "Update an existing let",
+                "operationId": "20b073d9683651cedfb3a5c46b564f56",
                 "parameters": [
                     {
                         "name": "id",
@@ -652,11 +856,11 @@
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "user_id,users": {
+                                    "relationship_status": {
                                         "type": "string",
                                         "example": "example_value"
                                     },
-                                    "PermissionGroup": {
+                                    "checkbox_test": {
                                         "type": "string",
                                         "example": "example_value"
                                     }
@@ -668,10 +872,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Post updated successfully"
+                        "description": "Let updated successfully"
                     },
                     "404": {
-                        "description": "Post not found"
+                        "description": "Let not found"
                     }
                 },
                 "security": [
@@ -682,15 +886,15 @@
             },
             "delete": {
                 "tags": [
-                    "Post"
+                    "Let"
                 ],
-                "summary": "Delete a post by ID",
-                "operationId": "b99a5157a5c6d4c799c5a4993ae08a7f",
+                "summary": "Delete a let by ID",
+                "operationId": "6ec2244aed00301bdf1061d73f087aa8",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the post to delete",
+                        "description": "ID of the let to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -699,10 +903,534 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Post deleted successfully"
+                        "description": "Let deleted successfully"
                     },
                     "404": {
-                        "description": "Post not found"
+                        "description": "Let not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-product": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get all products",
+                "operationId": "727821eff4fb4c1fb901f9166710c8cb",
+                "responses": {
+                    "200": {
+                        "description": "A list of products"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Create a new product",
+                "operationId": "2a864a97ac07d41d10e25dcd8d2010ab",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Product created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-product/{id}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get a product by ID",
+                "operationId": "2cded4c94ce7bbd89da58cd903eae5ef",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single product object"
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Update an existing product",
+                "operationId": "e1e371f95e5f79688024124dd2340d2f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Product updated successfully"
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete a product by ID",
+                "operationId": "e833874b6161135740fd0d41b773a947",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the product to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Product deleted successfully"
+                    },
+                    "404": {
+                        "description": "Product not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-tom": {
+            "get": {
+                "tags": [
+                    "Tom"
+                ],
+                "summary": "Get all toms",
+                "operationId": "ad577dc8405322465f6cc57c47d6e95d",
+                "responses": {
+                    "200": {
+                        "description": "A list of toms"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Tom"
+                ],
+                "summary": "Create a new tom",
+                "operationId": "df94b93d22681f4edd4fbc72b7b0e099",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "relationship_status": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tom created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-tom/{id}": {
+            "get": {
+                "tags": [
+                    "Tom"
+                ],
+                "summary": "Get a tom by ID",
+                "operationId": "88e97dc4c71834d3c5c40def7c8cce49",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single tom object"
+                    },
+                    "404": {
+                        "description": "Tom not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Tom"
+                ],
+                "summary": "Update an existing tom",
+                "operationId": "0a717b61e9126262a44d7e923c739749",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "relationship_status": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Tom updated successfully"
+                    },
+                    "404": {
+                        "description": "Tom not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Tom"
+                ],
+                "summary": "Delete a tom by ID",
+                "operationId": "30db6518dc864b04d1eb4df5af5a73e1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the tom to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Tom deleted successfully"
+                    },
+                    "404": {
+                        "description": "Tom not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-zero": {
+            "get": {
+                "tags": [
+                    "Zero"
+                ],
+                "summary": "Get all zeros",
+                "operationId": "6b1fb3c9201b47560083e7ca21a22950",
+                "responses": {
+                    "200": {
+                        "description": "A list of zeros"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Zero"
+                ],
+                "summary": "Create a new zero",
+                "operationId": "7b3c094a71a457bac52a8bfeefa7305c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "relationship_status": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Zero created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/api-zero/{id}": {
+            "get": {
+                "tags": [
+                    "Zero"
+                ],
+                "summary": "Get a zero by ID",
+                "operationId": "0b3ab35acfe41c634937591242510ce5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A single zero object"
+                    },
+                    "404": {
+                        "description": "Zero not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Zero"
+                ],
+                "summary": "Update an existing zero",
+                "operationId": "c9b24477ab882895a5f95b35aea8e845",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    },
+                                    "relationship_status": {
+                                        "type": "string",
+                                        "example": "example_value"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Zero updated successfully"
+                    },
+                    "404": {
+                        "description": "Zero not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Zero"
+                ],
+                "summary": "Delete a zero by ID",
+                "operationId": "177aced90d425cca320ffb28737af380",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the zero to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Zero deleted successfully"
+                    },
+                    "404": {
+                        "description": "Zero not found"
                     }
                 },
                 "security": [
@@ -724,16 +1452,32 @@
     },
     "tags": [
         {
-            "name": "Commnet",
-            "description": "Commnet management operations"
+            "name": "Best",
+            "description": "Best management operations"
         },
         {
-            "name": "Dog",
-            "description": "Dog management operations"
+            "name": "Finall",
+            "description": "Finall management operations"
         },
         {
-            "name": "Post",
-            "description": "Post management operations"
+            "name": "Gen",
+            "description": "Gen management operations"
+        },
+        {
+            "name": "Let",
+            "description": "Let management operations"
+        },
+        {
+            "name": "Product",
+            "description": "Product management operations"
+        },
+        {
+            "name": "Tom",
+            "description": "Tom management operations"
+        },
+        {
+            "name": "Zero",
+            "description": "Zero management operations"
         },
         {
             "name": "Authentication",

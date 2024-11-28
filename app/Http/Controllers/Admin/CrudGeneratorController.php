@@ -51,7 +51,7 @@ class CrudGeneratorController extends Controller
         $fieldNames = $request->input('fieldNames');
         $validations = $request->input('validations');
         $useCaseType = $request->input('use_case_type');
-        dd($request->toArray());
+        // dd($request->toArray());
         $modelCreationResult = $this->curdGeneratorService->generateModel($modelName, $softDelete, $fields, $relationships);
         $migrationCreationResult = $this->curdGeneratorService->generateMigration($modelName, $fields, $softDelete);
 

@@ -537,7 +537,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
 
                     <form method=\"POST\" action=\"{{ route('{$lowerCaseModelName}.store') }}\">
                         @csrf\n";
-
+                        $checkboxInput = false;
         foreach ($fields as $fieldName => $attributes) {
             // Only create the input if the "create" attribute is "on"
             if (isset($attributes['create']) && $attributes['create'] === 'on') {
@@ -545,8 +545,12 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                 $inputType = $attributes['input_type'] ?? 'text'; // Default to text
                 $errorClass = "@error('{$fieldName}') is-invalid @enderror";
                 $oldValue = "old('{$fieldName}')";
+                // radio
+                $values = isset($attributes['extra_values']) ? preg_split('/[\s,]+/', trim($attributes['extra_values'])) : [];
+                // select
                 $modelName = isset($attributes['model_name']) ? lcfirst($attributes['model_name']) .'s' : '';
                 $modelNameAs = isset($attributes['model_name']) ? lcfirst($attributes['model_name']) : '';
+                $optionsFieldName = isset($attributes['field_name']) ? $attributes['field_name'] : '';
                 // Start input generation
                 $viewContent .= "\t\t\t\t\t\t<div class=\"row mb-3\">\n";
                 $viewContent .= "\t\t\t\t\t\t    <div class=\"col-md-12\">\n";
@@ -564,15 +568,31 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                     case 'textarea':
                         $viewContent .= "\t\t\t\t\t\t        <textarea name=\"{$fieldName}\" class=\"form-control {$errorClass}\" id=\"{$fieldName}\" required>{{ {$oldValue} }}</textarea>\n";
                         break;
-                        
+                    
+                    case 'radio':
+                        foreach ($values as $value) {
+                            $radioId = "{$fieldName}_{$value}";
+                            $viewContent .= "\t\t\t\t\t\t        <div class=\"form-check ms-4\">\n";
+                            $viewContent .= "\t\t\t\t\t\t            <input type=\"radio\" name=\"{$fieldName}\" class=\"form-check-input {$errorClass}\" id=\"{$radioId}\" value=\"{$value}\" {{ {$oldValue} === '{$value}' ? 'checked' : '' }}>\n";
+                            $viewContent .= "\t\t\t\t\t\t            <label for=\"{$radioId}\" class=\"form-check-label\">{$value}</label>\n";
+                            $viewContent .= "\t\t\t\t\t\t        </div>\n";
+                        }
+                        break;
                     case 'checkbox':
-                        $viewContent .= "\t\t\t\t\t\t        <input type=\"checkbox\" name=\"{$fieldName}\" class=\"form-check-input {$errorClass}\" id=\"{$fieldName}\" " . (old($fieldName) ? 'checked' : '') . ">\n";
+                        $checkboxInput = true;
+                        foreach ($values as $value) {
+                            $viewContent .= "\t\t\t\t\t\t        <div class=\"form-check\">\n";
+                            $viewContent .= "\t\t\t\t\t\t            <input class=\"form-check-input {$errorClass}\" type=\"checkbox\" name=\"{$fieldName}[]\" id=\"{$fieldName}_{$value}\" value=\"{$value}\" {{ old('{$fieldName}') === \"{$value}\" ? 'checked' : '' }}>\n";
+                            $viewContent .= "\t\t\t\t\t\t            <label class=\"form-check-label\" for=\"{$fieldName}_{$value}\">{{ __('{$value}') }}</label>\n";
+                            $viewContent .= "\t\t\t\t\t\t        </div>\n";
+                        }
+                        $viewContent .= "\t\t\t\t\t\t        <input type=\"hidden\" id=\"{$fieldName}_hidden\" name=\"{$fieldName}\" value=\"{{ {$oldValue} }}\">\n";
                         break;
                     case 'select':
                         $viewContent .= "\t\t\t\t                <select class=\"form-select {$errorClass}\" name=\"{$fieldName}\" id=\"{$fieldName}\" required>\n";
                         $viewContent .= "\t\t\t\t                     <option value='' selected> -- Select -- </option>\n";
                         $viewContent .= "\t\t\t\t                     @foreach (\${$modelName} as \${$modelNameAs})\n";
-                        $viewContent .= "\t\t\t\t                     <option value=\"{{ \${$modelNameAs}->id }}\">{{ \${$modelNameAs}->name }}</option>\n";
+                        $viewContent .= "\t\t\t\t                     <option value=\"{{ \${$modelNameAs}->id }}\">{{ \${$modelNameAs}->{$optionsFieldName} }}</option>\n";
                         $viewContent .= "\t\t\t\t                     @endforeach\n";
                         $viewContent .= "\t\t\t\t                 </select>\n";
                         break;
@@ -602,8 +622,34 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
             </div>
         </div>
     </div>
-@endsection
-            ";
+@endsection";
+if ($checkboxInput) {
+$viewContent .="
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    function updateHiddenField(fieldName) {
+        const checkboxes = document.querySelectorAll('input[name=\"' +fieldName + '[]\"]:checked');
+        const selectedValues = Array.from(checkboxes).map(cb => cb.value);
+        document.getElementById(fieldName + '_hidden').value = selectedValues.join(',');
+    }
+
+    document.querySelectorAll('input[type=\"checkbox\"]').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            const fieldName = checkbox.name.split('[')[0]; // Extract field name from 'name=\"field[]\"'
+            updateHiddenField(fieldName);
+        });
+    });
+
+    document.querySelectorAll('input[type=\"checkbox\"]').forEach(function (checkbox) {
+        const fieldName = checkbox.name.split('[')[0];
+        updateHiddenField(fieldName);
+    });
+});
+</script>
+@endpush";
+}
+
 
             File::put($createViewFilePath, $viewContent);
             return ['success' => true];
@@ -687,7 +733,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                     <form method=\"POST\" action=\"{{ route('{$lowerCaseModelName}.update', \$data->id) }}\">
                         @csrf
                         @method('PUT')\n";
-
+                        $checkboxInput = false;
         foreach ($fields as $fieldName => $attributes) {
             // Only create the input if the "create" attribute is "on"
             if (isset($attributes['create']) && $attributes['create'] === 'on') {
@@ -695,6 +741,13 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                 $inputType = $attributes['input_type'] ?? 'text'; // Default to text
                 $errorClass = "@error('{$fieldName}') is-invalid @enderror";
                 $oldValue = "old('{$fieldName}', \$data->{$fieldName})";
+                // radio
+                $values = isset($attributes['extra_values']) ? preg_split('/[\s,]+/', trim($attributes['extra_values'])) : [];
+
+                // select
+                $modelName = isset($attributes['model_name']) ? lcfirst($attributes['model_name']) .'s' : '';
+                $modelNameAs = isset($attributes['model_name']) ? lcfirst($attributes['model_name']) : '';
+                $optionsFieldName = isset($attributes['field_name']) ? $attributes['field_name'] : '';
 
                 // Start input generation
                 $viewContent .= "\t\t\t\t\t\t<div class=\"row mb-3\">\n";
@@ -706,11 +759,39 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                     case 'email':
                     case 'number':
                     case 'password':
+                    case 'date':
                         $viewContent .= "\t\t\t\t\t\t        <input type=\"{$inputType}\" name=\"{$fieldName}\" class=\"form-control {$errorClass}\" id=\"{$fieldName}\" value=\"{{ {$oldValue} }}\" required>\n";
                         break;
     
                     case 'textarea':
                         $viewContent .= "\t\t\t\t\t\t        <textarea name=\"{$fieldName}\" class=\"form-control {$errorClass}\" id=\"{$fieldName}\" required>{{ {$oldValue} }}</textarea>\n";
+                        break;
+                    case 'radio':
+                        foreach ($values as $value) {
+                            $radioId = "{$fieldName}_{$value}";
+                            $viewContent .= "\t\t\t\t\t\t        <div class=\"form-check ms-4\">\n";
+                            $viewContent .= "\t\t\t\t\t\t            <input type=\"radio\" name=\"{$fieldName}\" class=\"form-check-input {$errorClass}\" id=\"{$radioId}\" value=\"{$value}\" {{ {$oldValue} === '{$value}' ? 'checked' : '' }}>\n";
+                            $viewContent .= "\t\t\t\t\t\t            <label for=\"{$radioId}\" class=\"form-check-label\">{$value}</label>\n";
+                            $viewContent .= "\t\t\t\t\t\t        </div>\n";
+                        }
+                        break;
+                    case 'checkbox':
+                        $checkboxInput = true;
+                        foreach ($values as $value) {
+                            $viewContent .= "\t\t\t\t\t\t        <div class=\"form-check\">\n";
+                            $viewContent .= "\t\t\t\t\t\t            <input class=\"form-check-input {$errorClass}\" type=\"checkbox\" name=\"{$fieldName}[]\" id=\"{$fieldName}_{$value}\" value=\"{$value}\">\n";
+                            $viewContent .= "\t\t\t\t\t\t            <label class=\"form-check-label\" for=\"{$fieldName}_{$value}\">{{ __('{$value}') }}</label>\n";
+                            $viewContent .= "\t\t\t\t\t\t        </div>\n";
+                        }
+                        $viewContent .= "\t\t\t\t\t\t        <input type=\"hidden\" id=\"{$fieldName}_hidden\" name=\"{$fieldName}\" value=\"{{ {$oldValue} }}\">\n";
+                        break;
+                    case 'select':
+                        $viewContent .= "\t\t\t\t                <select class=\"form-select {$errorClass}\" name=\"{$fieldName}\" id=\"{$fieldName}\" required>\n";
+                        $viewContent .= "\t\t\t\t                     <option value='' selected> -- Select -- </option>\n";
+                        $viewContent .= "\t\t\t\t                     @foreach (\${$modelName} as \${$modelNameAs})\n";
+                        $viewContent .= "\t\t\t\t                     <option value=\"{{ \${$modelNameAs}->id }}\" {{ {$oldValue} == \${$modelNameAs}->id ? 'selected' : '' }}>{{ \${$modelNameAs}->{$optionsFieldName} }}</option>\n";
+                        $viewContent .= "\t\t\t\t                     @endforeach\n";
+                        $viewContent .= "\t\t\t\t                 </select>\n";
                         break;
 
                     default:
@@ -739,8 +820,33 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
             </div>
         </div>
     </div>
-@endsection
-            ";
+@endsection";
+if ($checkboxInput) {
+$viewContent .="
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    function updateHiddenField(fieldName) {
+        const checkboxes = document.querySelectorAll('input[name=\"' +fieldName + '[]\"]:checked');
+        const selectedValues = Array.from(checkboxes).map(cb => cb.value);
+        document.getElementById(fieldName + '_hidden').value = selectedValues.join(',');
+    }
+
+    document.querySelectorAll('input[type=\"checkbox\"]').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            const fieldName = checkbox.name.split('[')[0]; // Extract field name from 'name=\"field[]\"'
+            updateHiddenField(fieldName);
+        });
+    });
+
+    document.querySelectorAll('input[type=\"checkbox\"]').forEach(function (checkbox) {
+        const fieldName = checkbox.name.split('[')[0];
+        updateHiddenField(fieldName);
+    });
+});
+</script>
+@endpush";
+}
 
             File::put($editViewFilePath, $viewContent);
             return ['success' => true];

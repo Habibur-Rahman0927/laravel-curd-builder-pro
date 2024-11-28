@@ -38,7 +38,7 @@ class ServiceRepositoryServiceProvider extends ServiceProvider
     public function register(): void
     {
         $repositories = [
-                        ILanguageRepository::class => LanguageRepository::class,
+            ILanguageRepository::class => LanguageRepository::class,
             IPermissionGroupRepository::class => PermissionGroupRepository::class,
             IRoleHasPermissionRepository::class => RoleHasPermissionRepository::class,
             IPermissionRepository::class => PermissionRepository::class,
@@ -47,7 +47,7 @@ class ServiceRepositoryServiceProvider extends ServiceProvider
         ];
 
         $services = [
-                        ILanguageService::class => LanguageService::class,
+            ILanguageService::class => LanguageService::class,
             IPermissionGroupService::class => PermissionGroupService::class,
             IRoleHasPermissionService::class => RoleHasPermissionService::class,
             IPermissionService::class => PermissionService::class,
