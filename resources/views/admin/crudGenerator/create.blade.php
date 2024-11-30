@@ -46,6 +46,80 @@
         .table {
             min-width: 800px;
         }
+        .applicable-placeholder {
+            font-style: italic;
+            color: #6c757d;
+            background-color: #f8f9fa;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+            text-align: center;
+            width: 100%;
+        }
+
+        .fillable-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .fillable-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .fillable-modal-header h5 {
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .fillable-modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .fillable-fields-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .field-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .fillable-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .fillable-modal-footer button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
     
     </style>
 @endsection
@@ -157,18 +231,19 @@
                                         <tr class="field-row">
                                             <td>
                                                 <select name="fields[0][type]" class="form-select" required>
-                                                    @foreach ([ 'bigInteger' => 'bigInteger()',
+                                                    @foreach ([ 'string' => 'string()',
+                                                                'integer' => 'integer()',
+                                                                'decimal' => 'decimal()',
+                                                                'uuid' => 'uuid()',
+                                                                'ulid' => 'ulid()',
+                                                                'bigInteger' => 'bigInteger()',
                                                                 'boolean' => 'boolean()',
                                                                 'dateTime' => 'dateTime()',
                                                                 'date' => 'date()',
-                                                                'decimal' => 'decimal()',
-                                                                'integer' => 'integer()',
                                                                 'json' => 'json()',
                                                                 'longText' => 'longText()',
-                                                                'string' => 'string()',
                                                                 'text' => 'text()',
                                                                 'time' => 'time()',
-                                                                'uuid' => 'uuid()',
                                                                 'binary' => 'binary()',
                                                                 'char' => 'char()',
                                                                 'double' => 'double()',
@@ -185,7 +260,9 @@
                                                                 'unsignedMediumInteger' => 'unsignedMediumInteger()',
                                                                 'unsignedSmallInteger' => 'unsignedSmallInteger()',
                                                                 'unsignedTinyInteger' => 'unsignedTinyInteger()',
-                                                                'year' => 'year()' ] as $value => $label)
+                                                                'year' => 'year()',
+                                                                'foreignId' => 'foreignId()',
+                                                                'foreignIdFor' => 'foreignIdFor()', ] as $value => $label)
                                                         <option value="{{ $value }}">{{ $label }}</option>
                                                     @endforeach
                                                 </select>
@@ -324,6 +401,7 @@
                                                             <th>Edit</th>
                                                             <th>List</th>
                                                             <th>Input Type</th>
+                                                            <th>Model/Other Options</th>
                                                             <th>Validation</th>
                                                         </tr>
                                                     </thead>
@@ -419,18 +497,19 @@
         row.innerHTML = `
                 <td>
                     <select name="fields[${fieldIndex}][type]" class="form-select" required>
-                        @foreach ([ 'bigInteger' => 'bigInteger()',
+                        @foreach ([ 'string' => 'string()',
+                                    'decimal' => 'decimal()',
+                                    'integer' => 'integer()',
+                                    'uuid' => 'uuid()',
+                                    'ulid' => 'ulid()',
+                                    'bigInteger' => 'bigInteger()',
                                     'boolean' => 'boolean()',
                                     'dateTime' => 'dateTime()',
                                     'date' => 'date()',
-                                    'decimal' => 'decimal()',
-                                    'integer' => 'integer()',
                                     'json' => 'json()',
                                     'longText' => 'longText()',
-                                    'string' => 'string()',
                                     'text' => 'text()',
                                     'time' => 'time()',
-                                    'uuid' => 'uuid()',
                                     'binary' => 'binary()',
                                     'char' => 'char()',
                                     'double' => 'double()',
@@ -447,7 +526,9 @@
                                     'unsignedMediumInteger' => 'unsignedMediumInteger()',
                                     'unsignedSmallInteger' => 'unsignedSmallInteger()',
                                     'unsignedTinyInteger' => 'unsignedTinyInteger()',
-                                    'year' => 'year()' ] as $value => $label)
+                                    'year' => 'year()',
+                                    'foreignId' => 'foreignId()',
+                                    'foreignIdFor' => 'foreignIdFor()', ] as $value => $label)
                             <option value="{{ $value }}">{{ $label }}</option>
                         @endforeach
                     </select>
@@ -501,17 +582,19 @@
             const uniqueCheckbox = fieldRowElement.querySelector('input[name*="[unique]"]');
             const indexCheckbox = fieldRowElement.querySelector('input[name*="[index]"]');
             const unsignedCheckbox = fieldRowElement.querySelector('input[name*="[unsigned]"]');
+            const fieldNameInput = fieldRowElement.querySelector('input[name*="[name]"]');
             const lengthInput = fieldRowElement.querySelector('input[name*="[length]"]');
             const defaultInput = fieldRowElement.querySelector('input[name*="[default]"]');
             const commentInput = fieldRowElement.querySelector('input[name*="[comment]"]');
 
             const allowedUnsignedTypes = ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'float', 'double', 'decimal'];
-            const noLengthRequiredTypes = ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'binary', 'boolean', 'text', 'date', 'dateTime', 'time', 'json', 'uuid', 'foreignId', 'mediumText', 'longText', 'year'];
+            const noLengthRequiredTypes = ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'binary', 'boolean', 'text', 'date', 'dateTime', 'time', 'json', 'uuid', 'ulid', 'foreignId', 'foreignIdFor', 'mediumText', 'longText', 'year'];
             const noDefualtRequiredTypes = ['text', 'mediumText', 'longText', 'tinyText', 'binary', 'json'];
-            const defualtNumberTypeInput = ['integer', 'bigInteger', 'mediumInteger', 'mediumInteger', 'smallInteger', 'tinyInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger'];
-            const noUniqueRequiredTypes = ['boolean', 'binary', 'text', 'mediumText', 'longText', 'tinyText', 'json'];
+            const defualtNumberTypeInput = ['integer', 'bigInteger', 'mediumInteger', 'mediumInteger', 'smallInteger', 'tinyInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'foreignId', 'foreignIdFor'];
+            const noUniqueRequiredTypes = ['boolean', 'binary', 'text', 'mediumText', 'longText', 'tinyText', 'json', 'foreignId', 'foreignIdFor'];
             const noIndexRequiredTypes = ['boolean', 'binary', 'text', 'mediumText', 'longText', 'tinyText', 'json'];
             const floatTypes = ['float', 'double', 'decimal'];
+            const noNullableTypes = [];
 
             // Reset all inputs before applying new settings
             if (nullableCheckbox) {
@@ -545,11 +628,8 @@
                 commentInput.placeholder = 'Comment';
             }
 
-            if (unsignedCheckbox) {
-                unsignedCheckbox.disabled = !allowedUnsignedTypes.includes(selectElement.value);
-                if (!unsignedCheckbox.disabled) {
-                    unsignedCheckbox.checked = false;
-                }
+            if (nullableCheckbox) {
+                nullableCheckbox.disabled = noNullableTypes.includes(selectElement.value);
             }
 
             if (uniqueCheckbox) {
@@ -558,6 +638,68 @@
 
             if (indexCheckbox) {
                 indexCheckbox.disabled = noIndexRequiredTypes.includes(selectElement.value);
+            }
+
+            if (unsignedCheckbox) {
+                unsignedCheckbox.disabled = !allowedUnsignedTypes.includes(selectElement.value);
+                if (!unsignedCheckbox.disabled) {
+                    unsignedCheckbox.checked = false;
+                }
+            }
+
+            if (fieldNameInput) {
+                if (selectElement.value === 'foreignId') {
+                    fieldNameInput.style.display = 'block';
+                    fieldNameInput.readOnly = false;
+                    fieldNameInput.value = '';
+                    fieldNameInput.placeholder = 'Demo: user_id,users';
+                    let modelSelect = fieldRowElement.querySelector('select[name="modelSelect"]');
+                    if (modelSelect) {
+                        modelSelect.remove();
+                    }
+                } else if (selectElement.value === 'foreignIdFor') {
+                    fieldNameInput.style.display = 'none';
+                    fieldNameInput.type = 'text';
+                    fieldNameInput.readOnly = true;
+                    let modelSelect = fieldRowElement.querySelector('select[name="modelSelect"]');
+                    if (!modelSelect) {
+                        modelSelect = document.createElement('select');
+                        modelSelect.name = 'modelSelect';
+                        modelSelect.classList.add('form-control');
+                        modelSelect.style.display = 'inline-block';
+                        modelSelect.style.width = '100%';
+                        modelSelect.style.marginTop = '5px';
+
+                        const defaultOption = document.createElement('option');
+                        defaultOption.value = '';
+                        defaultOption.textContent = ' -- Select a model -- ';
+                        defaultOption.disabled = true;
+                        defaultOption.selected = true;
+                        modelSelect.appendChild(defaultOption);
+
+                        modelNames.forEach(model => {
+                            const option = document.createElement('option');
+                            option.value = model;
+                            option.textContent = model;
+                            modelSelect.appendChild(option);
+                        });
+
+                        fieldNameInput.insertAdjacentElement('afterend', modelSelect);
+
+                        modelSelect.addEventListener('change', function () {
+                            fieldNameInput.value = modelSelect.value;
+                        });
+                    }
+                } else {
+                    fieldNameInput.style.display = 'block';
+                    fieldNameInput.placeholder = 'Field name';
+                    fieldNameInput.readOnly = false;
+                    fieldNameInput.value = '';
+                    let modelSelect = fieldRowElement.querySelector('select[name="modelSelect"]');
+                    if (modelSelect) {
+                        modelSelect.remove();
+                    }
+                }
             }
 
             if (lengthInput) {
@@ -796,7 +938,17 @@
             fields.forEach(field => {
                 let fieldLine = '';
                 if (field.name) {
-                    fieldLine += `            $table->${field.type}('${field.name}'${field.length ? `, ${field.length}` : ''})`;
+                    let fieldName = field.name;
+                    let tableName = '';
+                    if (['foreignId'].includes(field.type)) {
+                        fieldName = field.name.split(',')[0];
+                        tableName = field.name.split(',')[1];
+                    }
+                    if (['foreignIdFor'].includes(field.type)) {
+                        fieldLine += `$table->${field.type}(\\App\\Models\\${fieldName}::class)`;
+                    } else {
+                        fieldLine += `            $table->${field.type}('${fieldName}'${field.length ? `, ${field.length}` : ''})`;
+                    }
 
                     if (['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'float', 'double', 'decimal'].includes(field.type) && field.unsigned) {
                         fieldLine += '->unsigned()';
@@ -804,12 +956,18 @@
 
                     if (field.nullable) fieldLine += '->nullable()';
                     if (field.default) {
-                        if (field.type === 'boolean' || ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'float', 'double', 'decimal'].includes(field.type)) {
+                        if (field.type === 'boolean' || ['integer', 'tinyInteger', 'mediumInteger', 'bigInteger', 'smallInteger', 'unsignedBigInteger', 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger', 'float', 'double', 'decimal', 'foreignId', 'foreignIdFor'].includes(field.type)) {
                             fieldLine += `->default(${field.default})`;
                         } else {
                             fieldLine += `->default('${field.default}')`;
                         }
-                    } 
+                    }
+                    if (['foreignId'].includes(field.type)) {
+                        fieldLine += `->constrained('${tableName}')->cascadeOnDelete()->cascadeOnUpdate()`;
+                    }
+                    if (['foreignIdFor'].includes(field.type)) {
+                        fieldLine += `->constrained()->cascadeOnDelete()->cascadeOnUpdate()`;
+                    }
                     if (field.unique) fieldLine += '->unique()';
                     if (field.index) fieldLine += '->index()';
                     if (field.comment) fieldLine += `->comment('${field.comment}')`;
@@ -846,7 +1004,19 @@
 
         modelContent += `\nclass ${modelName} extends Model\n{\n    use HasFactory${softDeleteEnabled ? ', SoftDeletes' : ''};\n\n    protected $fillable = [\n`;
 
-        const fillableFields = fields.map(field => `'${field.name}'`).join(',\n\t');
+        const fillableFields = fields.map(field => {
+            let fieldName = field.name;
+
+            if (['foreignIdFor'].includes(field.type)) {
+                fieldName = fieldName.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase() + '_id';
+            }
+
+            if (['foreignId'].includes(field.type)) {
+                fieldName = field.name.split(',')[0];
+            }
+
+            return `'${fieldName}'`;
+        }).join(',\n\t');
         modelContent += `        ${fillableFields}\n    ];\n\n`;
 
         relationships.forEach(relationship => {
@@ -882,8 +1052,14 @@
         tableBody.innerHTML = '';
 
         fieldContainer.forEach(function (row) {
-            const fieldName = row.querySelector('input[name^="fields"][name$="[name]"]').value;
-
+            const fieldType = row.querySelector('select[name^="fields"][name$="[type]"]').value;
+            let fieldName = row.querySelector('input[name^="fields"][name$="[name]"]').value;
+            if (['foreignId'].includes(fieldType)) {
+                fieldName = fieldName.split(',')[0];
+            }
+            if (['foreignIdFor'].includes(fieldType)) {
+                fieldName = fieldName.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase() + '_id';
+            }
             if (fieldName) {
                 const tr = document.createElement('tr');
                 
@@ -951,7 +1127,7 @@
                 inputTypeSelect.name = `fieldNames[${fieldName}][input_type]`;
 
                 // List of input types
-                const inputTypes = ['text', 'number', 'date', 'email', 'password', 'checkbox', 'textarea'];
+                const inputTypes = ['text', 'email', 'number', 'date', 'password', 'select', 'checkbox', 'radio', 'textarea'];
                 inputTypes.forEach(type => {
                     const option = document.createElement('option');
                     option.value = type;
@@ -963,6 +1139,53 @@
                 inputTypeSelect.disabled = true;
                 tdInputType.appendChild(inputTypeSelect);
                 tr.appendChild(tdInputType);
+
+                const tdModelAndOtherOptions = document.createElement('td');
+
+                // Create the select dropdown for models
+                const modelSelect = document.createElement('select');
+                modelSelect.classList.add('form-control');
+                modelSelect.name = `fieldNames[${fieldName}][model_name]`;
+                modelSelect.style.display = 'none';
+                modelSelect.disabled = true;
+
+                const placeholderOption = document.createElement('option');
+                placeholderOption.value = '';
+                placeholderOption.textContent = '-- Select Model --';
+                placeholderOption.disabled = true;
+                placeholderOption.selected = true; // Set it as the default selected option
+                modelSelect.appendChild(placeholderOption);
+
+                modelNames.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model;
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+                tdModelAndOtherOptions.appendChild(modelSelect);
+
+                // Create a placeholder span for "Not Applicable"
+                const placeholder = document.createElement('span');
+                placeholder.textContent = 'Not Applicable';
+                placeholder.style.display = 'block';
+                placeholder.classList.add('applicable-placeholder');
+                tdModelAndOtherOptions.appendChild(placeholder);
+
+                const extraInput = document.createElement('input');
+                extraInput.type = 'text';
+                extraInput.name = `fieldNames[${fieldName}][extra_values]`;
+                extraInput.placeholder = 'Comma-separated values : option1,option2';
+                extraInput.classList.add('form-control');
+                extraInput.style.display = 'none';
+                extraInput.disabled = true;
+                tdModelAndOtherOptions.appendChild(extraInput);
+
+                // Add logic to toggle between dropdown and placeholder
+                inputTypeSelect.addEventListener('change', function () {
+                    toggleInputType(inputTypeSelect, fieldName, modelSelect, placeholder, extraInput);
+                });
+                tr.appendChild(tdModelAndOtherOptions);
+
 
                 // Validation container setup
                 const tdValidation = document.createElement('td');
@@ -1023,6 +1246,147 @@
             checkboxValidation.disabled = true;
         }
     }
+
+    function toggleInputType(inputTypeSelect, fieldName, modelSelect, placeholder, extraInput) {
+        if (inputTypeSelect.value === 'select') {
+            displayModelSelect(fieldName, modelSelect, placeholder, extraInput);
+        } else if (inputTypeSelect.value === 'radio' || inputTypeSelect.value === 'checkbox') {
+            displayExtraInput(modelSelect, placeholder, extraInput);
+        } else {
+            displayPlaceholder(modelSelect, placeholder, extraInput);
+        }
+    }
+
+    function displayModelSelect(fieldName, modelSelect, placeholder, extraInput) {
+        modelSelect.style.display = 'block';
+        modelSelect.disabled = false;
+        placeholder.style.display = 'none';
+        extraInput.style.display = 'none';
+        extraInput.disabled = true;
+
+        modelSelect.addEventListener('change', () => fetchFillableFields(fieldName, modelSelect));
+    }
+
+    function displayExtraInput(modelSelect, placeholder, extraInput) {
+        modelSelect.style.display = 'none';
+        modelSelect.disabled = true;
+        placeholder.style.display = 'none';
+        extraInput.style.display = 'block';
+        extraInput.disabled = false;
+    }
+
+    function displayPlaceholder(modelSelect, placeholder, extraInput) {
+        modelSelect.style.display = 'none';
+        modelSelect.disabled = true;
+        placeholder.style.display = 'block';
+        extraInput.style.display = 'none';
+        extraInput.disabled = false;
+    }
+
+    function fetchFillableFields(fieldName, modelSelect) {
+        const selectedModel = modelSelect.value;
+
+        fetch(`/api/model-fillable?model=${selectedModel}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+                createFillableFieldsModal(fieldName, selectedModel, data.fields);
+            })
+            .catch(error => {
+                console.error('Error fetching fillable fields:', error);
+            });
+    }
+
+    function createFillableFieldsModal(fieldName, selectedModel, fields) {
+        const modal = document.createElement('div');
+        modal.classList.add('fillable-modal');
+        modal.innerHTML = `
+            <div class="fillable-modal-header">
+                <h5>Select a Field for ${selectedModel} options</h5>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="fillable-modal-body">
+                <div class="fillable-fields-grid"></div>
+            </div>
+            <div class="fillable-modal-footer">
+                <button class="save-selection add-btn">Save</button>
+                <button class="cancel-selection btn btn-danger text-white">Cancel</button>
+            </div>
+        `;
+
+        populateFillableFieldsGrid(fieldName, modal.querySelector('.fillable-fields-grid'), fields, selectedModel);
+
+        const curdGeneratorForm = document.getElementById('curd-generator-form');
+        curdGeneratorForm.appendChild(modal);
+
+        modal.querySelector('.close-modal').addEventListener('click', () => modal.remove());
+        modal.querySelector('.cancel-selection').addEventListener('click', () => modal.remove());
+    }
+
+    function populateFillableFieldsGrid(fieldName, grid, fields, selectedModel) {
+        fields.forEach(field => {
+            const fieldWrapper = document.createElement('div');
+            fieldWrapper.classList.add('field-item');
+
+            const fieldCheckbox = document.createElement('input');
+            const fieldId = `${selectedModel}-${fieldName}-${field}`;
+            fieldCheckbox.type = 'checkbox';
+            fieldCheckbox.name = `fieldNames[${fieldName}][field_name]`;
+            fieldCheckbox.value = field;
+            fieldCheckbox.id = fieldId;
+
+            fieldCheckbox.addEventListener('change', () => {
+                grid.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    if (cb !== fieldCheckbox) cb.checked = false;
+                });
+            });
+
+            const fieldLabel = document.createElement('label');
+            fieldLabel.textContent = field;
+            fieldLabel.setAttribute('for', fieldId);
+
+            fieldWrapper.appendChild(fieldCheckbox);
+            fieldWrapper.appendChild(fieldLabel);
+            grid.appendChild(fieldWrapper);
+        });
+
+        attachSaveSelectionHandler(fieldName, grid, selectedModel);
+    }
+
+
+    function attachSaveSelectionHandler(fieldName, grid, selectedModel) {
+        const modal = grid.closest('.fillable-modal');
+        const curdGeneratorForm = document.getElementById('curd-generator-form');
+
+        modal.querySelector('.save-selection').addEventListener('click', (event) => {
+            const selectedField = grid.querySelector('input[type="checkbox"]:checked');
+            if (selectedField) {
+                const inputId = `${fieldName}-${selectedModel}-${selectedField.value}`;
+                let hiddenInput = document.getElementById(inputId);
+
+                if (!hiddenInput) {
+                    hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.id = inputId;
+                    hiddenInput.name = `fieldNames[${fieldName}][field_name]`;
+                    hiddenInput.value = selectedField.value;
+                    curdGeneratorForm.appendChild(hiddenInput);
+                } else {
+                    hiddenInput.value = selectedField.value;
+                }
+
+                alert(`You selected: ${selectedField.value}`);
+                modal.remove();
+            } else {
+                event.preventDefault();
+                alert('Please select a field before saving.');
+            }
+        });
+    }
+
 
     const fieldValidations = {};
     function showValidationModal(event, fieldName) {
@@ -1196,8 +1560,6 @@
                 }
             });
             fieldValidations[fieldName] = selectedRules; 
-            console.log(validationRules)
-            console.log(fieldValidations)
             bootstrapModal.hide();
         });
         const bootstrapModal = new bootstrap.Modal(modal);

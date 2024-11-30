@@ -148,16 +148,16 @@
                 ]
             }
         },
-        "/api/admin/api-long": {
+        "/api/admin/api-book": {
             "get": {
                 "tags": [
-                    "Long"
+                    "Book"
                 ],
-                "summary": "Get all longs",
-                "operationId": "c9084ae6cac36680d3c47e05685b6cd6",
+                "summary": "Get all books",
+                "operationId": "291b3cac9e0288222cd331b3a238cd97",
                 "responses": {
                     "200": {
-                        "description": "A list of longs"
+                        "description": "A list of books"
                     }
                 },
                 "security": [
@@ -168,10 +168,10 @@
             },
             "post": {
                 "tags": [
-                    "Long"
+                    "Book"
                 ],
-                "summary": "Create a new long",
-                "operationId": "e322727539fbb3e70301279878bbed45",
+                "summary": "Create a new book",
+                "operationId": "b4d0e45f1dbcfb91c1e4626c22c473a9",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -194,7 +194,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Long created successfully"
+                        "description": "Book created successfully"
                     },
                     "400": {
                         "description": "Invalid input"
@@ -207,13 +207,13 @@
                 ]
             }
         },
-        "/api/admin/api-long/{id}": {
+        "/api/admin/api-book/{id}": {
             "get": {
                 "tags": [
-                    "Long"
+                    "Book"
                 ],
-                "summary": "Get a long by ID",
-                "operationId": "f9ee51ea3c5ce098a38b650dbf4645b7",
+                "summary": "Get a book by ID",
+                "operationId": "7fbb811f142c89390bf2ba3e86d7af0d",
                 "parameters": [
                     {
                         "name": "id",
@@ -226,10 +226,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "A single long object"
+                        "description": "A single book object"
                     },
                     "404": {
-                        "description": "Long not found"
+                        "description": "Book not found"
                     }
                 },
                 "security": [
@@ -240,10 +240,10 @@
             },
             "put": {
                 "tags": [
-                    "Long"
+                    "Book"
                 ],
-                "summary": "Update an existing long",
-                "operationId": "dea306245e6afe52b2abf201cc89dfed",
+                "summary": "Update an existing book",
+                "operationId": "6849335b86a0e4fd4c5bef7ca71546ac",
                 "parameters": [
                     {
                         "name": "id",
@@ -276,10 +276,10 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Long updated successfully"
+                        "description": "Book updated successfully"
                     },
                     "404": {
-                        "description": "Long not found"
+                        "description": "Book not found"
                     }
                 },
                 "security": [
@@ -290,15 +290,15 @@
             },
             "delete": {
                 "tags": [
-                    "Long"
+                    "Book"
                 ],
-                "summary": "Delete a long by ID",
-                "operationId": "c6abd44ba13edcbee9bbc1288abf2cbe",
+                "summary": "Delete a book by ID",
+                "operationId": "cce021abff8c0ef6b149885566819957",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID of the long to delete",
+                        "description": "ID of the book to delete",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -307,182 +307,10 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Long deleted successfully"
+                        "description": "Book deleted successfully"
                     },
                     "404": {
-                        "description": "Long not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/admin/api-top": {
-            "get": {
-                "tags": [
-                    "Top"
-                ],
-                "summary": "Get all tops",
-                "operationId": "f01d5010ef48768f0667075aa67dec7f",
-                "responses": {
-                    "200": {
-                        "description": "A list of tops"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "post": {
-                "tags": [
-                    "Top"
-                ],
-                "summary": "Create a new top",
-                "operationId": "954d9eb508ca4530f5dfea72e5e289a6",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "first_name": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    },
-                                    "last_name": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Top created successfully"
-                    },
-                    "400": {
-                        "description": "Invalid input"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/admin/api-top/{id}": {
-            "get": {
-                "tags": [
-                    "Top"
-                ],
-                "summary": "Get a top by ID",
-                "operationId": "ebbab25b59b0b6449957418dffb7115b",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "A single top object"
-                    },
-                    "404": {
-                        "description": "Top not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "Top"
-                ],
-                "summary": "Update an existing top",
-                "operationId": "13901ea81d227df157bae4a99ad59f17",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "first_name": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    },
-                                    "last_name": {
-                                        "type": "string",
-                                        "example": "example_value"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Top updated successfully"
-                    },
-                    "404": {
-                        "description": "Top not found"
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            },
-            "delete": {
-                "tags": [
-                    "Top"
-                ],
-                "summary": "Delete a top by ID",
-                "operationId": "0bb6a10b06ac7aacbe275e4770a33abe",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the top to delete",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Top deleted successfully"
-                    },
-                    "404": {
-                        "description": "Top not found"
+                        "description": "Book not found"
                     }
                 },
                 "security": [
@@ -504,12 +332,8 @@
     },
     "tags": [
         {
-            "name": "Long",
-            "description": "Long management operations"
-        },
-        {
-            "name": "Top",
-            "description": "Top management operations"
+            "name": "Book",
+            "description": "Book management operations"
         },
         {
             "name": "Authentication",

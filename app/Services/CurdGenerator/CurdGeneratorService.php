@@ -72,8 +72,16 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
             if ($softDelete) {
                 $modelTemplate .= "\tuse SoftDeletes;\n\n";
             }
-
-            $fillableFields = array_column($fields, 'name');
+            $fillableFields = [];
+            foreach ($fields as $field) {
+                if (in_array($field['type'], ['foreignId'])) {
+                    $fillableFields[] = explode(',', $field['name'])[0]; 
+                } else if (in_array($field['type'], ['foreignIdFor'])) {
+                    $fillableFields[] = Str::snake($field['name']) . '_id';
+                } else {
+                    $fillableFields[] = $field['name'];
+                }
+            }
             $modelTemplate .= "\t/**\n\t * The attributes that are mass assignable.\n\t *\n\t * @var array\n\t */\n";
             $modelTemplate .= "\tprotected \$fillable = [\n\t\t'" . implode("',\n\t\t'", $fillableFields) . "'\n\t];\n";
 
@@ -140,6 +148,8 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                 'unsignedInteger', 'unsignedMediumInteger', 'unsignedSmallInteger', 'unsignedTinyInteger',
                 'float', 'double', 'decimal', 'boolean'
             ];
+            $foreignIdTypes = ['foreignId'];
+            $foreignIdForTypes = ['foreignIdFor'];
 
             foreach ($fields as $field) {
                 $fieldType = $field['type'];
@@ -148,6 +158,21 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                 $nullable = isset($field['nullable']) ? '->nullable()' : '';
                 $unique = isset($field['unique']) ? '->unique()' : '';
                 $unsigned = isset($field['unsigned']) ? '->unsigned()' : '';
+
+                if (in_array($fieldType, $foreignIdTypes)) {
+                    $fieldName = explode(",", $field['name'])[0];
+                    $constrainedTable = explode(",", $field['name'])[1];
+                    $foreignId = "->constrained('{$constrainedTable}')->cascadeOnDelete()->cascadeOnUpdate()";
+                } else if (in_array($fieldType, $foreignIdForTypes)) {
+                    $fieldName = "\App\Models\\" . $fieldName . "::class";
+                    $foreignId = '';
+                    if (isset($field['index'])) {
+                        $foreignId .='->index()';
+                    }
+                    $foreignId .= "->constrained()->cascadeOnDelete()->cascadeOnUpdate()";
+                }else {
+                    $foreignId = '';
+                }
 
                 if (isset($field['default'])) {
                     if (in_array($fieldType, $numericTypes)) {
@@ -161,9 +186,13 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
 
                 $comment = isset($field['comment']) ? "->comment('{$field['comment']}')" : '';
 
-                $migrationTemplate .= "\t\t\t\$table->{$fieldType}('{$fieldName}'{$length}){$nullable}{$unique}{$unsigned}{$default}{$comment};\n";
+                if ($fieldType === 'foreignIdFor') {
+                    $migrationTemplate .= "\t\t\t\$table->{$fieldType}({$fieldName}){$nullable}{$default}{$foreignId}{$comment};\n";
+                } else {
+                    $migrationTemplate .= "\t\t\t\$table->{$fieldType}('{$fieldName}'{$length}){$nullable}{$unique}{$unsigned}{$default}{$foreignId}{$comment};\n";
+                }
 
-                if (isset($field['index'])) {
+                if (isset($field['index']) && !in_array($fieldType, $foreignIdForTypes)) {
                     $migrationTemplate .= "\t\t\t\$table->index('{$fieldName}');\n";
                 }
             }
@@ -278,6 +307,164 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
         }
     }
 
+    public function generateController(string $modelName, $fieldNames): array
+    {
+        try {
+            $className = ucfirst($modelName) . 'Controller';
+            $serviceName = lcfirst($modelName) . 'Service';
+
+            $filePath = app_path("Http/Controllers/Admin/{$className}.php");
+
+            if (File::exists($filePath)) {
+                return ['success' => false, 'error' => 'File Already Exist'];
+            }
+
+            // Initialize an array to store services to inject
+            $serviceImports = [];
+            $serviceImports[] = "use App\Services\\$modelName\\I{$modelName}Service;\n";
+
+            $serviceInjections = [];
+            $serviceInjections[] = "private I{$modelName}Service \${$serviceName},\n";
+
+            $serviceInjectionNames = [];
+
+            // Loop through field names and check if the field is of 'select' type and has a 'model_name'
+            foreach ($fieldNames as $field => $fieldData) {
+                if ($fieldData['input_type'] === 'select' && isset($fieldData['model_name']) && ($fieldData['create'] === 'on' || $fieldData['edit'] === 'on')) {
+                    $serviceImports[] = "use App\Services\\{$fieldData['model_name']}\\I{$fieldData['model_name']}Service;\n"; 
+                    $serviceInjections[] = "private I{$fieldData['model_name']}Service \$" . lcfirst($fieldData['model_name']) . "Service,\n";
+                    $serviceInjectionNames[lcfirst($fieldData['model_name'])] = lcfirst($fieldData['model_name']) . "Service";
+                }
+            }
+            $serviceImports = array_unique($serviceImports);
+            $serviceInjections = array_unique($serviceInjections);
+
+
+            $template = "<?php\n\n" .
+    "namespace App\Http\Controllers\Admin;\n\n" .
+    "use App\Http\Controllers\Controller;\n" ;
+    foreach($serviceImports as $serviceImport) {
+        $template .= $serviceImport;
+    }
+    $template .= "use Illuminate\Http\Request;\n" .
+    "use Symfony\Component\HttpFoundation\Response as ResponseAlias;\n" .
+    "use Illuminate\View\View;\n" .
+    "use Illuminate\Http\RedirectResponse;\n" .
+    "use App\Http\Requests\Create{$modelName}Request;\n" .
+    "use App\Http\Requests\Update{$modelName}Request;\n" .
+    "use Illuminate\Http\JsonResponse;\n" .
+    "use Exception;\n\n" .
+    "class $className extends Controller\n" .
+    "{\n" .
+    "    public function __construct(\n";
+    foreach($serviceInjections as $serviceInjection) {
+        $template .= "\t\t\t\t\t\t\t\t{$serviceInjection}";
+    }
+    $template .= "\t)\n" .
+    "    {\n" .
+    "    }\n\n" .
+    "    public function index(): View\n" .
+    "    {\n" .
+    "        return view('admin." . lcfirst($modelName) . ".index');\n" .
+    "    }\n\n" .
+    "    public function getDatatables(Request \$request): JsonResponse\n" .
+    "    {\n" .
+    "        if (\$request->ajax()) {\n" .
+    "            return \$this->{$serviceName}->get{$modelName}Data();\n" .
+    "        }\n" .
+    "        return response()->json([\n" .
+    "            'success' => false,\n" .
+    "            'message' => 'Invalid request.',\n" .
+    "        ]);\n" .
+    "    }\n\n" .
+    "    public function create(): View\n" .
+    "    {\n" ;
+
+    foreach($serviceInjectionNames as $modelNameAsKey => $serviceInjectionName) {
+        $template .= "\t\t\${$modelNameAsKey}s = \$this->{$serviceInjectionName}->findAll();\n";
+    }
+
+    $template .= "        return view('admin." . lcfirst($modelName) . ".create')->with([\n";
+    foreach($serviceInjectionNames as $modelNameAsKey => $serviceInjectionName) {
+        $template .= "\t\t\t'{$modelNameAsKey}s' => \${$modelNameAsKey}s,\n";
+    }
+    $template .= "\t\t]);\n" .
+    "    }\n\n" .
+    "    public function store(Create{$modelName}Request \$request): RedirectResponse\n" .
+    "    {\n" .
+    "        try {\n" .
+    "            \$response = \$this->{$serviceName}->create(\$request->all());\n" .
+    "            if (\$response) {\n" .
+    "                return redirect()->back()->with('success', __('". strtolower($modelName)."_module.create_list_edit.". strtolower($modelName)."') . __('standard_curd_common_label.success'));\n" .
+    "            }\n" .
+    "        } catch (Exception \$e) {\n" .
+    "            return redirect()->back()->with('error', __('standard_curd_common_label.error'));\n" .
+    "        }\n\n" .
+    "        return redirect()->back()->with('error', __('standard_curd_common_label.error'));\n" .
+    "    }\n\n" .
+    "    public function edit(string \$id): View\n" .
+    "    {\n" .
+    "        try {\n" .
+    "            \$response = \$this->{$serviceName}->findById(\$id);\n" ;
+
+    foreach($serviceInjectionNames as $modelNameAsKey => $serviceInjectionName) {
+        $template .= "\t\t\t\${$modelNameAsKey}s = \$this->{$serviceInjectionName}->findAll();\n";
+    }
+
+    $template .= "            return view('admin." . lcfirst($modelName) . ".edit')->with([\n";
+    $template .= "\t\t\t\t'data' => \$response,\n";
+    foreach($serviceInjectionNames as $modelNameAsKey => $serviceInjectionName) {
+        $template .= "\t\t\t\t'{$modelNameAsKey}s' => \${$modelNameAsKey}s,\n";
+    }
+    $template .= "\t\t\t]);\n" .
+    "        } catch (Exception \$e) {\n" .
+    "            return redirect()->back()->with('error', __('standard_curd_common_label.error'));\n" .
+    "        }\n" .
+    "    }\n\n" .
+    "    public function update(Update{$modelName}Request \$request, string \$id): RedirectResponse\n" .
+    "    {\n" .
+    "        try {\n" .
+    "            \$data = \$request->except(['_token', '_method']);\n" .
+    "            \$this->{$serviceName}->update(['id' => \$id], \$data);\n" .
+    "            return redirect()->back()->with('success', __('". strtolower($modelName)."_module.create_list_edit.". strtolower($modelName)."') . __('standard_curd_common_label.update_success'));\n" .
+    "        } catch (Exception \$e) {\n" .
+    "            return redirect()->back()->with('error', __('standard_curd_common_label.error'));\n" .
+    "        }\n" .
+    "    }\n\n" .
+    "    public function destroy(string \$id): JsonResponse\n" .
+    "    {\n" .
+    "        try {\n" .
+    "            \$data = \$this->{$serviceName}->deleteById(\$id);\n" .
+    "            if (\$data) {\n" .
+    "                return response()->json([\n" .
+    "                    'message' => __('". strtolower($modelName)."_module.create_list_edit.". strtolower($modelName)."') . __('standard_curd_common_label.delete'),\n" .
+    "                    'status_code' => ResponseAlias::HTTP_OK,\n" .
+    "                    'data' => []\n" .
+    "                ], ResponseAlias::HTTP_OK);\n" .
+    "            }\n" .
+    "            return response()->json([\n" .
+    "                'message' => __('". strtolower($modelName)."_module.create_list_edit.". strtolower($modelName)."') . __('standard_curd_common_label.delete_is_not'),\n" .
+    "                'status_code' => ResponseAlias::HTTP_BAD_REQUEST,\n" .
+    "                'data' => []\n" .
+    "            ], ResponseAlias::HTTP_BAD_REQUEST);\n" .
+    "        } catch (Exception \$e) {\n" .
+    "            return response()->json([\n" .
+    "                'message' => __('standard_curd_common_label.error'),\n" .
+    "                'status_code' => ResponseAlias::HTTP_INTERNAL_SERVER_ERROR,\n" .
+    "                'data' => []\n" .
+    "            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);\n" .
+    "        }\n" .
+    "    }\n" .
+    "}\n";
+
+
+        File::put($filePath, $template);
+            return ['success' => true];
+        } catch (\Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
     /**
      * Generate a create view for the specified model.
      *
@@ -353,7 +540,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
 
                     <form method=\"POST\" action=\"{{ route('{$lowerCaseModelName}.store') }}\">
                         @csrf\n";
-
+                        $checkboxInput = false;
         foreach ($fields as $fieldName => $attributes) {
             // Only create the input if the "create" attribute is "on"
             if (isset($attributes['create']) && $attributes['create'] === 'on') {
@@ -361,7 +548,12 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                 $inputType = $attributes['input_type'] ?? 'text'; // Default to text
                 $errorClass = "@error('{$fieldName}') is-invalid @enderror";
                 $oldValue = "old('{$fieldName}')";
-
+                // radio
+                $values = isset($attributes['extra_values']) ? preg_split('/[\s,]+/', trim($attributes['extra_values'])) : [];
+                // select
+                $modelName = isset($attributes['model_name']) ? lcfirst($attributes['model_name']) .'s' : '';
+                $modelNameAs = isset($attributes['model_name']) ? lcfirst($attributes['model_name']) : '';
+                $optionsFieldName = isset($attributes['field_name']) ? $attributes['field_name'] : '';
                 // Start input generation
                 $viewContent .= "\t\t\t\t\t\t<div class=\"row mb-3\">\n";
                 $viewContent .= "\t\t\t\t\t\t    <div class=\"col-md-12\">\n";
@@ -379,11 +571,34 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                     case 'textarea':
                         $viewContent .= "\t\t\t\t\t\t        <textarea name=\"{$fieldName}\" class=\"form-control {$errorClass}\" id=\"{$fieldName}\" required>{{ {$oldValue} }}</textarea>\n";
                         break;
-                        
-                    case 'checkbox':
-                        $viewContent .= "\t\t\t\t\t\t        <input type=\"checkbox\" name=\"{$fieldName}\" class=\"form-check-input {$errorClass}\" id=\"{$fieldName}\" " . (old($fieldName) ? 'checked' : '') . ">\n";
+                    
+                    case 'radio':
+                        foreach ($values as $value) {
+                            $radioId = "{$fieldName}_{$value}";
+                            $viewContent .= "\t\t\t\t\t\t        <div class=\"form-check ms-4\">\n";
+                            $viewContent .= "\t\t\t\t\t\t            <input type=\"radio\" name=\"{$fieldName}\" class=\"form-check-input {$errorClass}\" id=\"{$radioId}\" value=\"{$value}\" {{ {$oldValue} === '{$value}' ? 'checked' : '' }}>\n";
+                            $viewContent .= "\t\t\t\t\t\t            <label for=\"{$radioId}\" class=\"form-check-label\">{$value}</label>\n";
+                            $viewContent .= "\t\t\t\t\t\t        </div>\n";
+                        }
                         break;
-
+                    case 'checkbox':
+                        $checkboxInput = true;
+                        foreach ($values as $value) {
+                            $viewContent .= "\t\t\t\t\t\t        <div class=\"form-check\">\n";
+                            $viewContent .= "\t\t\t\t\t\t            <input class=\"form-check-input {$errorClass}\" type=\"checkbox\" name=\"{$fieldName}[]\" id=\"{$fieldName}_{$value}\" value=\"{$value}\" {{ old('{$fieldName}') === \"{$value}\" ? 'checked' : '' }}>\n";
+                            $viewContent .= "\t\t\t\t\t\t            <label class=\"form-check-label\" for=\"{$fieldName}_{$value}\">{{ __('{$value}') }}</label>\n";
+                            $viewContent .= "\t\t\t\t\t\t        </div>\n";
+                        }
+                        $viewContent .= "\t\t\t\t\t\t        <input type=\"hidden\" id=\"{$fieldName}_hidden\" name=\"{$fieldName}\" value=\"{{ {$oldValue} }}\">\n";
+                        break;
+                    case 'select':
+                        $viewContent .= "\t\t\t\t                <select class=\"form-select {$errorClass}\" name=\"{$fieldName}\" id=\"{$fieldName}\" required>\n";
+                        $viewContent .= "\t\t\t\t                     <option value='' selected> -- Select -- </option>\n";
+                        $viewContent .= "\t\t\t\t                     @foreach (\${$modelName} as \${$modelNameAs})\n";
+                        $viewContent .= "\t\t\t\t                     <option value=\"{{ \${$modelNameAs}->id }}\">{{ \${$modelNameAs}->{$optionsFieldName} }}</option>\n";
+                        $viewContent .= "\t\t\t\t                     @endforeach\n";
+                        $viewContent .= "\t\t\t\t                 </select>\n";
+                        break;
                     default:
                         $viewContent .= "\t\t\t\t\t\t        <input type=\"text\" name=\"{$fieldName}\" class=\"form-control {$errorClass}\" id=\"{$fieldName}\" value=\"{{ {$oldValue} }}\" required>\n";
                 }
@@ -410,8 +625,34 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
             </div>
         </div>
     </div>
-@endsection
-            ";
+@endsection";
+if ($checkboxInput) {
+$viewContent .="
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    function updateHiddenField(fieldName) {
+        const checkboxes = document.querySelectorAll('input[name=\"' +fieldName + '[]\"]:checked');
+        const selectedValues = Array.from(checkboxes).map(cb => cb.value);
+        document.getElementById(fieldName + '_hidden').value = selectedValues.join(',');
+    }
+
+    document.querySelectorAll('input[type=\"checkbox\"]').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            const fieldName = checkbox.name.split('[')[0]; // Extract field name from 'name=\"field[]\"'
+            updateHiddenField(fieldName);
+        });
+    });
+
+    document.querySelectorAll('input[type=\"checkbox\"]').forEach(function (checkbox) {
+        const fieldName = checkbox.name.split('[')[0];
+        updateHiddenField(fieldName);
+    });
+});
+</script>
+@endpush";
+}
+
 
             File::put($createViewFilePath, $viewContent);
             return ['success' => true];
@@ -495,7 +736,7 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                     <form method=\"POST\" action=\"{{ route('{$lowerCaseModelName}.update', \$data->id) }}\">
                         @csrf
                         @method('PUT')\n";
-
+                        $checkboxInput = false;
         foreach ($fields as $fieldName => $attributes) {
             // Only create the input if the "create" attribute is "on"
             if (isset($attributes['create']) && $attributes['create'] === 'on') {
@@ -503,6 +744,13 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                 $inputType = $attributes['input_type'] ?? 'text'; // Default to text
                 $errorClass = "@error('{$fieldName}') is-invalid @enderror";
                 $oldValue = "old('{$fieldName}', \$data->{$fieldName})";
+                // radio
+                $values = isset($attributes['extra_values']) ? preg_split('/[\s,]+/', trim($attributes['extra_values'])) : [];
+
+                // select
+                $modelName = isset($attributes['model_name']) ? lcfirst($attributes['model_name']) .'s' : '';
+                $modelNameAs = isset($attributes['model_name']) ? lcfirst($attributes['model_name']) : '';
+                $optionsFieldName = isset($attributes['field_name']) ? $attributes['field_name'] : '';
 
                 // Start input generation
                 $viewContent .= "\t\t\t\t\t\t<div class=\"row mb-3\">\n";
@@ -514,11 +762,39 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                     case 'email':
                     case 'number':
                     case 'password':
+                    case 'date':
                         $viewContent .= "\t\t\t\t\t\t        <input type=\"{$inputType}\" name=\"{$fieldName}\" class=\"form-control {$errorClass}\" id=\"{$fieldName}\" value=\"{{ {$oldValue} }}\" required>\n";
                         break;
     
                     case 'textarea':
                         $viewContent .= "\t\t\t\t\t\t        <textarea name=\"{$fieldName}\" class=\"form-control {$errorClass}\" id=\"{$fieldName}\" required>{{ {$oldValue} }}</textarea>\n";
+                        break;
+                    case 'radio':
+                        foreach ($values as $value) {
+                            $radioId = "{$fieldName}_{$value}";
+                            $viewContent .= "\t\t\t\t\t\t        <div class=\"form-check ms-4\">\n";
+                            $viewContent .= "\t\t\t\t\t\t            <input type=\"radio\" name=\"{$fieldName}\" class=\"form-check-input {$errorClass}\" id=\"{$radioId}\" value=\"{$value}\" {{ {$oldValue} === '{$value}' ? 'checked' : '' }}>\n";
+                            $viewContent .= "\t\t\t\t\t\t            <label for=\"{$radioId}\" class=\"form-check-label\">{$value}</label>\n";
+                            $viewContent .= "\t\t\t\t\t\t        </div>\n";
+                        }
+                        break;
+                    case 'checkbox':
+                        $checkboxInput = true;
+                        foreach ($values as $value) {
+                            $viewContent .= "\t\t\t\t\t\t        <div class=\"form-check\">\n";
+                            $viewContent .= "\t\t\t\t\t\t            <input class=\"form-check-input {$errorClass}\" type=\"checkbox\" name=\"{$fieldName}[]\" id=\"{$fieldName}_{$value}\" value=\"{$value}\">\n";
+                            $viewContent .= "\t\t\t\t\t\t            <label class=\"form-check-label\" for=\"{$fieldName}_{$value}\">{{ __('{$value}') }}</label>\n";
+                            $viewContent .= "\t\t\t\t\t\t        </div>\n";
+                        }
+                        $viewContent .= "\t\t\t\t\t\t        <input type=\"hidden\" id=\"{$fieldName}_hidden\" name=\"{$fieldName}\" value=\"{{ {$oldValue} }}\">\n";
+                        break;
+                    case 'select':
+                        $viewContent .= "\t\t\t\t                <select class=\"form-select {$errorClass}\" name=\"{$fieldName}\" id=\"{$fieldName}\" required>\n";
+                        $viewContent .= "\t\t\t\t                     <option value='' selected> -- Select -- </option>\n";
+                        $viewContent .= "\t\t\t\t                     @foreach (\${$modelName} as \${$modelNameAs})\n";
+                        $viewContent .= "\t\t\t\t                     <option value=\"{{ \${$modelNameAs}->id }}\" {{ {$oldValue} == \${$modelNameAs}->id ? 'selected' : '' }}>{{ \${$modelNameAs}->{$optionsFieldName} }}</option>\n";
+                        $viewContent .= "\t\t\t\t                     @endforeach\n";
+                        $viewContent .= "\t\t\t\t                 </select>\n";
                         break;
 
                     default:
@@ -547,8 +823,33 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
             </div>
         </div>
     </div>
-@endsection
-            ";
+@endsection";
+if ($checkboxInput) {
+$viewContent .="
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    function updateHiddenField(fieldName) {
+        const checkboxes = document.querySelectorAll('input[name=\"' +fieldName + '[]\"]:checked');
+        const selectedValues = Array.from(checkboxes).map(cb => cb.value);
+        document.getElementById(fieldName + '_hidden').value = selectedValues.join(',');
+    }
+
+    document.querySelectorAll('input[type=\"checkbox\"]').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            const fieldName = checkbox.name.split('[')[0]; // Extract field name from 'name=\"field[]\"'
+            updateHiddenField(fieldName);
+        });
+    });
+
+    document.querySelectorAll('input[type=\"checkbox\"]').forEach(function (checkbox) {
+        const fieldName = checkbox.name.split('[')[0];
+        updateHiddenField(fieldName);
+    });
+});
+</script>
+@endpush";
+}
 
             File::put($editViewFilePath, $viewContent);
             return ['success' => true];
@@ -1309,7 +1610,7 @@ $(function () {
             $languageContent = [
                 'create_list_edit' => [
                     'list_page_title' => 'List ' . ucwords(str_replace('_', ' ', Str::snake($modelName))),
-                    strtolower($modelName) => Str::camel($modelName),
+                    strtolower($modelName) => ucwords(str_replace('_', ' ', Str::snake($modelName))),
                     'list_' . strtolower($modelName) . '_list' => ucwords(str_replace('_', ' ', Str::snake($modelName))) . ' List',
                     'create_page_title' => 'Create ' . ucwords(str_replace('_', ' ', Str::snake($modelName))),
                     'edit_page_title' => 'Edit ' . ucwords(str_replace('_', ' ', Str::snake($modelName))),
