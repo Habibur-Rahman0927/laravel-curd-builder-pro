@@ -1361,7 +1361,7 @@
         const modal = grid.closest('.fillable-modal');
         const curdGeneratorForm = document.getElementById('curd-generator-form');
 
-        modal.querySelector('.save-selection').addEventListener('click', () => {
+        modal.querySelector('.save-selection').addEventListener('click', (event) => {
             const selectedField = grid.querySelector('input[type="checkbox"]:checked');
             if (selectedField) {
                 const inputId = `${fieldName}-${selectedModel}-${selectedField.value}`;
@@ -1381,6 +1381,7 @@
                 alert(`You selected: ${selectedField.value}`);
                 modal.remove();
             } else {
+                event.preventDefault();
                 alert('Please select a field before saving.');
             }
         });

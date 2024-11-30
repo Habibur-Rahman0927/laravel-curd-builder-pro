@@ -51,7 +51,7 @@ class CrudGeneratorController extends Controller
         $fieldNames = $request->input('fieldNames');
         $validations = $request->input('validations');
         $useCaseType = $request->input('use_case_type');
-        // dd($request->toArray());
+        
         $modelCreationResult = $this->curdGeneratorService->generateModel($modelName, $softDelete, $fields, $relationships);
         $migrationCreationResult = $this->curdGeneratorService->generateMigration($modelName, $fields, $softDelete);
 
@@ -59,9 +59,9 @@ class CrudGeneratorController extends Controller
             return redirect()->back()->with('error', "Failed to create Model or Migration: " . ($modelCreationResult['error'] ?? '') . ' ' . ($migrationCreationResult['error'] ?? ''));
         }
 
+        Artisan::call('migrate');
         Artisan::call('app:service-gen', ['name' => $modelName]);
         Artisan::call('app:repository-gen', ['name' => $modelName]);
-        Artisan::call('migrate');
         $this->curdGeneratorService->generateOrBindServiceAndRepository($modelName);
 
         $createRequestResult = $this->curdGeneratorService->generateRequestFile($modelName, $validations);

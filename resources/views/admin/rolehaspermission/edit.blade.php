@@ -55,8 +55,12 @@
                                 <h6 class="mb-0">{{ __('role_has_permission_module.field_label.role_name') }}</h6>
                             </div>
                             <div class="form-group col-sm-9 text-secondary">
-                                <input type="text" name="name" class="form-control" placeholder="Enter Role name"
-                                    value="{{ $data->name }}" />
+                                    <select class="form-select" name="role_id" id="">
+                                        <option value=""> -- {{ __('role_has_permission_module.field_label.select_role') }} -- </option>
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->id }}" {{ $role->id == $data->id ? 'selected' : ''}}>{{ $role->name }}</option>
+                                        @endforeach
+                                    </select>
                             </div>
                         </div>
                         <div class="form-check form-switch">

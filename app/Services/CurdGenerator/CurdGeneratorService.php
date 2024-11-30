@@ -336,6 +336,9 @@ class CurdGeneratorService extends BaseService implements ICurdGeneratorService
                     $serviceInjectionNames[lcfirst($fieldData['model_name'])] = lcfirst($fieldData['model_name']) . "Service";
                 }
             }
+            $serviceImports = array_unique($serviceImports);
+            $serviceInjections = array_unique($serviceInjections);
+
 
             $template = "<?php\n\n" .
     "namespace App\Http\Controllers\Admin;\n\n" .
