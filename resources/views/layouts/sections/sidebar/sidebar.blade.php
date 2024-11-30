@@ -1,7 +1,9 @@
 <nav id="sidebar" class="active">
-    <div class="sidebar-header">
-        <img src="{{ asset('assets/img/bootstraper-logo.png') }}" alt="bootstrapper logo" class="app-logo">
+    <div class="sidebar-header d-flex justify-content-center align-items-center">
+        CURD Builder
+        <img src="{{ asset('assets/img/logo.png') }}" alt="bootstrapper logo" class="app-logo" style="width: 80px; height: auto;">
     </div>
+    
     <ul class="nav flex-column">
         @foreach ($menu['menu'] as $item)
             <li class="nav-item">
