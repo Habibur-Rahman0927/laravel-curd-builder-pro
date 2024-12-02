@@ -24,15 +24,18 @@ class UserService extends BaseService implements IUserService
     public function getUserData(): JsonResponse
     {
         try {
-            $data = $this->userRepository->findAll([], ['id', 'name', 'email', 'created_at']);
+            $data = $this->userRepository->getUserWithRole([], ['id', 'name', 'email', 'created_at', 'role_id']);
             return DataTables::of($data)
+                ->addColumn('role_name', function($data) {
+                    return $data->role->name;
+                })
                 ->addColumn('action', function($data){
                     return $data->id;
                 })->toJson();
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Could not retrieve data. Please try again later.',
+                'message' => 'Could not retrieve data. Please try again later.' . $e->getMessage(),
             ]);
         }
     }

@@ -9,6 +9,7 @@ $(function () {
             {data: 'id', name: 'id'},
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
+            {data: 'role_name', name: 'role_name'},
             {data: 'action', name: 'action', 
             render: function(data, type, row) {
                 let editButton = '<a href="/admin/user/' + row.id + '/edit" class="edit btn btn-success btn-sm">Edit</a>';
