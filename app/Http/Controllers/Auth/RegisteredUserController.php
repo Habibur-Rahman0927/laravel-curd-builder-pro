@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -42,6 +43,12 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+        if (Role::where('id', $request->role_id)->exists()) {
+            $role = Role::find($request->role_id);
+            $user->assignRole($role->name);
+        } else {
+            return redirect()->back()->with('error', 'Role does not exist.');
+        }
 
         Auth::login($user);
 

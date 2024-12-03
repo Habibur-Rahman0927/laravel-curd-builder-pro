@@ -47,6 +47,7 @@
                                     <th>{{ __('standard_curd_common_label.id') }}</th>
                                     <th>{{ __('user_module.field_label.name') }}</th>
                                     <th>{{ __('user_module.field_label.email') }}</th>
+                                    <th>{{ __('user_module.field_label.role_name') }}</th>
                                     <th>{{ __('standard_curd_common_label.action') }}</th>
                                 </tr>
                                 <tr>
@@ -56,6 +57,8 @@
                                             class="column-search form-control" /></th>
                                     <th><input type="text" placeholder="{{ __('standard_curd_common_label.search') }} {{ __('user_module.field_label.email') }}"
                                             class="column-search form-control" /></th>
+                                    <th><input type="text" placeholder="{{ __('standard_curd_common_label.search') }} {{ __('user_module.field_label.role_name') }}"
+                                                class="column-search form-control" /></th>
                                     <th></th>
                                 </tr>
                             </thead>

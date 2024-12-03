@@ -11,6 +11,7 @@ return array (
     'field_label' => array(
         'name' => 'Name',
         'email' => 'Email',
+        'role_name' => 'Role Name',
         'password' => 'Password',
         'password_option' => '(leave blank to keep current)',
         'select_user_type' => 'Select User Type',

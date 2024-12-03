@@ -1316,7 +1316,7 @@ $(function () {
                 } else {
                     $swaggerType = 'string';
                 }
-                $fieldsList .= "\t *             @OA\Property(property=\"{$fieldName}\", type=\"{$swaggerType}\", example=\"example_value\"),\n";
+                $fieldsList .= "\t *             @OA\Property(property=\"{$fieldName}\", type=\"{$swaggerType}\", example=\"\"),\n";
             }
 
             // Start building the controller content
