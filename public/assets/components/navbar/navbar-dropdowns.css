@@ -70,5 +70,5 @@
 }
 
 .nav-bg-color {
-    background: linear-gradient(90deg, #3b5265, #3d5166);
+    background: radial-gradient(ellipse at top, #151a33, #000);
 }

@@ -9,7 +9,7 @@
             background-color: #1e1e1e;
             color: #f8f8f2;
         }
-    
+
         pre {
             background-color: #282a36;
             color: #f8f8f2;
@@ -19,30 +19,30 @@
             white-space: pre-wrap;
             font-family: 'Courier New', Courier, monospace;
         }
-    
+
         .accordion-button {
             font-weight: bold;
         }
-    
+
         .accordion-body {
             background-color: #f8f9fa;
         }
-    
+
         .bg-light {
             background-color: #f0f8ff;
         }
         .accordion-background{
             background: linear-gradient(90deg, #3b5265, #3d5166) !important;
         }
-    
+
         .alert {
             border-radius: 5px;
         }
-    
+
         .table-responsive {
-            overflow-y: auto; 
+            overflow-y: auto;
         }
-    
+
         .table {
             min-width: 800px;
         }
@@ -120,7 +120,7 @@
             cursor: pointer;
         }
 
-    
+
     </style>
 @endsection
 
@@ -137,7 +137,7 @@
                 </div>
             </div>
             <div class="row">
-                    
+
                 <form action="{{ route('crud.generator.store') }}" method="POST" id="curd-generator-form">
                     @csrf
                 <div class="card shadow">
@@ -157,7 +157,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
-        
+
                         @if(session('error'))
                             <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
                                 {{ session('error') }}
@@ -280,12 +280,12 @@
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </td>
-                                            
+
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-        
+
                             <button type="button" class="btn add-btn" id="add-field">➕ {{ __('generate_curd_module.add_field') }}</button>
                     </div>
                 </div>
@@ -331,7 +331,7 @@
                                     </tbody>
                                 </table>
                             </div>
-        
+
                             <div>
                                 <button type="button" class="btn add-btn" id="add-relationship">➕ {{ __('generate_curd_module.add_relationship') }}</button>
                                 <button type="button" class="btn btn-warning" id="preview-button">{{ __('generate_curd_module.preview') }}</button>
@@ -357,18 +357,18 @@
                                                             Configure fields for:
                                                         </p>
                                                         <ul>
-                                                            <li><strong>Create:</strong> 
+                                                            <li><strong>Create:</strong>
                                                                 <span class="text-muted">If selected, this field will appear in the form when creating a new record.</span>
                                                             </li>
-                                                            <li><strong>Edit:</strong> 
+                                                            <li><strong>Edit:</strong>
                                                                 <span class="text-muted">If selected, this field will be available when editing existing records.</span>
                                                             </li>
-                                                            <li><strong>List:</strong> 
+                                                            <li><strong>List:</strong>
                                                                 <span class="text-muted">If selected, this field will appear in the list view (table display) of the records.</span>
                                                             </li>
-                                                            <li><strong>Field:</strong> 
+                                                            <li><strong>Field:</strong>
                                                                 <span class="text-muted">Your field is <code>first_name</code> but it will appear in the form as <strong>First Name</strong>.</span>
-                                                            </li>                                                    
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -389,8 +389,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                            
+
+
                                             <div class="table-responsive">
                                                 <table class="table table-bordered" id="field-selection-table">
                                                     <thead>
@@ -414,7 +414,7 @@
                                     </div>
                                 </div>
                             </div>
-        
+
                             <div class="accordion mt-4 mb-3 d-none" id="accordionApiSection">
                                 <div class="accordion-item border-0">
                                     <h1 class="accordion-header" id="headingApi">
@@ -433,7 +433,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -441,14 +441,14 @@
                                     </div>
                                 </div>
                             </div>
-        
+
                             <!-- Submit Button -->
                             <div class="form-group text-end">
-                                <button type="reset" class="btn btn-danger text-white">{{ __('standard_curd_common_label.reset') }}</button> 
+                                <button type="reset" class="btn btn-danger text-white">{{ __('standard_curd_common_label.reset') }}</button>
                                 <button type="submit" class="btn add-btn">{{ __('generate_curd_module.generate') }}</button>
                             </div>
                     </div>
-                    
+
                         <div class="modal fade" id="preview-modal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -480,7 +480,7 @@
         let input = event.target;
         input.value = input.value
             .replace(/\s+/g, '')
-            .replace(/(^\w|[A-Z]|\b\w)/g, (match, index) => 
+            .replace(/(^\w|[A-Z]|\b\w)/g, (match, index) =>
                 index === 0 ? match.toLowerCase() : match.toUpperCase()
             )
             .replace(/[^a-zA-Z0-9]/g, '');
@@ -564,7 +564,7 @@
             curdViewForm();
             apiValidation();
         });
-        
+
         const newFieldNameInput = container.lastElementChild.querySelector('.field-name-input');
         newFieldNameInput.addEventListener('input', function() {
             this.value = this.value.toLowerCase().replace(/\s+/g, '_');
@@ -972,7 +972,7 @@
                     if (field.index) fieldLine += '->index()';
                     if (field.comment) fieldLine += `->comment('${field.comment}')`;
                 }
-                
+
                 migrationContent += `${fieldLine}${field.name ? ';' : ''}\n`;
             });
             if (softDeleteEnabled) {
@@ -1021,7 +1021,7 @@
 
         relationships.forEach(relationship => {
             const relatedModelLowerCase = relationship.relatedModel.toLowerCase();
-            
+
             if (relationship.relationshipType === 'belongsTo') {
                 modelContent += `    public function ${relatedModelLowerCase}(): BelongsTo\n    {\n        return $this->belongsTo(${relationship.relatedModel}::class, '${relationship.foreignKey}');\n    }\n\n`;
             } else if (relationship.relationshipType === 'hasMany') {
@@ -1030,7 +1030,7 @@
                 modelContent += `    public function ${relatedModelLowerCase}(): HasOne\n    {\n        return $this->hasOne(${relationship.relatedModel}::class, '${relationship.foreignKey}');\n    }\n\n`;
             } else if (relationship.relationshipType === 'belongsToMany') {
                 modelContent += `    public function ${relatedModelLowerCase}s(): BelongsToMany\n    {\n        return $this->belongsToMany(${relationship.relatedModel}::class);\n    }\n\n`;
-            } 
+            }
         });
 
         modelContent += `};\n`;
@@ -1062,7 +1062,7 @@
             }
             if (fieldName) {
                 const tr = document.createElement('tr');
-                
+
                 const tdFieldName = document.createElement('td');
                 const fieldContainer = document.createElement('div');
                 fieldContainer.style.display = 'flex';
@@ -1559,7 +1559,7 @@
                     hiddenInput.value = value ? `${rule}:${value}` : rule;
                 }
             });
-            fieldValidations[fieldName] = selectedRules; 
+            fieldValidations[fieldName] = selectedRules;
             bootstrapModal.hide();
         });
         const bootstrapModal = new bootstrap.Modal(modal);
@@ -1594,7 +1594,7 @@
 
             if (fieldName) {
                 const tr = document.createElement('tr');
-                
+
                 const tdFieldName = document.createElement('td');
                 tdFieldName.textContent = fieldName
                 tr.appendChild(tdFieldName);

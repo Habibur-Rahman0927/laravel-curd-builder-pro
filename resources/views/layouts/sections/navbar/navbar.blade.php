@@ -1,7 +1,4 @@
 <nav class="navbar navbar-expand-lg nav-bg-color">
-    <button type="button" id="sidebarCollapse" class="btn btn-light">
-        <i class="fas fa-bars"></i><span></span>
-    </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="nav navbar-nav ms-auto">
             {{-- lang --}}

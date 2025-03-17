@@ -84,7 +84,7 @@
     min-width: 600px;
 }
 
-.yajra-datatable th, 
+.yajra-datatable th,
 .yajra-datatable td {
     padding: 12px 15px;
     text-align: left;
@@ -121,13 +121,13 @@
 }
 
 .export-btn {
-    background: linear-gradient(90deg, #475869, #698aaa);
+    background: radial-gradient(ellipse at top, #151a33, #000);
     color: white;
     font-weight: 700;
 }
 
 .add-btn {
-    background: linear-gradient(90deg, #475869, #698aaa);
+    background: radial-gradient(ellipse at top, #151a33, #000);
     color: white;
     font-weight: 700;
 }
@@ -148,7 +148,7 @@
 }
 
 .dropdown-menu button {
-    background-color: #6c757d;
+    background: radial-gradient(ellipse at top, #151a33, #000);
     color: white;
     border-radius: 4px;
     padding: 8px 12px;
