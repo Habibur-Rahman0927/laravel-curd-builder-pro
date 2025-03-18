@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel Network Animation</title>
+    <title>Laravel CRUD Builder</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -110,7 +111,7 @@
     <div class="relative z-10 text-center py-16 max-w-6xl mx-auto px-6">
         <h1 class="text-white text-6xl font-bold mb-8 leading-tight">Effortless Laravel CRUD Builder</h1>
         <p class="text-gray-300 text-xl mb-12">Supercharge your backend development with auto-generated APIs, customizable forms, and powerful relation management tools.</p>
-        <a href="{{ route('register') }}" class="btn-cta">Get Started</a>
+        <a class="btn-cta" id="openModal">Get The Project</a>
 
         <!-- Feature Cards -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
@@ -136,13 +137,59 @@
             </div>
             <div class="glass-card">
                 <h2 class="text-white text-2xl mb-3">🚀 Pre-configured Packages</h2>
-                <p class="text-gray-200">Essential packages configured for rapid development.</p>
+                <p class="text-gray-200">Essential packages configured for rapid development and localization support</p>
             </div>
         </div>
 
         <div class="version-info">CRUD Builder v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</div>
     </div>
+    <div id="projectModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full text-center">
+            <h2 class="text-xl font-semibold mb-4">Get The Project</h2>
+            <p class="text-gray-600 mb-4">Enter your email, and we will send you the code link.</p>
+            <input type="email" id="userEmail" class="w-full border p-2 rounded-md mb-4" placeholder="Your email" required>
+            <button id="submitEmail" class="bg-blue-500 text-white px-4 py-2 rounded-md">Submit</button>
+            <button id="closeModal" class="text-gray-500 mt-2 block">Close</button>
+        </div>
+    </div>
 
+
+    <script>
+        document.getElementById('openModal').addEventListener('click', function() {
+            document.getElementById('projectModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('projectModal').classList.add('hidden');
+        });
+
+        document.getElementById('submitEmail').addEventListener('click', function() {
+            let email = document.getElementById('userEmail').value;
+            if (email) {
+                fetch('/project-request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        email: email
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message); // Show success message
+                    document.getElementById('projectModal').classList.add('hidden');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Something went wrong. Please try again later.');
+                });
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        });
+    </script>
     <!-- Canvas Animation Script (unchanged from your version) -->
     <script>
         const canvas = document.getElementById('networkCanvas');
